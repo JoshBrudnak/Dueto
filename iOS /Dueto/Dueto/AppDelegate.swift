@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Dueto
 //
-//  Created by Laith Rafidi on 1/7/18.
+//  Created by Laith Rafidi and Lily Suau on 1/7/18.
 //  Copyright © 2018 Dueto. All rights reserved.
 //
 

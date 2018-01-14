@@ -1,0 +1,884 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A113A2FC5F91269AB55DF9FA683015F /* Floaty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86DA716C290E542D2067A7FFC0CE7A1 /* Floaty.swift */; };
+		1982E7ED9231E948A558799362FEA8B3 /* Floaty-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C0030FD3BEF3BC49F4A5EF8260B7B /* Floaty-dummy.m */; };
+		2F30735E6BB3BB6DD455904BE0452769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
+		31DEB9C293D974C0014F52E7853C3E0B /* FloatyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA36A70A509FA36B3ADFBBD2664E1F /* FloatyItem.swift */; };
+		35FA51E619FCF4D2AA5BE6DEE640E9EA /* Pods-Dueto-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5502EC91B558CEF2AD7B04BDCF675B8B /* Pods-Dueto-dummy.m */; };
+		4B6CFE375AD2C35E320B97B975CC7C9D /* Pods-Dueto-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2695CDB98473BC97755503203E096017 /* Pods-Dueto-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		530356FC11C4F4A1F641A30F65C5684F /* FloatyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3D5847743F50BD3DDF8766A24DC2A3 /* FloatyWindow.swift */; };
+		7060C75B128119AE663619DCED898CF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */; };
+		7067387FF3974A5BA87F204F718C33F5 /* Floaty-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B7D8FB0487E7442C9A5697FB12713C /* Floaty-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8E96697B51D3FD3DB5EB1BE3EF02B411 /* FloatyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68476F9B1E02EDABC3F62BEF2754AE99 /* FloatyManager.swift */; };
+		9054A1CA64F47D0BEE3744D146CD26A2 /* FloatyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34068DE07EEF2DFBCCFAAA54BEDEAFFA /* FloatyDelegate.swift */; };
+		9798C453D2FFD21C748C8E487E40E407 /* Pods-DuetoTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F511B9E2DF076945F31BE463AC0C5404 /* Pods-DuetoTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9EBAC41C05D389B2E933C7CE83BBAE67 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
+		9FB842479D4C8944E671D80ACE383C71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
+		A430E36B9FDE172EB092B3F5EFC8D979 /* Pods-DuetoUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9274AB238BF1E7902C7AE064D851C76C /* Pods-DuetoUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE0F1CB9B723C2C1C0ECCFD853B0FC33 /* Pods-DuetoTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5627564CAE6F4B4A25F72E19A9CCE3CE /* Pods-DuetoTests-dummy.m */; };
+		C8707F183BCA7A87C16F9DB96951C487 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
+		DA80750C30AE161A1C72E09EBB243A56 /* Pods-DuetoUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2438FB1FAAF0D87C395A8BD285DFF816 /* Pods-DuetoUITests-dummy.m */; };
+		F5B4C3EE44C285ACF24E077895435175 /* FloatyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2995F2534E42B250E0B1405156407A7 /* FloatyViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		17152A82A7C874582F6EF526320D276C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C123A74CD9D6CDA27160800BA68B01A;
+			remoteInfo = Floaty;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00B6F74A227EFEB8F51EB8BB9A96ABE8 /* Pods-DuetoUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoUITests-frameworks.sh"; sourceTree = "<group>"; };
+		054BD4DC37FF4A95465997D64A40D97E /* Pods-Dueto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Dueto.release.xcconfig"; sourceTree = "<group>"; };
+		122757C34B9B04460501E126C9358858 /* Pods-DuetoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DuetoTests.modulemap"; sourceTree = "<group>"; };
+		1B1A63293C116C441198EB6ED41C9E7F /* Pods-Dueto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Dueto.debug.xcconfig"; sourceTree = "<group>"; };
+		2438FB1FAAF0D87C395A8BD285DFF816 /* Pods-DuetoUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DuetoUITests-dummy.m"; sourceTree = "<group>"; };
+		2695CDB98473BC97755503203E096017 /* Pods-Dueto-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Dueto-umbrella.h"; sourceTree = "<group>"; };
+		2AFA2CAF5EDDEA1C6CF2D0509CCAC7A9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CEAACC86D6F06CD34E93CA595B93CBD /* Floaty-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Floaty-prefix.pch"; sourceTree = "<group>"; };
+		34068DE07EEF2DFBCCFAAA54BEDEAFFA /* FloatyDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyDelegate.swift; path = Sources/FloatyDelegate.swift; sourceTree = "<group>"; };
+		3C0000B7196AD06D75A36DC68D43DC06 /* Pods-DuetoTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoTests-resources.sh"; sourceTree = "<group>"; };
+		3F5F3AB5ADAFB42AA1AD5C073B1CA46F /* Pods_DuetoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DuetoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		452388D7F757EB3FE6CF160BC9562C63 /* Pods_DuetoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DuetoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BAB6A0FC3ED99F8FD52D0D4B5E4BBF3 /* Floaty.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Floaty.modulemap; sourceTree = "<group>"; };
+		4E8871170653C5CCA3FEEADEAD32D666 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5502EC91B558CEF2AD7B04BDCF675B8B /* Pods-Dueto-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Dueto-dummy.m"; sourceTree = "<group>"; };
+		561E3E12F09C8B59C4DD92A463D0C2D7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5627564CAE6F4B4A25F72E19A9CCE3CE /* Pods-DuetoTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DuetoTests-dummy.m"; sourceTree = "<group>"; };
+		58A149D9A84DFFD35151086073414AD1 /* Pods-DuetoUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DuetoUITests.modulemap"; sourceTree = "<group>"; };
+		6799CD380C4A4B990B767B5A453182CE /* Pods-Dueto.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Dueto.modulemap"; sourceTree = "<group>"; };
+		68476F9B1E02EDABC3F62BEF2754AE99 /* FloatyManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyManager.swift; path = Sources/FloatyManager.swift; sourceTree = "<group>"; };
+		70A128F5EFC2C40580FBD5A78F5D7CE6 /* Pods-DuetoUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DuetoUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		75778D05D046F1BF6146864078BB9772 /* Pods-DuetoUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoUITests-resources.sh"; sourceTree = "<group>"; };
+		81ED7454675F26EE75E48C4DA9FC6AB1 /* Pods-Dueto-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Dueto-acknowledgements.markdown"; sourceTree = "<group>"; };
+		8213CE4FFB272E989B68B1CF1AAAA05E /* Pods-DuetoUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DuetoUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		85F97F3C15A680DDCF1BC6519F28ACAB /* Pods_Dueto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dueto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		889A2994A4B3A55044B7207011A9F49F /* Pods-Dueto-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Dueto-frameworks.sh"; sourceTree = "<group>"; };
+		8EC3AD0C1CBE1C6C92D80C17DB3F8ECA /* Pods-DuetoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DuetoTests.release.xcconfig"; sourceTree = "<group>"; };
+		923BE02117F4F33D4B34AC3CAFF59D26 /* Pods-DuetoTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoTests-frameworks.sh"; sourceTree = "<group>"; };
+		9274AB238BF1E7902C7AE064D851C76C /* Pods-DuetoUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DuetoUITests-umbrella.h"; sourceTree = "<group>"; };
+		92DAE98EFAFDA2326E142452122A57A9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9FEA36A70A509FA36B3ADFBBD2664E1F /* FloatyItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyItem.swift; path = Sources/FloatyItem.swift; sourceTree = "<group>"; };
+		A101713E766B4F36D5A390E5BB338028 /* Floaty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Floaty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8BDFDB37E18C9894CE75F89903C94C2 /* Floaty.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Floaty.xcconfig; sourceTree = "<group>"; };
+		B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B9123F9EEB2C67287E980E6A29A22F1A /* Pods-Dueto-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Dueto-acknowledgements.plist"; sourceTree = "<group>"; };
+		C62D58A46CC9D4AA58BA8374E6FF2BDC /* Pods-DuetoTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DuetoTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		C919DD29A2B5C4F242101E91B87BF227 /* Pods-DuetoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DuetoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D3C9B0667B6FF0FF1CE30B390E331D6A /* Pods-DuetoTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DuetoTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D59DB45564BFE02A63E50CD1A3A631FC /* Pods-DuetoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DuetoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D6B7D8FB0487E7442C9A5697FB12713C /* Floaty-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Floaty-umbrella.h"; sourceTree = "<group>"; };
+		D86DA716C290E542D2067A7FFC0CE7A1 /* Floaty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Floaty.swift; path = Sources/Floaty.swift; sourceTree = "<group>"; };
+		D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		DE3D5847743F50BD3DDF8766A24DC2A3 /* FloatyWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyWindow.swift; path = Sources/FloatyWindow.swift; sourceTree = "<group>"; };
+		E2995F2534E42B250E0B1405156407A7 /* FloatyViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyViewController.swift; path = Sources/FloatyViewController.swift; sourceTree = "<group>"; };
+		E56309F22EA4CCD2296E55342CDFE26E /* Pods-DuetoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DuetoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F511B9E2DF076945F31BE463AC0C5404 /* Pods-DuetoTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DuetoTests-umbrella.h"; sourceTree = "<group>"; };
+		FA5A1C503B41A9B1C97B7D8CB1C88635 /* Pods-Dueto-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Dueto-resources.sh"; sourceTree = "<group>"; };
+		FE9C0030FD3BEF3BC49F4A5EF8260B7B /* Floaty-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Floaty-dummy.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		45FC3340083C7F701BF87DF20D001A63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FB842479D4C8944E671D80ACE383C71 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55577BF01C8CD71DC9D2583D349D45E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8707F183BCA7A87C16F9DB96951C487 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		627F85B60AEAEBA63D1602D617A3DE6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9EBAC41C05D389B2E933C7CE83BBAE67 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E91D449C74F3A7565170694D645F1052 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F30735E6BB3BB6DD455904BE0452769 /* Foundation.framework in Frameworks */,
+				7060C75B128119AE663619DCED898CF8 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B4132C375963DFF8785A0578764233A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4BAB6A0FC3ED99F8FD52D0D4B5E4BBF3 /* Floaty.modulemap */,
+				A8BDFDB37E18C9894CE75F89903C94C2 /* Floaty.xcconfig */,
+				FE9C0030FD3BEF3BC49F4A5EF8260B7B /* Floaty-dummy.m */,
+				2CEAACC86D6F06CD34E93CA595B93CBD /* Floaty-prefix.pch */,
+				D6B7D8FB0487E7442C9A5697FB12713C /* Floaty-umbrella.h */,
+				561E3E12F09C8B59C4DD92A463D0C2D7 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Floaty";
+			sourceTree = "<group>";
+		};
+		1B2644B4C8E371B3B66E49E64FE1C345 /* Pods-Dueto */ = {
+			isa = PBXGroup;
+			children = (
+				2AFA2CAF5EDDEA1C6CF2D0509CCAC7A9 /* Info.plist */,
+				6799CD380C4A4B990B767B5A453182CE /* Pods-Dueto.modulemap */,
+				81ED7454675F26EE75E48C4DA9FC6AB1 /* Pods-Dueto-acknowledgements.markdown */,
+				B9123F9EEB2C67287E980E6A29A22F1A /* Pods-Dueto-acknowledgements.plist */,
+				5502EC91B558CEF2AD7B04BDCF675B8B /* Pods-Dueto-dummy.m */,
+				889A2994A4B3A55044B7207011A9F49F /* Pods-Dueto-frameworks.sh */,
+				FA5A1C503B41A9B1C97B7D8CB1C88635 /* Pods-Dueto-resources.sh */,
+				2695CDB98473BC97755503203E096017 /* Pods-Dueto-umbrella.h */,
+				1B1A63293C116C441198EB6ED41C9E7F /* Pods-Dueto.debug.xcconfig */,
+				054BD4DC37FF4A95465997D64A40D97E /* Pods-Dueto.release.xcconfig */,
+			);
+			name = "Pods-Dueto";
+			path = "Target Support Files/Pods-Dueto";
+			sourceTree = "<group>";
+		};
+		1BB3D9F41A5FF1AB90CEC9A85698D9DD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A101713E766B4F36D5A390E5BB338028 /* Floaty.framework */,
+				85F97F3C15A680DDCF1BC6519F28ACAB /* Pods_Dueto.framework */,
+				452388D7F757EB3FE6CF160BC9562C63 /* Pods_DuetoTests.framework */,
+				3F5F3AB5ADAFB42AA1AD5C073B1CA46F /* Pods_DuetoUITests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3E125E5444B5CCBD75616774801C75F8 /* Pods-DuetoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4E8871170653C5CCA3FEEADEAD32D666 /* Info.plist */,
+				58A149D9A84DFFD35151086073414AD1 /* Pods-DuetoUITests.modulemap */,
+				70A128F5EFC2C40580FBD5A78F5D7CE6 /* Pods-DuetoUITests-acknowledgements.markdown */,
+				8213CE4FFB272E989B68B1CF1AAAA05E /* Pods-DuetoUITests-acknowledgements.plist */,
+				2438FB1FAAF0D87C395A8BD285DFF816 /* Pods-DuetoUITests-dummy.m */,
+				00B6F74A227EFEB8F51EB8BB9A96ABE8 /* Pods-DuetoUITests-frameworks.sh */,
+				75778D05D046F1BF6146864078BB9772 /* Pods-DuetoUITests-resources.sh */,
+				9274AB238BF1E7902C7AE064D851C76C /* Pods-DuetoUITests-umbrella.h */,
+				C919DD29A2B5C4F242101E91B87BF227 /* Pods-DuetoUITests.debug.xcconfig */,
+				E56309F22EA4CCD2296E55342CDFE26E /* Pods-DuetoUITests.release.xcconfig */,
+			);
+			name = "Pods-DuetoUITests";
+			path = "Target Support Files/Pods-DuetoUITests";
+			sourceTree = "<group>";
+		};
+		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				438B396F6B4147076630CAEFE34282C1 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		438B396F6B4147076630CAEFE34282C1 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */,
+				B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		72C10A899C47A29D8A9AD2C6E20A29B4 /* Pods-DuetoTests */ = {
+			isa = PBXGroup;
+			children = (
+				92DAE98EFAFDA2326E142452122A57A9 /* Info.plist */,
+				122757C34B9B04460501E126C9358858 /* Pods-DuetoTests.modulemap */,
+				D3C9B0667B6FF0FF1CE30B390E331D6A /* Pods-DuetoTests-acknowledgements.markdown */,
+				C62D58A46CC9D4AA58BA8374E6FF2BDC /* Pods-DuetoTests-acknowledgements.plist */,
+				5627564CAE6F4B4A25F72E19A9CCE3CE /* Pods-DuetoTests-dummy.m */,
+				923BE02117F4F33D4B34AC3CAFF59D26 /* Pods-DuetoTests-frameworks.sh */,
+				3C0000B7196AD06D75A36DC68D43DC06 /* Pods-DuetoTests-resources.sh */,
+				F511B9E2DF076945F31BE463AC0C5404 /* Pods-DuetoTests-umbrella.h */,
+				D59DB45564BFE02A63E50CD1A3A631FC /* Pods-DuetoTests.debug.xcconfig */,
+				8EC3AD0C1CBE1C6C92D80C17DB3F8ECA /* Pods-DuetoTests.release.xcconfig */,
+			);
+			name = "Pods-DuetoTests";
+			path = "Target Support Files/Pods-DuetoTests";
+			sourceTree = "<group>";
+		};
+		72F34623D4FCEDBE8A9E9E4EF4C4AFE8 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1B2644B4C8E371B3B66E49E64FE1C345 /* Pods-Dueto */,
+				72C10A899C47A29D8A9AD2C6E20A29B4 /* Pods-DuetoTests */,
+				3E125E5444B5CCBD75616774801C75F8 /* Pods-DuetoUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
+				E949B91BBEF7274FD2E72323249CCDEC /* Pods */,
+				1BB3D9F41A5FF1AB90CEC9A85698D9DD /* Products */,
+				72F34623D4FCEDBE8A9E9E4EF4C4AFE8 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		CA9C2D2FFF81B47F2F8CB48631C74FB7 /* Floaty */ = {
+			isa = PBXGroup;
+			children = (
+				D86DA716C290E542D2067A7FFC0CE7A1 /* Floaty.swift */,
+				34068DE07EEF2DFBCCFAAA54BEDEAFFA /* FloatyDelegate.swift */,
+				9FEA36A70A509FA36B3ADFBBD2664E1F /* FloatyItem.swift */,
+				68476F9B1E02EDABC3F62BEF2754AE99 /* FloatyManager.swift */,
+				E2995F2534E42B250E0B1405156407A7 /* FloatyViewController.swift */,
+				DE3D5847743F50BD3DDF8766A24DC2A3 /* FloatyWindow.swift */,
+				0B4132C375963DFF8785A0578764233A /* Support Files */,
+			);
+			path = Floaty;
+			sourceTree = "<group>";
+		};
+		E949B91BBEF7274FD2E72323249CCDEC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CA9C2D2FFF81B47F2F8CB48631C74FB7 /* Floaty */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		287F672FDA2E059D76F3CD7F6A92A7CE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9798C453D2FFD21C748C8E487E40E407 /* Pods-DuetoTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E9BDCAC3EFFBF27A1939FACCAC0E49F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A430E36B9FDE172EB092B3F5EFC8D979 /* Pods-DuetoUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC4B55F79F7EDF7665C0699A20731DE3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7067387FF3974A5BA87F204F718C33F5 /* Floaty-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1FEFC52E3E12B0095DEF0E305F5979A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B6CFE375AD2C35E320B97B975CC7C9D /* Pods-Dueto-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		35488FA9D5A15FBED09BA5FC496C0DC2 /* Pods-DuetoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7B670BFECCC2AE24C724006E756008D /* Build configuration list for PBXNativeTarget "Pods-DuetoUITests" */;
+			buildPhases = (
+				75B74F3DEE16FDDA253E8D0F733FD70D /* Sources */,
+				55577BF01C8CD71DC9D2583D349D45E7 /* Frameworks */,
+				5E9BDCAC3EFFBF27A1939FACCAC0E49F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-DuetoUITests";
+			productName = "Pods-DuetoUITests";
+			productReference = 3F5F3AB5ADAFB42AA1AD5C073B1CA46F /* Pods_DuetoUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3E02C705D35A37F3CDA121BE3A6A7663 /* Pods-DuetoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92D5887E1B2C77E4112473D61AE69625 /* Build configuration list for PBXNativeTarget "Pods-DuetoTests" */;
+			buildPhases = (
+				E6062DDCD9FBBA705ED347481C3E8352 /* Sources */,
+				45FC3340083C7F701BF87DF20D001A63 /* Frameworks */,
+				287F672FDA2E059D76F3CD7F6A92A7CE /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-DuetoTests";
+			productName = "Pods-DuetoTests";
+			productReference = 452388D7F757EB3FE6CF160BC9562C63 /* Pods_DuetoTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4E382699C55E6E4D73FF10A06270560C /* Pods-Dueto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9A7ACAC6EAEB204F9C3D7B7D74CD1B2 /* Build configuration list for PBXNativeTarget "Pods-Dueto" */;
+			buildPhases = (
+				AE6A87A20BE268E6D8A23821010DAA99 /* Sources */,
+				627F85B60AEAEBA63D1602D617A3DE6D /* Frameworks */,
+				F1FEFC52E3E12B0095DEF0E305F5979A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C8468FBF239E846265AEE6E24C1949EE /* PBXTargetDependency */,
+			);
+			name = "Pods-Dueto";
+			productName = "Pods-Dueto";
+			productReference = 85F97F3C15A680DDCF1BC6519F28ACAB /* Pods_Dueto.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5C123A74CD9D6CDA27160800BA68B01A /* Floaty */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 11DD83B99F71D3E302573ED38372EA3B /* Build configuration list for PBXNativeTarget "Floaty" */;
+			buildPhases = (
+				58D385880A221FD41E30877A347BC358 /* Sources */,
+				E91D449C74F3A7565170694D645F1052 /* Frameworks */,
+				DC4B55F79F7EDF7665C0699A20731DE3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Floaty;
+			productName = Floaty;
+			productReference = A101713E766B4F36D5A390E5BB338028 /* Floaty.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0920;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 1BB3D9F41A5FF1AB90CEC9A85698D9DD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5C123A74CD9D6CDA27160800BA68B01A /* Floaty */,
+				4E382699C55E6E4D73FF10A06270560C /* Pods-Dueto */,
+				3E02C705D35A37F3CDA121BE3A6A7663 /* Pods-DuetoTests */,
+				35488FA9D5A15FBED09BA5FC496C0DC2 /* Pods-DuetoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		58D385880A221FD41E30877A347BC358 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1982E7ED9231E948A558799362FEA8B3 /* Floaty-dummy.m in Sources */,
+				0A113A2FC5F91269AB55DF9FA683015F /* Floaty.swift in Sources */,
+				9054A1CA64F47D0BEE3744D146CD26A2 /* FloatyDelegate.swift in Sources */,
+				31DEB9C293D974C0014F52E7853C3E0B /* FloatyItem.swift in Sources */,
+				8E96697B51D3FD3DB5EB1BE3EF02B411 /* FloatyManager.swift in Sources */,
+				F5B4C3EE44C285ACF24E077895435175 /* FloatyViewController.swift in Sources */,
+				530356FC11C4F4A1F641A30F65C5684F /* FloatyWindow.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75B74F3DEE16FDDA253E8D0F733FD70D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA80750C30AE161A1C72E09EBB243A56 /* Pods-DuetoUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE6A87A20BE268E6D8A23821010DAA99 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35FA51E619FCF4D2AA5BE6DEE640E9EA /* Pods-Dueto-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6062DDCD9FBBA705ED347481C3E8352 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE0F1CB9B723C2C1C0ECCFD853B0FC33 /* Pods-DuetoTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C8468FBF239E846265AEE6E24C1949EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Floaty;
+			target = 5C123A74CD9D6CDA27160800BA68B01A /* Floaty */;
+			targetProxy = 17152A82A7C874582F6EF526320D276C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		170AB5C761177C756E452871F5948FD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8BDFDB37E18C9894CE75F89903C94C2 /* Floaty.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Floaty/Floaty-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Floaty/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Floaty/Floaty.modulemap";
+				PRODUCT_NAME = Floaty;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4C29DBCE921C61C3E9D588EE6F2A786C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8BDFDB37E18C9894CE75F89903C94C2 /* Floaty.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Floaty/Floaty-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Floaty/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Floaty/Floaty.modulemap";
+				PRODUCT_NAME = Floaty;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5421ECD45098110998BDA5D7D806B456 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C919DD29A2B5C4F242101E91B87BF227 /* Pods-DuetoUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-DuetoUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-DuetoUITests/Pods-DuetoUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_DuetoUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6D554291F892FC0D3ED3AD3697970E7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EC3AD0C1CBE1C6C92D80C17DB3F8ECA /* Pods-DuetoTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-DuetoTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-DuetoTests/Pods-DuetoTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_DuetoTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7C07ED8089F70A31B83996A8910D7F18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		8ABCF13AF4774AF9895DCB38E6387301 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D59DB45564BFE02A63E50CD1A3A631FC /* Pods-DuetoTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-DuetoTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-DuetoTests/Pods-DuetoTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_DuetoTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9392084D1AA413954BC2480DCE771A12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B1A63293C116C441198EB6ED41C9E7F /* Pods-Dueto.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Dueto/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Dueto/Pods-Dueto.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Dueto;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		94BC3C04269785FBBB891E52C64D84B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E56309F22EA4CCD2296E55342CDFE26E /* Pods-DuetoUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-DuetoUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-DuetoUITests/Pods-DuetoUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_DuetoUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		98F29E7567052F62660DDD7069ADF73C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		C46CE2B7C216B31D7E138ABEAF2EFD1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 054BD4DC37FF4A95465997D64A40D97E /* Pods-Dueto.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Dueto/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Dueto/Pods-Dueto.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Dueto;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		11DD83B99F71D3E302573ED38372EA3B /* Build configuration list for PBXNativeTarget "Floaty" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				170AB5C761177C756E452871F5948FD9 /* Debug */,
+				4C29DBCE921C61C3E9D588EE6F2A786C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C07ED8089F70A31B83996A8910D7F18 /* Debug */,
+				98F29E7567052F62660DDD7069ADF73C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92D5887E1B2C77E4112473D61AE69625 /* Build configuration list for PBXNativeTarget "Pods-DuetoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ABCF13AF4774AF9895DCB38E6387301 /* Debug */,
+				6D554291F892FC0D3ED3AD3697970E7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7B670BFECCC2AE24C724006E756008D /* Build configuration list for PBXNativeTarget "Pods-DuetoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5421ECD45098110998BDA5D7D806B456 /* Debug */,
+				94BC3C04269785FBBB891E52C64D84B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9A7ACAC6EAEB204F9C3D7B7D74CD1B2 /* Build configuration list for PBXNativeTarget "Pods-Dueto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9392084D1AA413954BC2480DCE771A12 /* Debug */,
+				C46CE2B7C216B31D7E138ABEAF2EFD1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
