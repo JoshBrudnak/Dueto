@@ -23,8 +23,7 @@ class TableViewController: UITableViewController {
         arrayOfCellData = [cellData(cell : 1, text : "", image : #imageLiteral(resourceName: "piano")),
         cellData(cell : 1, text : "", image : #imageLiteral(resourceName: "piano")), cellData(cell : 1, text : "", image : #imageLiteral(resourceName: "piano"))]
         
-                
-
+        
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayOfCellData.count
