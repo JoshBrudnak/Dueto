@@ -1,0 +1,38 @@
+1) As a musician I want a platform to find other musicians to collaborate with, based upon their previous works.
+	1.2) As a musician I want a simple and uniform user experience, which does not take a lot of technical expertise to use.
+		1.2.1) I want the same layout on Android and iOS devices, so I do not get confused when switching systems.
+		1.2.2) I want the same functionality in the apps and on the website.
+
+	1.3) As a musician I want a basic website and app combination to record, edit, upload, and view videos.
+		1.3.1) I want my videos to be processed no matter what the format is so I do not have to care about codecs etc.
+			1.3.1.1) I want to be able to upload audio tracks and have them show up as a video, so I can use computer generated music.
+		1.3.2) I want the videos to have changeable quality to accomodate for different kinds of internet speeds/connections.
+		1.3.3) I want to have an easy way to record my videos, without a lot of user input, so I can focus on playing my music.
+			1.3.3.1) I want a "press once to record"-button so I can put my phone up and focus on playing.
+			1.3.3.2) I want an "audio only" setting if I am conscious about my looks or do not have a (working) camera.
+
+	1.4) As a musician I want a nice way to interact with other musicians to find a collaboration partner quickly and simply.
+		1.4.1) I want an easy to use chat system to communicate with a (potential) collaboration partner.
+		1.4.2) I want to be able to find collaboration partners using categorisation of their music.
+		1.4.3) I want to be able to find collaboration partners by location.
+
+2) As a musician I want a safe environment for my music and my collaborations, so my rights are protected.
+	2.1) My music should not be downloadable unless I intend so, to protect my intellectual property.
+		2.1.1) I want password protection to my account, to keep it safe.
+		2.1.2) I want it to be hard to download my videos or audio.
+	2.2) My messages, videos, and collaborations should be private unless I intend for something different, to protect my privacy.
+		2.2.1) My messages should be safe and never accessible from anyone but me and my chat partner.
+		2.2.2) My collaborations and and uploaded videos should be available only to the people of my choosing.
+			2.2.2.1) I want a privacy option to set for my posts.
+			2.2.2.2) I want a private share option for my posts.
+	2.3) I want to be able to report content, which is violating the law/my rights to protect myself and others.
+		2.3.1) I want to be able to see that my reports did something or not.
+		2.3.2) I want to be able to report someone anonymously.
+
+3) As a musician I want the quality of both audio and video I produce to stay the same when uploaded, so possible collaborators see how much work I put into my music.
+	3.1) I want my music to be enhanced, if I do not have the proper equipment myself.
+	3.2) I want my videos to be enhanced, if I do not have the proper equipment myself.
+
+4) As a musician I want to be able to customize the experience of possible collaborators on my profile, to be more attractive for collaborations.
+	4.1) I want to be able to change the profile details and colours, so the profile matches and represents me.
+	4.2) I want to be able to set a piece of music playing on my profile that represents me.

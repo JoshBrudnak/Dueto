@@ -1,9 +1,11 @@
 package dueto.dueto;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.VideoView;
 import java.util.ArrayList;
 
@@ -36,6 +38,16 @@ public class LoadHome extends Activity
         }
 
 
+    }
+
+    public static void addNewRow(TableLayout t1)
+    {
+        TableRow row = new TableRow(null);
+        TextView text = new TextView(null);
+        text.setText("I am new here, where is the door?");
+        row.addView(text);
+        row.setBackgroundColor(Color.RED);
+        t1.addView(row);
     }
 
 
