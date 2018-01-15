@@ -20,8 +20,9 @@ class TableViewController: UITableViewController {
     var arrayOfCellData = [cellData]()
     
     override func viewDidLoad() {
-        arrayOfCellData = [cellData(cell : 1, text : "", image : #imageLiteral(resourceName: "piano")),
-        cellData(cell : 1, text : "", image : #imageLiteral(resourceName: "piano")), cellData(cell : 1, text : "", image : #imageLiteral(resourceName: "piano"))]
+        arrayOfCellData = [cellData(cell : 1, text : "Name goes here.", image : #imageLiteral(resourceName: "piano")),
+        cellData(cell : 1, text : "Name goes here.", image : #imageLiteral(resourceName: "piano")), cellData(cell : 1, text : "Name goes here.", image : #imageLiteral(resourceName: "piano"))]
+
         
         
     }
@@ -38,6 +39,9 @@ class TableViewController: UITableViewController {
         
     
     }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 320
+//    }
 
 
 }
