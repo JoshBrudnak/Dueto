@@ -1,6 +1,7 @@
 package dueto.dueto;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.MotionEvent;
@@ -13,6 +14,8 @@ import android.widget.TableRow;
 
 public class MainActivity extends Activity {
 
+    private Button LogIn;
+    private Button SignIn;
     private int bVisibility = View.INVISIBLE;
     private boolean scrollable = true; //Scroll always
     @Override
@@ -24,6 +27,22 @@ public class MainActivity extends Activity {
         TableRow row = new TableRow(this);
         t1.addView(row);*/
 
+        LogIn = (Button)findViewById(R.id.logButt); //the sign-in + log-in buttons on the Main page
+        SignIn = (Button)findViewById(R.id.signButt);
+
+        LogIn.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+
+        SignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SigninActivity.class));
+            }
+        });
 
         //Defining buttons to use them later
         final FloatingActionButton
@@ -74,7 +93,5 @@ public class MainActivity extends Activity {
                 scrollable = !scrollable;
             }
         });
-
-
     }
 }

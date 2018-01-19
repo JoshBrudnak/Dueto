@@ -54,6 +54,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <Button
+                    android:id="@+id/logButt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Log In"/>
+
+
+                <Button
+                    android:id="@+id/signButt"
+                    android:layout_width="191dp"
+                    android:layout_height="48dp"
+                    android:text="Sign Up" />
+
             </TableRow>
 
             <TableRow
