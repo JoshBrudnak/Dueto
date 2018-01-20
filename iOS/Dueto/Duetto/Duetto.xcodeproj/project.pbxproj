@@ -1,0 +1,609 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A17169D200FFC9300DE6F36 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A17169C200FFC9300DE6F36 /* AppDelegate.swift */; };
+		2A1716A0200FFC9300DE6F36 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A17169F200FFC9300DE6F36 /* Model.swift */; };
+		2A1716A2200FFC9300DE6F36 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716A1200FFC9300DE6F36 /* Data.swift */; };
+		2A1716A8200FFC9300DE6F36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716A7200FFC9300DE6F36 /* Main.storyboard */; };
+		2A1716AA200FFC9300DE6F36 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716A9200FFC9300DE6F36 /* TableViewCell.swift */; };
+		2A1716AD200FFC9300DE6F36 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716AC200FFC9300DE6F36 /* ViewController.swift */; };
+		2A1716AF200FFC9300DE6F36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716AE200FFC9300DE6F36 /* Assets.xcassets */; };
+		2A1716B2200FFC9300DE6F36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716B0200FFC9300DE6F36 /* LaunchScreen.storyboard */; };
+		2A1716BD200FFC9300DE6F36 /* DuettoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716BC200FFC9300DE6F36 /* DuettoTests.swift */; };
+		2A1716C8200FFC9300DE6F36 /* DuettoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716C7200FFC9300DE6F36 /* DuettoUITests.swift */; };
+		2A1716D720100F5A00DE6F36 /* DesignableX in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716D620100F5A00DE6F36 /* DesignableX */; };
+		2A1716E120105D1800DE6F36 /* UIButtonX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E020105D1800DE6F36 /* UIButtonX.swift */; };
+		2A1716E32010EA9C00DE6F36 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */; };
+		2A1716E52011550000DE6F36 /* UIViewX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E42011550000DE6F36 /* UIViewX.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2A1716B9200FFC9300DE6F36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A171691200FFC9200DE6F36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A171698200FFC9200DE6F36;
+			remoteInfo = Duetto;
+		};
+		2A1716C4200FFC9300DE6F36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A171691200FFC9200DE6F36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A171698200FFC9200DE6F36;
+			remoteInfo = Duetto;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2A171699200FFC9200DE6F36 /* Duetto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Duetto.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A17169C200FFC9300DE6F36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2A17169F200FFC9300DE6F36 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		2A1716A1200FFC9300DE6F36 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		2A1716A7200FFC9300DE6F36 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		2A1716A9200FFC9300DE6F36 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		2A1716AC200FFC9300DE6F36 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2A1716AE200FFC9300DE6F36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2A1716B1200FFC9300DE6F36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2A1716B3200FFC9300DE6F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A1716B8200FFC9300DE6F36 /* DuettoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuettoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A1716BC200FFC9300DE6F36 /* DuettoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuettoTests.swift; sourceTree = "<group>"; };
+		2A1716BE200FFC9300DE6F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A1716C3200FFC9300DE6F36 /* DuettoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuettoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A1716C7200FFC9300DE6F36 /* DuettoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuettoUITests.swift; sourceTree = "<group>"; };
+		2A1716C9200FFC9300DE6F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A1716D620100F5A00DE6F36 /* DesignableX */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DesignableX; path = "../../../../../../../Downloads/DesignableX-master/DesignableXTesting/DesignableXTesting/DesignableX"; sourceTree = "<group>"; };
+		2A1716E020105D1800DE6F36 /* UIButtonX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonX.swift; sourceTree = "<group>"; };
+		2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
+		2A1716E42011550000DE6F36 /* UIViewX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewX.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A171696200FFC9200DE6F36 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A1716B5200FFC9300DE6F36 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A1716C0200FFC9300DE6F36 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A171690200FFC9200DE6F36 = {
+			isa = PBXGroup;
+			children = (
+				2A17169B200FFC9300DE6F36 /* Duetto */,
+				2A1716BB200FFC9300DE6F36 /* DuettoTests */,
+				2A1716C6200FFC9300DE6F36 /* DuettoUITests */,
+				2A17169A200FFC9200DE6F36 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2A17169A200FFC9200DE6F36 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A171699200FFC9200DE6F36 /* Duetto.app */,
+				2A1716B8200FFC9300DE6F36 /* DuettoTests.xctest */,
+				2A1716C3200FFC9300DE6F36 /* DuettoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A17169B200FFC9300DE6F36 /* Duetto */ = {
+			isa = PBXGroup;
+			children = (
+				2A1716D520100F4500DE6F36 /* Resources */,
+				2A1716B3200FFC9300DE6F36 /* Info.plist */,
+				2A17169E200FFC9300DE6F36 /* Model */,
+				2A1716A6200FFC9300DE6F36 /* View */,
+				2A1716AB200FFC9300DE6F36 /* Controller */,
+			);
+			path = Duetto;
+			sourceTree = "<group>";
+		};
+		2A17169E200FFC9300DE6F36 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2A17169F200FFC9300DE6F36 /* Model.swift */,
+				2A1716A1200FFC9300DE6F36 /* Data.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2A1716A6200FFC9300DE6F36 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2A1716E020105D1800DE6F36 /* UIButtonX.swift */,
+				2A1716A7200FFC9300DE6F36 /* Main.storyboard */,
+				2A1716A9200FFC9300DE6F36 /* TableViewCell.swift */,
+				2A1716B0200FFC9300DE6F36 /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2A1716AB200FFC9300DE6F36 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A1716AC200FFC9300DE6F36 /* ViewController.swift */,
+				2A17169C200FFC9300DE6F36 /* AppDelegate.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2A1716BB200FFC9300DE6F36 /* DuettoTests */ = {
+			isa = PBXGroup;
+			children = (
+				2A1716BC200FFC9300DE6F36 /* DuettoTests.swift */,
+				2A1716BE200FFC9300DE6F36 /* Info.plist */,
+			);
+			path = DuettoTests;
+			sourceTree = "<group>";
+		};
+		2A1716C6200FFC9300DE6F36 /* DuettoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2A1716C7200FFC9300DE6F36 /* DuettoUITests.swift */,
+				2A1716C9200FFC9300DE6F36 /* Info.plist */,
+			);
+			path = DuettoUITests;
+			sourceTree = "<group>";
+		};
+		2A1716D520100F4500DE6F36 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A1716E42011550000DE6F36 /* UIViewX.swift */,
+				2A1716AE200FFC9300DE6F36 /* Assets.xcassets */,
+				2A1716D620100F5A00DE6F36 /* DesignableX */,
+				2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2A171698200FFC9200DE6F36 /* Duetto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A1716CC200FFC9300DE6F36 /* Build configuration list for PBXNativeTarget "Duetto" */;
+			buildPhases = (
+				2A171695200FFC9200DE6F36 /* Sources */,
+				2A171696200FFC9200DE6F36 /* Frameworks */,
+				2A171697200FFC9200DE6F36 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Duetto;
+			productName = Duetto;
+			productReference = 2A171699200FFC9200DE6F36 /* Duetto.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2A1716B7200FFC9300DE6F36 /* DuettoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A1716CF200FFC9300DE6F36 /* Build configuration list for PBXNativeTarget "DuettoTests" */;
+			buildPhases = (
+				2A1716B4200FFC9300DE6F36 /* Sources */,
+				2A1716B5200FFC9300DE6F36 /* Frameworks */,
+				2A1716B6200FFC9300DE6F36 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A1716BA200FFC9300DE6F36 /* PBXTargetDependency */,
+			);
+			name = DuettoTests;
+			productName = DuettoTests;
+			productReference = 2A1716B8200FFC9300DE6F36 /* DuettoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2A1716C2200FFC9300DE6F36 /* DuettoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A1716D2200FFC9300DE6F36 /* Build configuration list for PBXNativeTarget "DuettoUITests" */;
+			buildPhases = (
+				2A1716BF200FFC9300DE6F36 /* Sources */,
+				2A1716C0200FFC9300DE6F36 /* Frameworks */,
+				2A1716C1200FFC9300DE6F36 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A1716C5200FFC9300DE6F36 /* PBXTargetDependency */,
+			);
+			name = DuettoUITests;
+			productName = DuettoUITests;
+			productReference = 2A1716C3200FFC9300DE6F36 /* DuettoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A171691200FFC9200DE6F36 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Lily Suau";
+				TargetAttributes = {
+					2A171698200FFC9200DE6F36 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					2A1716B7200FFC9300DE6F36 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 2A171698200FFC9200DE6F36;
+					};
+					2A1716C2200FFC9300DE6F36 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 2A171698200FFC9200DE6F36;
+					};
+				};
+			};
+			buildConfigurationList = 2A171694200FFC9200DE6F36 /* Build configuration list for PBXProject "Duetto" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2A171690200FFC9200DE6F36;
+			productRefGroup = 2A17169A200FFC9200DE6F36 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2A171698200FFC9200DE6F36 /* Duetto */,
+				2A1716B7200FFC9300DE6F36 /* DuettoTests */,
+				2A1716C2200FFC9300DE6F36 /* DuettoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2A171697200FFC9200DE6F36 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1716B2200FFC9300DE6F36 /* LaunchScreen.storyboard in Resources */,
+				2A1716D720100F5A00DE6F36 /* DesignableX in Resources */,
+				2A1716AF200FFC9300DE6F36 /* Assets.xcassets in Resources */,
+				2A1716A8200FFC9300DE6F36 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A1716B6200FFC9300DE6F36 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A1716C1200FFC9300DE6F36 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A171695200FFC9200DE6F36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1716AD200FFC9300DE6F36 /* ViewController.swift in Sources */,
+				2A1716E52011550000DE6F36 /* UIViewX.swift in Sources */,
+				2A17169D200FFC9300DE6F36 /* AppDelegate.swift in Sources */,
+				2A1716E32010EA9C00DE6F36 /* FloatingActionButton.swift in Sources */,
+				2A1716E120105D1800DE6F36 /* UIButtonX.swift in Sources */,
+				2A1716AA200FFC9300DE6F36 /* TableViewCell.swift in Sources */,
+				2A1716A2200FFC9300DE6F36 /* Data.swift in Sources */,
+				2A1716A0200FFC9300DE6F36 /* Model.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A1716B4200FFC9300DE6F36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1716BD200FFC9300DE6F36 /* DuettoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A1716BF200FFC9300DE6F36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1716C8200FFC9300DE6F36 /* DuettoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2A1716BA200FFC9300DE6F36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A171698200FFC9200DE6F36 /* Duetto */;
+			targetProxy = 2A1716B9200FFC9300DE6F36 /* PBXContainerItemProxy */;
+		};
+		2A1716C5200FFC9300DE6F36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A171698200FFC9200DE6F36 /* Duetto */;
+			targetProxy = 2A1716C4200FFC9300DE6F36 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2A1716B0200FFC9300DE6F36 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A1716B1200FFC9300DE6F36 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2A1716CA200FFC9300DE6F36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2A1716CB200FFC9300DE6F36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2A1716CD200FFC9300DE6F36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Duetto/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Dueto.Duetto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2A1716CE200FFC9300DE6F36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Duetto/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Dueto.Duetto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2A1716D0200FFC9300DE6F36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DuettoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Dueto.DuettoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Duetto.app/Duetto";
+			};
+			name = Debug;
+		};
+		2A1716D1200FFC9300DE6F36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DuettoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Dueto.DuettoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Duetto.app/Duetto";
+			};
+			name = Release;
+		};
+		2A1716D3200FFC9300DE6F36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DuettoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Dueto.DuettoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Duetto;
+			};
+			name = Debug;
+		};
+		2A1716D4200FFC9300DE6F36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DuettoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Dueto.DuettoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Duetto;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2A171694200FFC9200DE6F36 /* Build configuration list for PBXProject "Duetto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A1716CA200FFC9300DE6F36 /* Debug */,
+				2A1716CB200FFC9300DE6F36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A1716CC200FFC9300DE6F36 /* Build configuration list for PBXNativeTarget "Duetto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A1716CD200FFC9300DE6F36 /* Debug */,
+				2A1716CE200FFC9300DE6F36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A1716CF200FFC9300DE6F36 /* Build configuration list for PBXNativeTarget "DuettoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A1716D0200FFC9300DE6F36 /* Debug */,
+				2A1716D1200FFC9300DE6F36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A1716D2200FFC9300DE6F36 /* Build configuration list for PBXNativeTarget "DuettoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A1716D3200FFC9300DE6F36 /* Debug */,
+				2A1716D4200FFC9300DE6F36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A171691200FFC9200DE6F36 /* Project object */;
+}

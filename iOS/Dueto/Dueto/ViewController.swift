@@ -17,6 +17,9 @@ struct cellData {
 
 class TableViewController: UITableViewController {
     
+    
+    
+    
     var arrayOfCellData = [cellData]()
     
     override func viewDidLoad() {

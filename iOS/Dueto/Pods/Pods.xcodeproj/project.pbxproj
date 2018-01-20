@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,7 +41,7 @@
 /* Begin PBXFileReference section */
 		00B6F74A227EFEB8F51EB8BB9A96ABE8 /* Pods-DuetoUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoUITests-frameworks.sh"; sourceTree = "<group>"; };
 		054BD4DC37FF4A95465997D64A40D97E /* Pods-Dueto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Dueto.release.xcconfig"; sourceTree = "<group>"; };
-		122757C34B9B04460501E126C9358858 /* Pods-DuetoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DuetoTests.modulemap"; sourceTree = "<group>"; };
+		122757C34B9B04460501E126C9358858 /* Pods-DuetoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DuetoTests.modulemap"; sourceTree = "<group>"; };
 		1B1A63293C116C441198EB6ED41C9E7F /* Pods-Dueto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Dueto.debug.xcconfig"; sourceTree = "<group>"; };
 		2438FB1FAAF0D87C395A8BD285DFF816 /* Pods-DuetoUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DuetoUITests-dummy.m"; sourceTree = "<group>"; };
 		2695CDB98473BC97755503203E096017 /* Pods-Dueto-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Dueto-umbrella.h"; sourceTree = "<group>"; };
@@ -49,29 +49,29 @@
 		2CEAACC86D6F06CD34E93CA595B93CBD /* Floaty-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Floaty-prefix.pch"; sourceTree = "<group>"; };
 		34068DE07EEF2DFBCCFAAA54BEDEAFFA /* FloatyDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyDelegate.swift; path = Sources/FloatyDelegate.swift; sourceTree = "<group>"; };
 		3C0000B7196AD06D75A36DC68D43DC06 /* Pods-DuetoTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoTests-resources.sh"; sourceTree = "<group>"; };
-		3F5F3AB5ADAFB42AA1AD5C073B1CA46F /* Pods_DuetoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DuetoUITests.framework; path = "Pods-DuetoUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		452388D7F757EB3FE6CF160BC9562C63 /* Pods_DuetoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DuetoTests.framework; path = "Pods-DuetoTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4BAB6A0FC3ED99F8FD52D0D4B5E4BBF3 /* Floaty.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Floaty.modulemap; sourceTree = "<group>"; };
+		3F5F3AB5ADAFB42AA1AD5C073B1CA46F /* Pods_DuetoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DuetoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		452388D7F757EB3FE6CF160BC9562C63 /* Pods_DuetoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DuetoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BAB6A0FC3ED99F8FD52D0D4B5E4BBF3 /* Floaty.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Floaty.modulemap; sourceTree = "<group>"; };
 		4E8871170653C5CCA3FEEADEAD32D666 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5502EC91B558CEF2AD7B04BDCF675B8B /* Pods-Dueto-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Dueto-dummy.m"; sourceTree = "<group>"; };
 		561E3E12F09C8B59C4DD92A463D0C2D7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5627564CAE6F4B4A25F72E19A9CCE3CE /* Pods-DuetoTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DuetoTests-dummy.m"; sourceTree = "<group>"; };
-		58A149D9A84DFFD35151086073414AD1 /* Pods-DuetoUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DuetoUITests.modulemap"; sourceTree = "<group>"; };
-		6799CD380C4A4B990B767B5A453182CE /* Pods-Dueto.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Dueto.modulemap"; sourceTree = "<group>"; };
+		58A149D9A84DFFD35151086073414AD1 /* Pods-DuetoUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DuetoUITests.modulemap"; sourceTree = "<group>"; };
+		6799CD380C4A4B990B767B5A453182CE /* Pods-Dueto.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Dueto.modulemap"; sourceTree = "<group>"; };
 		68476F9B1E02EDABC3F62BEF2754AE99 /* FloatyManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyManager.swift; path = Sources/FloatyManager.swift; sourceTree = "<group>"; };
 		70A128F5EFC2C40580FBD5A78F5D7CE6 /* Pods-DuetoUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DuetoUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		75778D05D046F1BF6146864078BB9772 /* Pods-DuetoUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoUITests-resources.sh"; sourceTree = "<group>"; };
 		81ED7454675F26EE75E48C4DA9FC6AB1 /* Pods-Dueto-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Dueto-acknowledgements.markdown"; sourceTree = "<group>"; };
 		8213CE4FFB272E989B68B1CF1AAAA05E /* Pods-DuetoUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DuetoUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		85F97F3C15A680DDCF1BC6519F28ACAB /* Pods_Dueto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Dueto.framework; path = "Pods-Dueto.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		85F97F3C15A680DDCF1BC6519F28ACAB /* Pods_Dueto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dueto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		889A2994A4B3A55044B7207011A9F49F /* Pods-Dueto-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Dueto-frameworks.sh"; sourceTree = "<group>"; };
 		8EC3AD0C1CBE1C6C92D80C17DB3F8ECA /* Pods-DuetoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DuetoTests.release.xcconfig"; sourceTree = "<group>"; };
 		923BE02117F4F33D4B34AC3CAFF59D26 /* Pods-DuetoTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DuetoTests-frameworks.sh"; sourceTree = "<group>"; };
 		9274AB238BF1E7902C7AE064D851C76C /* Pods-DuetoUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DuetoUITests-umbrella.h"; sourceTree = "<group>"; };
 		92DAE98EFAFDA2326E142452122A57A9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9FEA36A70A509FA36B3ADFBBD2664E1F /* FloatyItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FloatyItem.swift; path = Sources/FloatyItem.swift; sourceTree = "<group>"; };
-		A101713E766B4F36D5A390E5BB338028 /* Floaty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Floaty.framework; path = Floaty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A101713E766B4F36D5A390E5BB338028 /* Floaty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Floaty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8BDFDB37E18C9894CE75F89903C94C2 /* Floaty.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Floaty.xcconfig; sourceTree = "<group>"; };
 		B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		B9123F9EEB2C67287E980E6A29A22F1A /* Pods-Dueto-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Dueto-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -255,7 +255,6 @@
 				DE3D5847743F50BD3DDF8766A24DC2A3 /* FloatyWindow.swift */,
 				0B4132C375963DFF8785A0578764233A /* Support Files */,
 			);
-			name = Floaty;
 			path = Floaty;
 			sourceTree = "<group>";
 		};
@@ -381,7 +380,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0920;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -792,6 +791,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;

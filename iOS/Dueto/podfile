@@ -7,6 +7,7 @@ target 'Dueto' do
 
   # Pods for Dueto
 pod “Floaty”
+# Name of podfile once!
   target 'DuetoTests' do
     inherit! :search_paths
     # Pods for testing

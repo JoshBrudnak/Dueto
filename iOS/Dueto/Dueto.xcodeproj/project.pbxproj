@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1266AF0D6A787827A82F1860 /* Pods_Dueto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCACFC60C629572D3983E70F /* Pods_Dueto.framework */; };
 		277F509129ED965344F1775F /* Pods_DuetoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B41D943C430E911CE9F959 /* Pods_DuetoTests.framework */; };
+		2A5CA5F5200D5EC000C90ABC /* buttonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5CA5F4200D5EC000C90ABC /* buttonController.swift */; };
+		2A5CA5F7200E9D4D00C90ABC /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5CA5F6200E9D4D00C90ABC /* ViewController2.swift */; };
 		2A9A4ACF200684280051ACA8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 2A9A4ACE200684280051ACA8 /* Podfile */; };
 		2A9A4AD0200684280051ACA8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 2A9A4ACE200684280051ACA8 /* Podfile */; };
 		2A9A4AD1200684280051ACA8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 2A9A4ACE200684280051ACA8 /* Podfile */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		151D86A11EBDCD3BCC408E4E /* Pods-DuetoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DuetoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DuetoTests/Pods-DuetoTests.release.xcconfig"; sourceTree = "<group>"; };
 		28B41D943C430E911CE9F959 /* Pods_DuetoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DuetoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A5CA5F4200D5EC000C90ABC /* buttonController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonController.swift; sourceTree = "<group>"; };
+		2A5CA5F6200E9D4D00C90ABC /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		2A9A4ACE200684280051ACA8 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2AE5C5B8200964A400A44512 /* TableViewCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell1.swift; sourceTree = "<group>"; };
 		2AE5C5B9200964A400A44512 /* TableViewCell1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell1.xib; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				70EB8DB92002A196007AC8B2 /* Info.plist */,
 				2AE5C5B8200964A400A44512 /* TableViewCell1.swift */,
 				2AE5C5B9200964A400A44512 /* TableViewCell1.xib */,
+				2A5CA5F4200D5EC000C90ABC /* buttonController.swift */,
+				2A5CA5F6200E9D4D00C90ABC /* ViewController2.swift */,
 			);
 			path = Dueto;
 			sourceTree = "<group>";
@@ -479,7 +485,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A5CA5F7200E9D4D00C90ABC /* ViewController2.swift in Sources */,
 				2AE5C5BA200964A400A44512 /* TableViewCell1.swift in Sources */,
+				2A5CA5F5200D5EC000C90ABC /* buttonController.swift in Sources */,
 				70EB8DB02002A196007AC8B2 /* ViewController.swift in Sources */,
 				70EB8DAE2002A196007AC8B2 /* AppDelegate.swift in Sources */,
 			);
