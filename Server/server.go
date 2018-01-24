@@ -1,58 +1,58 @@
 package main
 
 import (
-    "fmt"
-    "os"
 	"database/sql"
 	"encoding/json"
-	"log"
-    "net/http"
+	"fmt"
+	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
-    "github.com/gorilla/mux"
+	"log"
+	"net/http"
+	"os"
 )
 
 var db *sql.DB
 
 const (
-	createArtistT = "create table if not exists Artists(id serial primary key, username text, name text, followers text, description text, date timestamp, active boolean, likeCount int);"
-	createVideoT = "create table if not exists Videos(id serial primary key, artist text, filePath text, title text, description text, time text, views int, likes int);"
-	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, message text, user text, time timestamp);"
+	createArtistT  = "create table if not exists Artists(id serial primary key, username text, name text, followers text, description text, date timestamp, active boolean, likeCount int);"
+	createVideoT   = "create table if not exists Videos(id serial primary key, artist text, filePath text, title text, description text, time text, views int, likes int);"
+	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, message text, users text, time timestamp);"
 
 	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, $4);"
-	AddArtist = "insert into Artist(username, name, followers, description, likeCount) VALUES($1, $2, $3, $4, $5);"
-	AddVideo = "insert into Videos(artist, title, desc, time, views, likes) VALUES($1, $2, $3, $4, $5, $6);"
+	AddArtist  = "insert into Artist(username, name, followers, description, likeCount) VALUES($1, $2, $3, $4, $5);"
+	AddVideo   = "insert into Videos(artist, title, desc, time, views, likes) VALUES($1, $2, $3, $4, $5, $6);"
 
-	SelectArtistData = "select username, name, followers from Artist where username = $1;"
-	SelectArtistVideos = "select fileName, title, description, views, likes from Videos where artist = $1;"
+	SelectArtistData    = "select username, name, followers from Artist where username = $1;"
+	SelectArtistVideos  = "select fileName, title, description, views, likes from Videos where artist = $1;"
 	SelectVideoComments = "select message, user, timeStamp from Comment where videoId = $1"
 )
 
 type Video struct {
-	Artist       string
-	File         string
-	Title        string
-	Desc         string
-	Tags         string
-	Genre        string
-	Likes        string
-	Views        string
-	Time         string
+	Artist string
+	File   string
+	Title  string
+	Desc   string
+	Tags   string
+	Genre  string
+	Likes  string
+	Views  string
+	Time   string
 }
 
 type Artist struct {
-	UserName       string
-	Name         string
-	Followers        string
-	Desc         string
-	Date        string
-	Active        string
-	LikeCount        string
+	UserName  string
+	Name      string
+	Followers string
+	Desc      string
+	Date      string
+	Active    string
+	LikeCount string
 }
 
 type Comment struct {
-	Message       string
-	User         string
-	Time        string
+	Message string
+	User    string
+	Time    string
 }
 
 type config struct {
@@ -63,9 +63,20 @@ type config struct {
 }
 
 func checkErr(err error) {
-  if(err != nil) {
-     panic(err)
-  }
+	if err != nil {
+		panic(err)
+	}
+}
+
+func logIfErr(err error) {
+	if err != nil {
+		log.Println(err)
+	}
+}
+
+func query(sql string) {
+	_, err := db.Query(sql)
+	checkErr(err)
 }
 
 func init() {
@@ -80,18 +91,40 @@ func init() {
 	checkErr(err)
 	db.SetMaxOpenConns(80)
 
+	query(createArtistT)
+	query(createVideoT)
+	query(createCommentT)
+
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
 }
 
 func home(http.ResponseWriter, *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+}
 
+func profile(http.ResponseWriter, *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	var a Artist
+	rows, err := db.Query(SelectArtistData)
+	checErr(err)
+	defer rows.Close()
+
+	rows.Next()
+	if err := rows.Scan(&a.ID, &a.Description, &a.Code, &a.Start, &a.End, &a.Current); err != nil {
+		logIfErr(err)
+	}
+
+	if err := json.NewEncoder(w).Encode(course); err != nil {
+		panic(err)
+	}
 }
 
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/api/home", home)
-	r.HandleFunc("/api/profile", home)
+	r.HandleFunc("/api/profile", profile)
 	http.Handle("/", r)
 	http.ListenAndServe(":8082", nil)
 }
