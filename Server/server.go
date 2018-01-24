@@ -15,7 +15,7 @@ var db *sql.DB
 
 const (
 	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, followers text, description text, date timestamp, active boolean, likeCount int);"
-	createVideoT   = "create table if not exists Video(id serial primary key, artist text, filePath text, title text, description text, time text, views int, likes int);"
+	createVideoT   = "create table if not exists Video(id serial primary key, artist text, filePath text, title text, description text, time text, views int, likes int, genre text);"
 	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, message text, users text, time timestamp);"
 
 	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, $4);"
@@ -25,6 +25,8 @@ const (
 	SelectArtistData    = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
 	SelectArtistVideos  = "select fileName, title, description, views, likes from Videos where artist = $1;"
 	SelectVideoComments = "select message, user, timeStamp from Comment where videoId = $1"
+	SelectVideosByGenre = "select artist, filePath, title, description, views, likeCount, date from Video where genre = $1"
+	SelectVideosByArtist = "select filePath, title, description, views, likeCount, date, genre from Video where artist = $1"
 )
 
 type Video struct {
@@ -97,17 +99,15 @@ func init() {
 
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
-}
-
-func home(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+    fmt.Println("Server started ...")
 }
 
 func profile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+    username := r.URL.Query().Get("name")
 
 	var a Artist
-	rows, err := db.Query(SelectArtistData, "burtonBurton")
+	rows, err := db.Query(SelectArtistData, username)
 	checkErr(err)
 	defer rows.Close()
 
@@ -117,7 +117,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(a); err != nil {
-		panic(err)
+		logIfErr(err)
 	}
 }
 
