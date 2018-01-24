@@ -17,13 +17,13 @@
 		2A1716B2200FFC9300DE6F36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716B0200FFC9300DE6F36 /* LaunchScreen.storyboard */; };
 		2A1716BD200FFC9300DE6F36 /* DuettoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716BC200FFC9300DE6F36 /* DuettoTests.swift */; };
 		2A1716C8200FFC9300DE6F36 /* DuettoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716C7200FFC9300DE6F36 /* DuettoUITests.swift */; };
-		2A1716D720100F5A00DE6F36 /* DesignableX in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716D620100F5A00DE6F36 /* DesignableX */; };
 		2A1716E120105D1800DE6F36 /* UIButtonX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E020105D1800DE6F36 /* UIButtonX.swift */; };
 		2A1716E32010EA9C00DE6F36 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */; };
 		2A1716E52011550000DE6F36 /* UIViewX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E42011550000DE6F36 /* UIViewX.swift */; };
 		2A1716E82012F1F400DE6F36 /* NotificationsControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E62012F1F400DE6F36 /* NotificationsControl.swift */; };
 		2A1716E92012F1F400DE6F36 /* NotificationsControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716E72012F1F400DE6F36 /* NotificationsControl.xib */; };
 		2A1716EB20144DDE00DE6F36 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716EA20144DDE00DE6F36 /* CameraController.swift */; };
+		70305306201904E300E63501 /* DesignableX in Resources */ = {isa = PBXBuildFile; fileRef = 70305305201904E300E63501 /* DesignableX */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,13 +60,13 @@
 		2A1716C3200FFC9300DE6F36 /* DuettoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuettoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1716C7200FFC9300DE6F36 /* DuettoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuettoUITests.swift; sourceTree = "<group>"; };
 		2A1716C9200FFC9300DE6F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2A1716D620100F5A00DE6F36 /* DesignableX */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DesignableX; path = "../../../../../../../Downloads/DesignableX-master/DesignableXTesting/DesignableXTesting/DesignableX"; sourceTree = "<group>"; };
 		2A1716E020105D1800DE6F36 /* UIButtonX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonX.swift; sourceTree = "<group>"; };
 		2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		2A1716E42011550000DE6F36 /* UIViewX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewX.swift; sourceTree = "<group>"; };
 		2A1716E62012F1F400DE6F36 /* NotificationsControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsControl.swift; sourceTree = "<group>"; };
 		2A1716E72012F1F400DE6F36 /* NotificationsControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationsControl.xib; sourceTree = "<group>"; };
 		2A1716EA20144DDE00DE6F36 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		70305305201904E300E63501 /* DesignableX */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DesignableX; path = ../../DesignableX; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +181,7 @@
 			children = (
 				2A1716E42011550000DE6F36 /* UIViewX.swift */,
 				2A1716AE200FFC9300DE6F36 /* Assets.xcassets */,
-				2A1716D620100F5A00DE6F36 /* DesignableX */,
+				70305305201904E300E63501 /* DesignableX */,
 				2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */,
 			);
 			name = Resources;
@@ -295,8 +295,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A1716B2200FFC9300DE6F36 /* LaunchScreen.storyboard in Resources */,
+				70305306201904E300E63501 /* DesignableX in Resources */,
 				2A1716E92012F1F400DE6F36 /* NotificationsControl.xib in Resources */,
-				2A1716D720100F5A00DE6F36 /* DesignableX in Resources */,
 				2A1716AF200FFC9300DE6F36 /* Assets.xcassets in Resources */,
 				2A1716A8200FFC9300DE6F36 /* Main.storyboard in Resources */,
 			);
