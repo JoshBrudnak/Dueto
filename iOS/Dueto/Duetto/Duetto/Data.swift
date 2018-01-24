@@ -10,7 +10,7 @@ class Data {
     static func getData(completion: @escaping ([Model]) -> ()) {
         DispatchQueue.global(qos: .userInteractive).async {
             var data = [Model]()
-            data.append(Model(title: "Title", subTitle: "Subtitle", image: nil))
+            data.append(Model(title: "Title", subTitle: "Subtitle", image: #imageLiteral(resourceName: "piano")))
             
             DispatchQueue.main.async {
                 completion(data)
