@@ -14,15 +14,15 @@ import (
 var db *sql.DB
 
 const (
-	createArtistT  = "create table if not exists Artists(id serial primary key, username text, name text, followers text, description text, date timestamp, active boolean, likeCount int);"
-	createVideoT   = "create table if not exists Videos(id serial primary key, artist text, filePath text, title text, description text, time text, views int, likes int);"
+	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, followers text, description text, date timestamp, active boolean, likeCount int);"
+	createVideoT   = "create table if not exists Video(id serial primary key, artist text, filePath text, title text, description text, time text, views int, likes int);"
 	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, message text, users text, time timestamp);"
 
 	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, $4);"
 	AddArtist  = "insert into Artist(username, name, followers, description, likeCount) VALUES($1, $2, $3, $4, $5);"
 	AddVideo   = "insert into Videos(artist, title, desc, time, views, likes) VALUES($1, $2, $3, $4, $5, $6);"
 
-	SelectArtistData    = "select username, name, followers from Artist where username = $1;"
+	SelectArtistData    = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
 	SelectArtistVideos  = "select fileName, title, description, views, likes from Videos where artist = $1;"
 	SelectVideoComments = "select message, user, timeStamp from Comment where videoId = $1"
 )
@@ -99,24 +99,24 @@ func init() {
 	log.SetOutput(f)
 }
 
-func home(http.ResponseWriter, *http.Request) {
+func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-func profile(http.ResponseWriter, *http.Request) {
+func profile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	var a Artist
-	rows, err := db.Query(SelectArtistData)
-	checErr(err)
+	rows, err := db.Query(SelectArtistData, "burtonBurton")
+	checkErr(err)
 	defer rows.Close()
 
 	rows.Next()
-	if err := rows.Scan(&a.ID, &a.Description, &a.Code, &a.Start, &a.End, &a.Current); err != nil {
+	if err := rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount); err != nil {
 		logIfErr(err)
 	}
 
-	if err := json.NewEncoder(w).Encode(course); err != nil {
+	if err := json.NewEncoder(w).Encode(a); err != nil {
 		panic(err)
 	}
 }
