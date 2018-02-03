@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 
 public class MainActivity extends Activity {
 
     private Button LogIn;
     private Button SignIn;
+    private Button Notifications;
     private int bVisibility = View.INVISIBLE;
     private boolean scrollable = true; //Scroll always
     @Override
@@ -29,6 +28,7 @@ public class MainActivity extends Activity {
 
         LogIn = (Button)findViewById(R.id.logButt); //the sign-in + log-in buttons on the Main page
         SignIn = (Button)findViewById(R.id.signButt);
+        Notifications = (Button)findViewById(R.id.tabButt);
 
         LogIn.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
             @Override
@@ -41,6 +41,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SigninActivity.class));
+            }
+        });
+
+        Notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TimelineActivity.class));
             }
         });
 

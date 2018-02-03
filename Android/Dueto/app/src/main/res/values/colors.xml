@@ -4,4 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="test">#FFDD00</color>
+    <color name="LightPink">#ffe6e6</color>
+    <color name="Pink">#ffcccc</color>
+    <color name="DarkPink">#ff9999</color>
+    <color name="White">#ffffff</color>
+    <color name="Gray">#8B8B95</color>
+    <color name="Black">#000000</color>
+    <color name="Red">#b30000</color>
 </resources>

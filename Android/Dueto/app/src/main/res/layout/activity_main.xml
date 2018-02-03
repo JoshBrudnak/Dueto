@@ -15,7 +15,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -55,15 +55,20 @@
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/logButt"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tabButt"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="Log In"/>
+                    android:text="Notifications" />
 
+                <Button
+                    android:id="@+id/logButt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Log In" />
 
                 <Button
                     android:id="@+id/signButt"
-                    android:layout_width="191dp"
+                    android:layout_width="100dp"
                     android:layout_height="48dp"
                     android:text="Sign Up" />
 
@@ -197,5 +202,6 @@
         app:layout_constraintStart_toEndOf="@+id/cameraButton"
         app:layout_constraintTop_toBottomOf="@+id/homeButton"
         app:layout_constraintVertical_bias="0.0" />
+
 
 </android.support.constraint.ConstraintLayout>
