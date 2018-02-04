@@ -83,10 +83,10 @@
                 android:text="Attempts Remaining: 3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logButt"
-                app:layout_constraintVertical_bias="0.176" />
+                app:layout_constraintTop_toBottomOf="@+id/passText"
+                app:layout_constraintVertical_bias="0.0" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

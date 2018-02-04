@@ -22,10 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SigninActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".SigninActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".TimelineActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
     </application>
 

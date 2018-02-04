@@ -11,4 +11,15 @@
         android:textSize="25sp"
         android:text="Messages..."
         android:layout_marginTop="40dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 </RelativeLayout>
