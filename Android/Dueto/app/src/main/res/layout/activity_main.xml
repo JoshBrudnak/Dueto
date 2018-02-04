@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constrLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dueto.dueto.MainActivity">
@@ -25,7 +26,7 @@
             android:id="@+id/homeTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/menuBG"
             android:stretchColumns="1">
 
             <TableRow
@@ -94,114 +95,105 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/menuButton"
-        android:layout_width="112dp"
-        android:layout_height="114dp"
+        android:layout_width="64dp"
+        android:layout_height="65dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:backgroundTint="@android:color/holo_blue_bright"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@android:color/transparent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/messagesButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/ic_dialog_info"
-        app:layout_constraintEnd_toStartOf="@+id/homeButton"
-        app:layout_constraintStart_toEndOf="@+id/discoverButton"
-        app:layout_constraintTop_toTopOf="@+id/sView" />
+    <RelativeLayout
+        android:id="@+id/relLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/discoverButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toStartOf="@+id/cameraButton"
-        app:layout_constraintStart_toStartOf="@+id/sView"
-        app:layout_constraintTop_toBottomOf="@+id/messagesButton" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/cameraButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/btn_star_big_off"
+            app:backgroundTint="@android:color/transparent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/homeButton"
-        android:layout_width="80dp"
-        android:layout_height="81dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/btn_star_big_on"
-        app:layout_constraintEnd_toEndOf="@+id/sView"
-        app:layout_constraintStart_toEndOf="@+id/cameraButton"
-        app:layout_constraintTop_toBottomOf="@+id/messagesButton" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/discoverButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/coopButton"
+            android:layout_toEndOf="@+id/cameraButton"
+            android:layout_toRightOf="@+id/cameraButton"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_launcher"
+            app:backgroundTint="@android:color/transparent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cameraButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/btn_star_big_off"
-        app:layout_constraintBottom_toBottomOf="@+id/sView"
-        app:layout_constraintEnd_toEndOf="@+id/sView"
-        app:layout_constraintStart_toStartOf="@+id/sView"
-        app:layout_constraintTop_toBottomOf="@+id/messagesButton"
-        app:layout_constraintVertical_bias="0.0" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/profileButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/cameraButton"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/cameraButton"
+            android:layout_toStartOf="@+id/cameraButton"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/ic_delete"
+            app:backgroundTint="@android:color/transparent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/profileButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginLeft="128dp"
-        android:layout_marginTop="32dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/ic_delete"
-        app:layout_constraintBottom_toBottomOf="@+id/sView"
-        app:layout_constraintEnd_toStartOf="@+id/cameraButton"
-        app:layout_constraintStart_toStartOf="@+id/sView"
-        app:layout_constraintTop_toBottomOf="@+id/discoverButton"
-        app:layout_constraintVertical_bias="0.0" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/homeButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_above="@+id/cameraButton"
+            android:layout_alignLeft="@+id/cameraButton"
+            android:layout_alignStart="@+id/cameraButton"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/btn_star_big_on"
+            app:backgroundTint="@android:color/transparent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/coopButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginRight="128dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/ic_menu_recent_history"
-        app:layout_constraintBottom_toBottomOf="@+id/sView"
-        app:layout_constraintEnd_toEndOf="@+id/sView"
-        app:layout_constraintStart_toEndOf="@+id/cameraButton"
-        app:layout_constraintTop_toBottomOf="@+id/homeButton"
-        app:layout_constraintVertical_bias="0.0" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/messagesButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/cameraButton"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/cameraButton"
+            android:layout_toRightOf="@+id/cameraButton"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/ic_dialog_info"
+            app:backgroundTint="@android:color/transparent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/coopButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/profileButton"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@+id/cameraButton"
+            android:layout_toStartOf="@+id/cameraButton"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/ic_menu_recent_history"
+            app:backgroundTint="@android:color/transparent" />
+
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>
