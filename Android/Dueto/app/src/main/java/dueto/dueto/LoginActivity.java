@@ -2,6 +2,7 @@ package dueto.dueto;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validID(String userName, String userPass) {
         if((userName.equals("Admin")) && (userPass.equals("1234"))) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, TimelineActivity.class);
             startActivity(intent);
         }
         else {

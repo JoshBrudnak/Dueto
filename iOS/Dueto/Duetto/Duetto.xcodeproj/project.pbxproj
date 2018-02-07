@@ -20,10 +20,13 @@
 		2A1716E120105D1800DE6F36 /* UIButtonX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E020105D1800DE6F36 /* UIButtonX.swift */; };
 		2A1716E32010EA9C00DE6F36 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */; };
 		2A1716E52011550000DE6F36 /* UIViewX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E42011550000DE6F36 /* UIViewX.swift */; };
-		2A1716E82012F1F400DE6F36 /* NotificationsControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716E62012F1F400DE6F36 /* NotificationsControl.swift */; };
-		2A1716E92012F1F400DE6F36 /* NotificationsControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716E72012F1F400DE6F36 /* NotificationsControl.xib */; };
 		2A1716EB20144DDE00DE6F36 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1716EA20144DDE00DE6F36 /* CameraController.swift */; };
 		2A1716ED2019099D00DE6F36 /* DesignableX in Resources */ = {isa = PBXBuildFile; fileRef = 2A1716EC2019099C00DE6F36 /* DesignableX */; };
+		70305308201915C300E63501 /* LoginRegister.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70305307201915C300E63501 /* LoginRegister.storyboard */; };
+		7030530C201916BB00E63501 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030530B201916BB00E63501 /* LoginController.swift */; };
+		7030530E20224A1B00E63501 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030530D20224A1B00E63501 /* RegistrationController.swift */; };
+		703053112027718600E63501 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703053102027718600E63501 /* CameraViewController.swift */; };
+		70305315202773EF00E63501 /* CameraStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70305314202773EF00E63501 /* CameraStoryboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,10 +66,13 @@
 		2A1716E020105D1800DE6F36 /* UIButtonX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonX.swift; sourceTree = "<group>"; };
 		2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		2A1716E42011550000DE6F36 /* UIViewX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewX.swift; sourceTree = "<group>"; };
-		2A1716E62012F1F400DE6F36 /* NotificationsControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsControl.swift; sourceTree = "<group>"; };
-		2A1716E72012F1F400DE6F36 /* NotificationsControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationsControl.xib; sourceTree = "<group>"; };
 		2A1716EA20144DDE00DE6F36 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		2A1716EC2019099C00DE6F36 /* DesignableX */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DesignableX; sourceTree = "<group>"; };
+		70305307201915C300E63501 /* LoginRegister.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegister.storyboard; sourceTree = "<group>"; };
+		7030530B201916BB00E63501 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		7030530D20224A1B00E63501 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		703053102027718600E63501 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		70305314202773EF00E63501 /* CameraStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraStoryboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,8 +137,6 @@
 			children = (
 				2A17169F200FFC9300DE6F36 /* Model.swift */,
 				2A1716A1200FFC9300DE6F36 /* Data.swift */,
-				2A1716E62012F1F400DE6F36 /* NotificationsControl.swift */,
-				2A1716E72012F1F400DE6F36 /* NotificationsControl.xib */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -144,6 +148,7 @@
 				2A1716A7200FFC9300DE6F36 /* Main.storyboard */,
 				2A1716A9200FFC9300DE6F36 /* TableViewCell.swift */,
 				2A1716B0200FFC9300DE6F36 /* LaunchScreen.storyboard */,
+				70305307201915C300E63501 /* LoginRegister.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -154,6 +159,9 @@
 				2A1716AC200FFC9300DE6F36 /* ViewController.swift */,
 				2A17169C200FFC9300DE6F36 /* AppDelegate.swift */,
 				2A1716EA20144DDE00DE6F36 /* CameraController.swift */,
+				7030530B201916BB00E63501 /* LoginController.swift */,
+				7030530D20224A1B00E63501 /* RegistrationController.swift */,
+				7030530F202770CB00E63501 /* Camera */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -185,6 +193,15 @@
 				2A1716E22010EA9C00DE6F36 /* FloatingActionButton.swift */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		7030530F202770CB00E63501 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				703053102027718600E63501 /* CameraViewController.swift */,
+				70305314202773EF00E63501 /* CameraStoryboard.storyboard */,
+			);
+			name = Camera;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,8 +312,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A1716B2200FFC9300DE6F36 /* LaunchScreen.storyboard in Resources */,
+				70305308201915C300E63501 /* LoginRegister.storyboard in Resources */,
+				70305315202773EF00E63501 /* CameraStoryboard.storyboard in Resources */,
 				2A1716ED2019099D00DE6F36 /* DesignableX in Resources */,
-				2A1716E92012F1F400DE6F36 /* NotificationsControl.xib in Resources */,
 				2A1716AF200FFC9300DE6F36 /* Assets.xcassets in Resources */,
 				2A1716A8200FFC9300DE6F36 /* Main.storyboard in Resources */,
 			);
@@ -323,15 +341,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7030530C201916BB00E63501 /* LoginController.swift in Sources */,
 				2A1716AD200FFC9300DE6F36 /* ViewController.swift in Sources */,
-				2A1716E82012F1F400DE6F36 /* NotificationsControl.swift in Sources */,
 				2A1716E52011550000DE6F36 /* UIViewX.swift in Sources */,
 				2A17169D200FFC9300DE6F36 /* AppDelegate.swift in Sources */,
 				2A1716EB20144DDE00DE6F36 /* CameraController.swift in Sources */,
+				703053112027718600E63501 /* CameraViewController.swift in Sources */,
 				2A1716E32010EA9C00DE6F36 /* FloatingActionButton.swift in Sources */,
 				2A1716E120105D1800DE6F36 /* UIButtonX.swift in Sources */,
 				2A1716AA200FFC9300DE6F36 /* TableViewCell.swift in Sources */,
 				2A1716A2200FFC9300DE6F36 /* Data.swift in Sources */,
+				7030530E20224A1B00E63501 /* RegistrationController.swift in Sources */,
 				2A1716A0200FFC9300DE6F36 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
