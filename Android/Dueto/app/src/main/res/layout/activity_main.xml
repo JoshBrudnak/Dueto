@@ -57,7 +57,7 @@
 
                 <Button
                     android:id="@+id/tabButt"
-                    android:layout_width="100dp"
+                    android:layout_width="192dp"
                     android:layout_height="wrap_content"
                     android:text="Notifications" />
 
@@ -99,13 +99,14 @@
         android:layout_height="65dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        app:backgroundTint="@android:color/holo_blue_bright"
+        android:src="@drawable/menu"
+        app:backgroundTint="@color/White"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="@android:color/transparent" />
+        app:rippleColor="@android:color/black" />
 
     <RelativeLayout
         android:id="@+id/relLayout"
@@ -113,8 +114,10 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/cameraButton"
@@ -124,8 +127,8 @@
             android:layout_centerVertical="true"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/btn_star_big_off"
-            app:backgroundTint="@android:color/transparent" />
+            android:src="@drawable/camera"
+            app:backgroundTint="@android:color/white" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/discoverButton"
@@ -136,8 +139,8 @@
             android:layout_toRightOf="@+id/cameraButton"
             android:clickable="true"
             android:focusable="true"
-            android:src="@mipmap/ic_launcher"
-            app:backgroundTint="@android:color/transparent" />
+            android:src="@drawable/discover"
+            app:backgroundTint="@android:color/white" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/profileButton"
@@ -150,8 +153,8 @@
             android:layout_toStartOf="@+id/cameraButton"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/ic_delete"
-            app:backgroundTint="@android:color/transparent" />
+            android:src="@drawable/profile"
+            app:backgroundTint="@android:color/white" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/homeButton"
@@ -163,8 +166,8 @@
             android:layout_marginBottom="20dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/btn_star_big_on"
-            app:backgroundTint="@android:color/transparent" />
+            android:src="@drawable/home"
+            app:backgroundTint="@android:color/white" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/messagesButton"
@@ -177,8 +180,8 @@
             android:layout_toRightOf="@+id/cameraButton"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/ic_dialog_info"
-            app:backgroundTint="@android:color/transparent" />
+            android:src="@drawable/messages"
+            app:backgroundTint="@android:color/white" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/coopButton"
@@ -190,8 +193,8 @@
             android:layout_toStartOf="@+id/cameraButton"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/ic_menu_recent_history"
-            app:backgroundTint="@android:color/transparent" />
+            android:src="@drawable/coop"
+            app:backgroundTint="@android:color/white" />
 
     </RelativeLayout>
 
