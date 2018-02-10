@@ -9,6 +9,6 @@ ReactDOM.render(
   <MuiThemeProvider>
     <Dueto/>
   </MuiThemeProvider>
-  , document.getElementById('root'));
+  , document.getElementById('dueto'));
 
 registerServiceWorker();

@@ -4,14 +4,16 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
+	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 )
 
 var db *sql.DB
+var templates *template.Template
 
 const (
 	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, followers text, description text, date timestamp, active boolean, likeCount int);"
@@ -22,10 +24,10 @@ const (
 	AddArtist  = "insert into Artist(username, name, followers, description, likeCount) VALUES($1, $2, $3, $4, $5);"
 	AddVideo   = "insert into Videos(artist, title, desc, time, views, likes) VALUES($1, $2, $3, $4, $5, $6);"
 
-	SelectArtistData    = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
-	SelectArtistVideos  = "select fileName, title, description, views, likes from Videos where artist = $1;"
-	SelectVideoComments = "select message, user, timeStamp from Comment where videoId = $1"
-	SelectVideosByGenre = "select artist, filePath, title, description, views, likeCount, date from Video where genre = $1"
+	SelectArtistData     = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
+	SelectArtistVideos   = "select fileName, title, description, views, likes from Videos where artist = $1;"
+	SelectVideoComments  = "select message, user, timeStamp from Comment where videoId = $1"
+	SelectVideosByGenre  = "select artist, filePath, title, description, views, likeCount, date from Video where genre = $1"
 	SelectVideosByArtist = "select filePath, title, description, views, likeCount, date, genre from Video where artist = $1"
 )
 
@@ -81,6 +83,11 @@ func query(sql string) {
 	checkErr(err)
 }
 
+func compileTemplates() {
+	t, err := template.ParseFiles("../react/dueto/public/index.html")
+	templates = template.Must(t, err)
+}
+
 func init() {
 	var c config
 	file, err := os.Open("database.json")
@@ -99,12 +106,22 @@ func init() {
 
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
-    fmt.Println("Server started ...")
+	fmt.Println("Server started ...")
+}
+
+func api(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	data, err := ioutil.ReadFile("../react/dueto/build/static/js/main.js")
+	if err != nil {
+		panic(err)
+	}
+	w.Header().Set("Content-Length", fmt.Sprint(len(data)))
+	fmt.Fprint(w, string(data))
 }
 
 func profile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    username := r.URL.Query().Get("name")
+	username := r.URL.Query().Get("name")
 
 	var a Artist
 	rows, err := db.Query(SelectArtistData, username)
@@ -121,10 +138,15 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func home(w http.ResponseWriter, r *http.Request) {
+	templates.ExecuteTemplate(w, "index.html", nil)
+}
+
 func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/api/home", home)
-	r.HandleFunc("/api/profile", profile)
-	http.Handle("/", r)
-	http.ListenAndServe(":8082", nil)
+	compileTemplates()
+
+	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("../react/dueto/build/static/js"))))
+	http.HandleFunc("/api/profile", profile)
+	http.HandleFunc("/", home)
+	http.ListenAndServe(":8080", nil)
 }
