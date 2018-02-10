@@ -6,7 +6,6 @@ import (
 	"fmt"
 	_ "github.com/lib/pq"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -16,48 +15,11 @@ var db *sql.DB
 var templates *template.Template
 
 const (
-	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, followers text, description text, date timestamp, active boolean, likeCount int);"
-	createVideoT   = "create table if not exists Video(id serial primary key, artist text, filePath text, title text, description text, time text, views int, likes int, genre text);"
-	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, message text, users text, time timestamp);"
-
-	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, $4);"
-	AddArtist  = "insert into Artist(username, name, followers, description, likeCount) VALUES($1, $2, $3, $4, $5);"
-	AddVideo   = "insert into Videos(artist, title, desc, time, views, likes) VALUES($1, $2, $3, $4, $5, $6);"
-
-	SelectArtistData     = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
-	SelectArtistVideos   = "select fileName, title, description, views, likes from Videos where artist = $1;"
-	SelectVideoComments  = "select message, user, timeStamp from Comment where videoId = $1"
-	SelectVideosByGenre  = "select artist, filePath, title, description, views, likeCount, date from Video where genre = $1"
-	SelectVideosByArtist = "select filePath, title, description, views, likeCount, date, genre from Video where artist = $1"
+	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int);"
+	createVideoT   = "create table if not exists Video(id serial primary key, thumbnail text, artistId text, filePath text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
+	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, artistId text, message text, time timestamp);"
+    createSessionT = "create table if not exists Session(userId text, sessionKey text);"
 )
-
-type Video struct {
-	Artist string
-	File   string
-	Title  string
-	Desc   string
-	Tags   string
-	Genre  string
-	Likes  string
-	Views  string
-	Time   string
-}
-
-type Artist struct {
-	UserName  string
-	Name      string
-	Followers string
-	Desc      string
-	Date      string
-	Active    string
-	LikeCount string
-}
-
-type Comment struct {
-	Message string
-	User    string
-	Time    string
-}
 
 type config struct {
 	URL      string
@@ -76,11 +38,6 @@ func logIfErr(err error) {
 	if err != nil {
 		log.Println(err)
 	}
-}
-
-func query(sql string) {
-	_, err := db.Query(sql)
-	checkErr(err)
 }
 
 func compileTemplates() {
@@ -109,35 +66,6 @@ func init() {
 	fmt.Println("Server started ...")
 }
 
-func api(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	data, err := ioutil.ReadFile("../react/dueto/build/static/js/main.js")
-	if err != nil {
-		panic(err)
-	}
-	w.Header().Set("Content-Length", fmt.Sprint(len(data)))
-	fmt.Fprint(w, string(data))
-}
-
-func profile(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	username := r.URL.Query().Get("name")
-
-	var a Artist
-	rows, err := db.Query(SelectArtistData, username)
-	checkErr(err)
-	defer rows.Close()
-
-	rows.Next()
-	if err := rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount); err != nil {
-		logIfErr(err)
-	}
-
-	if err := json.NewEncoder(w).Encode(a); err != nil {
-		logIfErr(err)
-	}
-}
-
 func home(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "index.html", nil)
 }
@@ -146,6 +74,7 @@ func main() {
 	compileTemplates()
 
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("../react/dueto/build/static/js"))))
+	http.HandleFunc("/api/home", homePage)
 	http.HandleFunc("/api/profile", profile)
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":8080", nil)
