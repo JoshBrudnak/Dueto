@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
-    "encoding/json"
-	"io/ioutil"
+	"encoding/json"
 	"net/http"
+    "fmt"
 )
 
 const (
@@ -12,38 +11,70 @@ const (
 	AddArtist  = "insert into Artist(username, name, followers, description, likeCount) VALUES($1, $2, $3, $4, $5);"
 	AddVideo   = "insert into Videos(artist, title, desc, time, views, likes) VALUES($1, $2, $3, $4, $5, $6);"
 
-	SelectArtistData     = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
-	SelectArtistVideos   = "select fileName, title, description, views, likes from Videos where artist = $1;"
+	SelectIntArtistData  = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
+	SelectExtArtistData  = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
+	SelectArtistVideos   = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
 	SelectVideoComments  = "select message, user, timeStamp from Comment where videoId = $1"
 	SelectVideosByGenre  = "select artist, filePath, title, description, views, likeCount, date from Video where genre = $1"
-	SelectVideosByArtist = "select filePath, title, description, views, likeCount, date, genre from Video where artist = $1"
+	SelectVideosByArtist = "select filePath, title, description, views, likeCount, date, genre from Video where artistId = $1"
 )
 
-type Video struct {
-	Artist string
-	File   string
-	Title  string
-	Desc   string
-	Tags   string
-	Genre  string
-	Likes  string
-	Views  string
-	Time   string
+type BasicArtist struct {
+	Id       string
+	Name     string
+	UserName string
+	Avatar   string
 }
 
-type Artist struct {
-	UserName  string
-	Name      string
-	Followers string
+type Video struct {
+	Id        string
+	Avatar    string
+	Artist    string
+	ArtistId  string
+	Thumbnail string
+	File      string
+	Title     string
 	Desc      string
-	Date      string
-	Active    string
-	LikeCount string
+	Tags      string
+	Genre     string
+	Likes     string
+	Views     string
+	Time      string
+}
+
+type VideoList struct {
+	VideoCards []Video
+}
+
+type ExtArtist struct {
+	Name          string
+	Username      string
+	Age           string
+	FollowerCount string
+	Bio           string
+	Date          string
+	Active        string
+	LikeCount     string
+	VideoList     []Video
+}
+
+type IntArtist struct {
+	UserName           string
+	Name               string
+	AccountCreationDay string
+	FollowerCount      string
+	Followers          string
+	Desc               string
+	Date               string
+	Active             string
+	LikeCount          string
+	VideoList          []Video
 }
 
 type Comment struct {
+	Id      string
+	artist  BasicArtist
 	Message string
-	User    string
 	Time    string
 }
 
@@ -52,22 +83,13 @@ func query(sql string) {
 	checkErr(err)
 }
 
-func api(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	data, err := ioutil.ReadFile("../react/dueto/build/static/js/main.js")
-	if err != nil {
-		panic(err)
-	}
-	w.Header().Set("Content-Length", fmt.Sprint(len(data)))
-	fmt.Fprint(w, string(data))
-}
-
 func profile(w http.ResponseWriter, r *http.Request) {
+	var a IntArtist
+
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	username := r.URL.Query().Get("name")
 
-	var a Artist
-	rows, err := db.Query(SelectArtistData, username)
+	rows, err := db.Query(SelectIntArtistData, username)
 	checkErr(err)
 	defer rows.Close()
 
@@ -82,20 +104,26 @@ func profile(w http.ResponseWriter, r *http.Request) {
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	username := r.URL.Query().Get("name")
+	var v Video
+	var videos VideoList
+	var filepath string
 
-	var a Artist
-	rows, err := db.Query(SelectArtistData, username)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	rows, err := db.Query(SelectArtistVideos, 1)
 	checkErr(err)
 	defer rows.Close()
 
-	rows.Next()
-	if err := rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount); err != nil {
-		logIfErr(err)
+	for rows.Next() {
+		if err := rows.Scan(&filepath, &v.Title, &v.Desc, &v.ArtistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre); err != nil {
+			logIfErr(err)
+		}
+        fmt.Println(v)
+
+		videos.VideoCards = append(videos.VideoCards, v)
 	}
 
-	if err := json.NewEncoder(w).Encode(a); err != nil {
+	if err := json.NewEncoder(w).Encode(videos); err != nil {
 		logIfErr(err)
 	}
 }
