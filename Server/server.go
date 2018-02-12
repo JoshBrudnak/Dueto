@@ -18,6 +18,7 @@ const (
 	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int);"
 	createVideoT   = "create table if not exists Video(id serial primary key, thumbnail text, artistId text, filePath text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
 	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, artistId text, message text, time timestamp);"
+    createGenreT = "create table if not exists Genre(id serial primary key, name text, description text);"
     createSessionT = "create table if not exists Session(userId text, sessionKey text);"
 )
 
@@ -76,6 +77,8 @@ func main() {
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("../react/dueto/build/static/js"))))
 	http.HandleFunc("/api/home", homePage)
 	http.HandleFunc("/api/profile", profile)
+	http.HandleFunc("/api/discover", discover)
+	http.HandleFunc("/api/genre", genre)
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":8080", nil)
 }
