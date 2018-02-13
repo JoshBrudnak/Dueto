@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+    "fmt"
 )
 
 const (
@@ -12,9 +13,9 @@ const (
     AddGenre   = "insert into Genre(name, description) VALUES('classical', 'melodic usually orchestral instumental or vocal');"
     AddSession = "insert into Session(userId, sessionKey) VALUES($1, $2);"
 
-    SelectBasicArtistData = "select username, name, avatar from artist where artistId = $1;"
-	SelectIntArtistData  = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
-	SelectExtArtistData  = "select username, name, followers, description, date, active, likeCount from Artist where username = $1;"
+    SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
+	SelectIntArtistData  = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
+	SelectExtArtistData  = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
 	SelectArtistVideos   = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
 	SelectVideoComments  = "select message, user, timeStamp from Comment where videoId = $1"
 	SelectVideosByGenre  = "select filePath, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
@@ -94,23 +95,40 @@ func query(sql string) {
 }
 
 func profile(w http.ResponseWriter, r *http.Request) {
+    var v Video
 	var a IntArtist
+    var artistId int
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	username := r.URL.Query().Get("username")
 
 	rows, err := db.Query(SelectIntArtistData, username)
 	checkErr(err)
-	defer rows.Close()
 
 	rows.Next()
-	if err := rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount); err != nil {
-		logIfErr(err)
-	}
+	err = rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount, &artistId)
+	logIfErr(err)
+	defer rows.Close()
+
+	videoRows, viderr := db.Query(SelectArtistVideos, artistId)
+    logIfErr(viderr)
+    defer videoRows.Close()
+
+	for videoRows.Next() {
+		err = videoRows.Scan(&v.File, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		//logIfErr(err)
+	    checkErr(err)
+        if videoRows == nil {
+           fmt.Println("NILL 120")
+        }
+
+		a.VideoList = append(a.VideoList, v)
+    }
 
 	if err := json.NewEncoder(w).Encode(a); err != nil {
 		logIfErr(err)
 	}
+
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -135,7 +153,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	    defer artistRow.Close()
         rows.Next()
 
-		err = rows.Scan(&a.Name, &a.UserName, &a.Avatar)
+		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
 		logIfErr(err)
 
         a.Id = artistId
@@ -196,7 +214,7 @@ func genre(w http.ResponseWriter, r *http.Request) {
 	    defer artistRow.Close()
         rows.Next()
 
-		err = rows.Scan(&a.Name, &a.UserName, &a.Avatar)
+		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
 		logIfErr(err)
 
         a.Id = artistId
