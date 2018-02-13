@@ -1,13 +1,13 @@
 package main
 
 import (
-    "strings"
 	"database/sql"
-    _ "github.com/lib/pq"
-    "encoding/json"
-    "io/ioutil"
+	"encoding/json"
 	"fmt"
+	_ "github.com/lib/pq"
+	"io/ioutil"
 	"os"
+	"strings"
 )
 
 var db *sql.DB
@@ -45,17 +45,17 @@ func init() {
 }
 
 func main() {
-    file, err := ioutil.ReadFile("./testData.sql")
-    checkErr(err)
+	file, err := ioutil.ReadFile("./testData.sql")
+	checkErr(err)
 
-    queries := strings.Split(string(file), ";")
+	queries := strings.Split(string(file), ";")
 
-    for _, query := range queries {
-        _,dbErr := db.Query(query)
-        logIfErr(dbErr)
+	for _, query := range queries {
+		_, dbErr := db.Query(query)
+		logIfErr(dbErr)
 
-        if dbErr == nil {
-            fmt.Println("Executed: " + query)
-        }
-    }
+		if dbErr == nil {
+			fmt.Println("Executed: " + query)
+		}
+	}
 }

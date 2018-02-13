@@ -2,34 +2,34 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
-    "fmt"
 )
 
 const (
 	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, $4);"
 	AddArtist  = "insert into Artist(username, name, avatar, password, followers, description, likeCount) VALUES($1, $2, $3, $4, $5, $6, $7);"
 	AddVideo   = "insert into Videos(artist, title, desc, time, views, likes) VALUES($1, $2, $3, $4, $5, $6);"
-    AddGenre   = "insert into Genre(name, description) VALUES('classical', 'melodic usually orchestral instumental or vocal');"
-    AddSession = "insert into Session(userId, sessionKey) VALUES($1, $2);"
+	AddGenre   = "insert into Genre(name, description) VALUES('classical', 'melodic usually orchestral instumental or vocal');"
+	AddSession = "insert into Session(userId, sessionKey) VALUES($1, $2);"
 
-    SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
-	SelectIntArtistData  = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
-	SelectExtArtistData  = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
-	SelectArtistVideos   = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
-	SelectVideoComments  = "select message, user, timeStamp from Comment where videoId = $1"
-	SelectVideosByGenre  = "select filePath, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
-	SelectVideosByArtist = "select filePath, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
-    SelectGenres         = "select name, description from Genre;"
+	SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
+	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
+	SelectExtArtistData   = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
+	SelectArtistVideos    = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
+	SelectVideoComments   = "select message, user, timeStamp from Comment where videoId = $1"
+	SelectVideosByGenre   = "select filePath, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
+	SelectVideosByArtist  = "select filePath, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
+	SelectGenres          = "select name, description from Genre;"
 )
 
 type Genre struct {
-    Name string
-    Description string
+	Name        string
+	Description string
 }
 
 type Genres struct {
-    GenreList []Genre
+	GenreList []Genre
 }
 
 type BasicArtist struct {
@@ -40,7 +40,7 @@ type BasicArtist struct {
 }
 
 type Video struct {
-    Artist    BasicArtist
+	Artist    BasicArtist
 	Id        string
 	Thumbnail string
 	File      string
@@ -95,9 +95,9 @@ func query(sql string) {
 }
 
 func profile(w http.ResponseWriter, r *http.Request) {
-    var v Video
+	var v Video
 	var a IntArtist
-    var artistId int
+	var artistId int
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	username := r.URL.Query().Get("username")
@@ -111,19 +111,19 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	videoRows, viderr := db.Query(SelectArtistVideos, artistId)
-    logIfErr(viderr)
-    defer videoRows.Close()
+	logIfErr(viderr)
+	defer videoRows.Close()
 
 	for videoRows.Next() {
 		err = videoRows.Scan(&v.File, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		//logIfErr(err)
-	    checkErr(err)
-        if videoRows == nil {
-           fmt.Println("NILL 120")
-        }
+		checkErr(err)
+		if videoRows == nil {
+			fmt.Println("NILL 120")
+		}
 
 		a.VideoList = append(a.VideoList, v)
-    }
+	}
 
 	if err := json.NewEncoder(w).Encode(a); err != nil {
 		logIfErr(err)
@@ -135,7 +135,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var videos VideoList
 	var filepath string
-    var artistId string
+	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
@@ -147,17 +147,17 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		err = rows.Scan(&filepath, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
 
-        var a BasicArtist
-	    artistRow, aErr := db.Query(SelectBasicArtistData, artistId)
-        logIfErr(aErr)
-	    defer artistRow.Close()
-        rows.Next()
+		var a BasicArtist
+		artistRow, aErr := db.Query(SelectBasicArtistData, artistId)
+		logIfErr(aErr)
+		defer artistRow.Close()
+		rows.Next()
 
 		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
 		logIfErr(err)
 
-        a.Id = artistId
-        v.Artist = a
+		a.Id = artistId
+		v.Artist = a
 
 		videos.VideoCards = append(videos.VideoCards, v)
 	}
@@ -194,31 +194,31 @@ func genre(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var videos VideoList
 	var filepath string
-    var artistId string
+	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	genre := r.URL.Query().Get("genre")
 
 	rows, err := db.Query(SelectVideosByGenre, genre)
-    logIfErr(err)
+	logIfErr(err)
 	defer rows.Close()
 
 	for rows.Next() {
 		err = rows.Scan(&filepath, &v.Title, &v.Desc, &v.Views, &v.Likes, &v.Time, &artistId)
 		logIfErr(err)
 
-        var a BasicArtist
-        v.Genre = genre
-	    artistRow, err := db.Query(SelectBasicArtistData, artistId)
-        logIfErr(err)
-	    defer artistRow.Close()
-        rows.Next()
+		var a BasicArtist
+		v.Genre = genre
+		artistRow, err := db.Query(SelectBasicArtistData, artistId)
+		logIfErr(err)
+		defer artistRow.Close()
+		rows.Next()
 
 		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
 		logIfErr(err)
 
-        a.Id = artistId
-        v.Artist = a
+		a.Id = artistId
+		v.Artist = a
 
 		videos.VideoCards = append(videos.VideoCards, v)
 	}
