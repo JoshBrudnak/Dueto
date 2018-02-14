@@ -7,8 +7,10 @@ import (
 	_ "github.com/lib/pq"
 	"html/template"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
+	"time"
 )
 
 var db *sql.DB
@@ -46,6 +48,17 @@ func compileTemplates() {
 	templates = template.Must(t, err)
 }
 
+func createHash() string {
+	letters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	b := make([]rune, 20)
+
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+
+	return string(b)
+}
+
 func init() {
 	var c config
 	file, err := os.Open("database.json")
@@ -65,6 +78,8 @@ func init() {
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
 	fmt.Println("Server started ...")
+
+	rand.Seed(time.Now().UnixNano())
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -79,6 +94,7 @@ func main() {
 	http.HandleFunc("/api/profile", profile)
 	http.HandleFunc("/api/discover", discover)
 	http.HandleFunc("/api/genre", genre)
+	http.HandleFunc("/api/login", login)
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":8080", nil)
 }
