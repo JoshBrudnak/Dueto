@@ -2,8 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
+	"time"
 )
 
 const (
@@ -21,6 +22,7 @@ const (
 	SelectVideosByGenre   = "select filePath, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
 	SelectVideosByArtist  = "select filePath, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
 	SelectGenres          = "select name, description from Genre;"
+	SelectUserAuth        = "select id, password from artist where username = $1;"
 )
 
 type Genre struct {
@@ -225,4 +227,38 @@ func genre(w http.ResponseWriter, r *http.Request) {
 
 	err = json.NewEncoder(w).Encode(videos)
 	logIfErr(err)
+}
+
+func login(w http.ResponseWriter, r *http.Request) {
+	var id int
+	var hashPassword string
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	username := r.URL.Query().Get("username")
+	password := r.URL.Query().Get("password")
+
+	bHash, err := bcrypt.GenerateFromPassword([]byte(password), 1)
+	hash := string(bHash)
+	checkErr(err)
+
+	rows, err := db.Query(SelectUserAuth, username)
+	logIfErr(err)
+	defer rows.Close()
+
+	rows.Next()
+	err = rows.Scan(&id, &hashPassword)
+	logIfErr(err)
+
+	err = bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(password))
+
+	if err == nil {
+		sessionId := createHash()
+		_, err := db.Query(AddSession, id, sessionId)
+		logIfErr(err)
+
+		exp := time.Now().Add(365 * 24 * time.Hour)
+		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Expires: exp}
+		http.SetCookie(w, &cookie)
+
+	}
 }
