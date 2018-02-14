@@ -23,6 +23,7 @@ const (
 	SelectVideosByArtist  = "select filePath, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
 	SelectGenres          = "select name, description from Genre;"
 	SelectUserAuth        = "select id, password from artist where username = $1;"
+	SelectSession         = "select count(userId) from session where sessionkey = $1;"
 )
 
 type Genre struct {
@@ -96,6 +97,23 @@ func query(sql string) {
 	logIfErr(err)
 }
 
+func authenticate(sessionId string) bool {
+    var sessionCount int
+
+	rows, err := db.Query(SelectSession, sessionId)
+	checkErr(err)
+
+	rows.Next()
+	err = rows.Scan(&sessionCount)
+	logIfErr(err)
+
+    if sessionCount > 0 {
+        return true
+    }
+
+    return false
+}
+
 func profile(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var a IntArtist
@@ -103,6 +121,12 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	username := r.URL.Query().Get("username")
+	sessionId := r.URL.Query().Get("sessionid")
+
+    if !authenticate(sessionId) {
+        http.Error(w, "Authentication failed", http.StatusForbidden)
+        return
+    }
 
 	rows, err := db.Query(SelectIntArtistData, username)
 	checkErr(err)
@@ -118,11 +142,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	for videoRows.Next() {
 		err = videoRows.Scan(&v.File, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
-		//logIfErr(err)
-		checkErr(err)
-		if videoRows == nil {
-			fmt.Println("NILL 120")
-		}
+		logIfErr(err)
 
 		a.VideoList = append(a.VideoList, v)
 	}
@@ -140,6 +160,12 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	sessionId := r.URL.Query().Get("sessionid")
+
+    if !authenticate(sessionId) {
+        http.Error(w, "Authentication failed", http.StatusForbidden)
+        return
+    }
 
 	rows, err := db.Query(SelectArtistVideos, 1)
 	checkErr(err)
@@ -174,6 +200,12 @@ func discover(w http.ResponseWriter, r *http.Request) {
 	var genres Genres
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	sessionId := r.URL.Query().Get("sessionid")
+
+    if !authenticate(sessionId) {
+        http.Error(w, "Authentication failed", http.StatusForbidden)
+        return
+    }
 
 	rows, err := db.Query(SelectGenres)
 	checkErr(err)
@@ -237,9 +269,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	username := r.URL.Query().Get("username")
 	password := r.URL.Query().Get("password")
 
-	bHash, err := bcrypt.GenerateFromPassword([]byte(password), 1)
-	hash := string(bHash)
-	checkErr(err)
+	//bHash, err := bcrypt.GenerateFromPassword([]byte(password), 1)
 
 	rows, err := db.Query(SelectUserAuth, username)
 	logIfErr(err)
