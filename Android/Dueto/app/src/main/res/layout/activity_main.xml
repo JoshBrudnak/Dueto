@@ -11,7 +11,7 @@
         android:id="@+id/sView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/Black"
         android:fillViewport="true"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,28 +32,48 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/White"
                 android:minHeight="300dp">
 
-                <VideoView
-                    android:id="@+id/videoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/pianoView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="240dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/piano" />
 
             </TableRow>
 
             <TableRow
                 android:id="@+id/row2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/White"
+                android:minHeight="300dp">
+
+                <ImageView
+                    android:id="@+id/roomView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="240dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/guitars" />
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/test"
+                android:background="@color/White"
                 android:minHeight="300dp">
 
-                <VideoView
-                    android:id="@+id/videoView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/celloView"
+                    android:layout_width="450dp"
+                    android:layout_height="240dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/cello" />
 
                 <Button
                     android:id="@+id/tabButt"
@@ -75,20 +95,6 @@
 
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
-                android:minHeight="300dp">
-
-                <VideoView
-                    android:id="@+id/videoView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </TableRow>
-
         </TableLayout>
 
     </ScrollView>
@@ -103,7 +109,8 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/menu"
-        app:backgroundTint="@color/White"
+        app:backgroundTint="@color/Pink"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@android:color/black" />
@@ -128,7 +135,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/camera"
-            app:backgroundTint="@android:color/white" />
+            app:backgroundTint="@color/Pink" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/discoverButton"
@@ -140,7 +147,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/discover"
-            app:backgroundTint="@android:color/white" />
+            app:backgroundTint="@color/Pink" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/profileButton"
@@ -154,7 +161,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/profile"
-            app:backgroundTint="@android:color/white" />
+            app:backgroundTint="@color/Pink" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/homeButton"
@@ -167,7 +174,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/home"
-            app:backgroundTint="@android:color/white" />
+            app:backgroundTint="@color/Pink" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/messagesButton"
@@ -181,7 +188,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/messages"
-            app:backgroundTint="@android:color/white" />
+            app:backgroundTint="@color/Pink" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/coopButton"
@@ -194,7 +201,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/coop"
-            app:backgroundTint="@android:color/white" />
+            app:backgroundTint="@color/Pink" />
 
     </RelativeLayout>
 

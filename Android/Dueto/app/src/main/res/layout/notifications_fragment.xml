@@ -3,23 +3,65 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/textNotifications"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="25sp"
-        android:text="Notifications..."
-        android:layout_marginTop="40dp" />
 
     <ScrollView
+        android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
 
-        </android.support.constraint.ConstraintLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/followView"
+                    android:layout_width="372dp"
+                    android:layout_height="59dp"
+                    android:gravity="center"
+                    android:text="X has followed you!" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/likeView"
+                    android:layout_width="372dp"
+                    android:layout_height="59dp"
+                    android:gravity="center"
+                    android:text="X has liked your post!" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/shareView"
+                    android:layout_width="372dp"
+                    android:layout_height="59dp"
+                    android:gravity="center"
+                    android:text="X has shared your post!" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/msgView"
+                    android:layout_width="372dp"
+                    android:layout_height="59dp"
+                    android:gravity="center"
+                    android:text="X has sent you a message!" />
+            </TableRow>
+        </TableLayout>
+
     </ScrollView>
 </RelativeLayout>

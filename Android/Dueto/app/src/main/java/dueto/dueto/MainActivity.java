@@ -66,27 +66,9 @@ public class MainActivity extends Activity {
         SignIn = (Button) findViewById(R.id.signButt);
         Notifications = (Button) findViewById(R.id.tabButt);
 
-        LogIn.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
 
-        SignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SigninActivity.class));
-            }
-        });
         //------------------------------------------------------------------------------------------
 
-        Notifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TimelineActivity.class));
-            }
-        });
 
         //Defining buttons to use them later
         final FloatingActionButton
@@ -102,6 +84,27 @@ public class MainActivity extends Activity {
 
         final ScrollView sView = findViewById(R.id.sView);
 
+        messagesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TimelineActivity.class));
+            }
+        });
+
+        coopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SigninActivity.class));
+            }
+        });
+
+        profileButton.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+
         //Setting button visibility to invisible
         constr.setVisibility(bVisibility);
         menuButton.setRotation(menuButtonRotation);
@@ -116,6 +119,7 @@ public class MainActivity extends Activity {
                 constr.setVisibility(bVisibility);
                 bVisibility = bVisibility != 0 ? 0 : 4;
                 menuButtonRotation = menuButtonRotation != 45 ? 45 : 0;
+
                 if (scrollable) {
                     sView.setOnTouchListener(new View.OnTouchListener() {
                         @Override

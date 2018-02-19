@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validID(String userName, String userPass) {
         if((userName.equals("Admin")) && (userPass.equals("1234"))) {
-            Intent intent = new Intent(LoginActivity.this, TimelineActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
         else {
