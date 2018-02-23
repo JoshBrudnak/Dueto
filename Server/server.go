@@ -21,7 +21,7 @@ const (
 	createVideoT   = "create table if not exists Video(id serial primary key, thumbnail text, artistId text, filePath text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
 	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, artistId text, message text, time timestamp);"
 	createGenreT   = "create table if not exists Genre(id serial primary key, name text, description text);"
-	createSessionT = "create table if not exists Session(userId text, sessionKey text);"
+	createSessionT = "create table if not exists Session(userId text, sessionKey text, time timestamp);"
 )
 
 type config struct {
@@ -80,6 +80,10 @@ func init() {
 	fmt.Println("Server started ...")
 
 	rand.Seed(time.Now().UnixNano())
+
+	os.MkdirAll("./data/thumbnails/", os.ModePerm)
+	os.MkdirAll("./data/videos/", os.ModePerm)
+	os.MkdirAll("./data/avatars/", os.ModePerm)
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -95,6 +99,10 @@ func main() {
 	http.HandleFunc("/api/discover", discover)
 	http.HandleFunc("/api/genre", genre)
 	http.HandleFunc("/api/login", login)
+	http.HandleFunc("/api/logout", logout)
+	http.HandleFunc("/api/createuser", createUser)
+	http.HandleFunc("/api/video", video)
+	http.HandleFunc("/api/addvideo", addVideo)
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":8080", nil)
 }
