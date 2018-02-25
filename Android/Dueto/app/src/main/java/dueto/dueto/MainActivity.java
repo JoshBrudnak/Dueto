@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,11 +27,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+
+import dueto.dueto.templates.TableCell;
 
 public class MainActivity extends Activity {
 
@@ -43,24 +50,40 @@ public class MainActivity extends Activity {
     static final int REQUEST_TAKE_PHOTO = 1;
 
     ImageView pictureView;
-//    private Display display = getWindowManager().getDefaultDisplay();
-//    private DisplayMetrics displayMetrics = new DisplayMetrics();
+    private Display display;
     private boolean scrollable = true; //Scroll always
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        /*TableLayout t1 = findViewById(R.id.homeTable);
-        TableRow row = new TableRow(this);
-        t1.addView(row);*/
 
-//        display.getMetrics(displayMetrics);
-//
-//        int height = displayMetrics.heightPixels;
-//        int width = displayMetrics.widthPixels;
-//        int dens = displayMetrics.densityDpi;
-//
+        display = getWindowManager().getDefaultDisplay();
+        TableLayout t1 = findViewById(R.id.homeTable);
+        JSONObject jsonObject = new JSONObject();
+
+        ImageView profilepic = new ImageView(this);
+        ImageView thumbpic = new ImageView(this);
+        profilepic.setImageResource(R.drawable.profile);
+        thumbpic.setImageResource(R.drawable.cello);
+
+        try
+        {
+            jsonObject.put("artist", "John Dungeldo");
+            jsonObject.put("name", "Mechikko");
+            jsonObject.put("description", "John Dungeldo");
+            jsonObject.put("profilepic", profilepic);
+            jsonObject.put("thumbpic", thumbpic);
+        }
+        catch(JSONException js)
+        {
+            System.out.println(js.getMessage());
+        }
+
+        TableCell cell = new TableCell(this, display, jsonObject);
+
+        t1.addView(cell);
+
         //Defining login buttons
         LogIn = (Button) findViewById(R.id.logButt); //the sign-in + log-in buttons on the Main page
         SignIn = (Button) findViewById(R.id.signButt);

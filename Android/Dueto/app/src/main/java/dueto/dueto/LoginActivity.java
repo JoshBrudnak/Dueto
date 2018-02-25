@@ -1,5 +1,6 @@
 package dueto.dueto;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,6 +38,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validID(Name.getText().toString(), Password.getText().toString());
+
+                final ServerCommunicator sc = new ServerCommunicator();
+                final HashMap<String, String> params = new HashMap<>();
+
+                System.out.println("reached 1");
+
+//                params.put("username", Name.getText().toString());
+//                params.put("password", Password.getText().toString());
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        System.out.println(sc.makeRequest("login", params));
+//                    }
+//                }, 10000);
             }
         });
 
