@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
         profileButton.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
             }
         });
 
