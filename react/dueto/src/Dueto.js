@@ -3,6 +3,7 @@ import Home from "./pages/Home.js"
 import Login from "./pages/Login.js"
 import Profile from "./pages/Profile.js"
 import Discover from "./pages/Discover.js"
+import Video from "./pages/Video.js"
 import {
   BrowserRouter,
   Link,
@@ -20,6 +21,7 @@ class Dueto extends Component {
             <Route path="/profile" component={Profile} />
             <Route path="/login" component={Login} />
             <Route path="/discover" component={Discover} />
+            <Route path="/video" component={Video} />
           </Switch>
         </div>
       </BrowserRouter>

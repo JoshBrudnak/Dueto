@@ -62,6 +62,19 @@ export const getDiscoverData = async () => {
   return newData
 }
 
+export const getVideoUrl = (artistId, video) => {
+  let id = getSessionId()
+
+  const data = {
+     sessionid: id,
+     artist: artistId,
+     name: video
+  }
+  const params = encodeUrl(data)
+
+  return "/api/video?" + params
+}
+
 export const addVideo = async (feedUrl, video) => {
   const bodyData = {video: video}
   const formBody = encodeUrl(bodyData)

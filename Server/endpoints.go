@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+    "log"
 	"time"
 )
 
@@ -273,6 +274,7 @@ func serveFile(w http.ResponseWriter, r *http.Request, fileType string) {
 	videoName := r.URL.Query().Get("name")
 
 	filePath := "./data/" + fileType + "/" + artistId + "/" + videoName + ".mp4"
+    log.Println(filePath)
 	http.ServeFile(w, r, filePath)
 }
 
