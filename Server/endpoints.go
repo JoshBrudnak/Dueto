@@ -345,8 +345,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 		_, err := db.Query(AddSession, id, sessionId)
 		logIfErr(err)
 
-		exp := time.Now().Add(365 * 24 * time.Hour)
-		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Expires: exp}
+		exp := time.Now().Add(time.Hour)
+		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Path: "/", Expires: exp}
 		http.SetCookie(w, &cookie)
 
 	}
@@ -361,7 +361,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 
 	if err == nil {
-		exp := time.Now().Add(365 * 24 * time.Hour)
+        exp := time.Now().AddDate(0, 0, 1)
 		cookie := http.Cookie{Name: "SESSIONID", Value: "", Expires: exp}
 		http.SetCookie(w, &cookie)
 	}
