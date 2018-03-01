@@ -33,6 +33,11 @@ const (
 	SetExpirationTime     = "expire from session after $1 where sessionKey= $1;"
 )
 
+type Authentication struct {
+    Username string
+    Password string
+}
+
 type Genre struct {
 	Name        string
 	Description string
@@ -274,7 +279,6 @@ func serveFile(w http.ResponseWriter, r *http.Request, fileType string) {
 	videoName := r.URL.Query().Get("name")
 
 	filePath := "./data/" + fileType + "/" + artistId + "/" + videoName + ".mp4"
-    log.Println(filePath)
 	http.ServeFile(w, r, filePath)
 }
 
@@ -306,7 +310,6 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	hash := string(bHash)
 
 	rows, err := db.Query(AddArtist, username, name, age, hash, 0, desc, 0, location)
-	logIfErr(err)
 	defer rows.Close()
 
 	_, err = db.Query(SelectUserAuth, username)
@@ -327,12 +330,18 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 func login(w http.ResponseWriter, r *http.Request) {
 	var id int
 	var hashPassword string
+    var auth Authentication
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	username := r.URL.Query().Get("username")
-	password := r.URL.Query().Get("password")
+    decoder := json.NewDecoder(r.Body)
+    decoder.Decode(&auth)
+    defer r.Body.Close()
 
-	rows, err := db.Query(SelectUserAuth, username)
+    if auth.Username == "" || auth.Password == "" {
+        return
+    }
+
+	rows, err := db.Query(SelectUserAuth, auth.Username)
 	logIfErr(err)
 	defer rows.Close()
 
@@ -340,7 +349,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	err = rows.Scan(&id, &hashPassword)
 	logIfErr(err)
 
-	err = bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(password))
+	err = bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(auth.Password))
 
 	if err == nil {
 		sessionId := createHash()

@@ -75,13 +75,33 @@ export const getVideoUrl = (artistId, video) => {
   return "/api/video?" + params
 }
 
+export const loginUser = async (username, password) => {
+  const data = {
+     Username: username, 
+     Password: password 
+  }
+
+  let formBody = JSON.stringify(data)
+
+  const response = await fetch("/api/login", {
+    body: formBody,
+    credentials: 'include',
+    method: 'POST',
+    headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response.json()
+
+  return newData
+}
+
 export const addVideo = async (feedUrl, video) => {
   const bodyData = {video: video}
   const formBody = encodeUrl(bodyData)
 
   const response = await fetch(feedUrl, {
     body: formBody,
-    credentials: 'include',
+    credentials: 'omit',
     method: 'POST',
     headers: {
       Accept: 'application/json',

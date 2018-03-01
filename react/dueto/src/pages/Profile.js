@@ -9,10 +9,8 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    console.log("did mount")
-    getProfileData("joeshmow")
+    getProfileData(this.props.user)
       .then(data => {
-        console.log(data)
       })
       .catch(error => {})
   }
