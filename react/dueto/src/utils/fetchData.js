@@ -23,10 +23,7 @@ function encodeUrl(data) {
 }
 
 export const getProfileData = async (name) => {
-  let id = getSessionId()
-
   const data = {
-     sessionid: id,
      username: name
   }
   const params = encodeUrl(data)
@@ -37,36 +34,21 @@ export const getProfileData = async (name) => {
 }
 
 export const getHomeData = async () => {
-  let id = getSessionId()
-
-  const data = {
-     sessionid: id
-  }
-  const params = encodeUrl(data)
-  const response = await fetch("/api/home?" + params, { credentials: "include" })
+  const response = await fetch("/api/home", { credentials: "include" })
   const newData = await response.json()
 
   return newData
 }
 
 export const getDiscoverData = async () => {
-  let id = getSessionId()
-
-  const data = {
-     sessionid: id
-  }
-  const params = encodeUrl(data)
-  const response = await fetch("/api/discover?" + params, { credentials: "include" })
+  const response = await fetch("/api/discover", { credentials: "include" })
   const newData = await response.json()
 
   return newData
 }
 
 export const getVideoUrl = (artistId, video) => {
-  let id = getSessionId()
-
   const data = {
-     sessionid: id,
      artist: artistId,
      name: video
   }

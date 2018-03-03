@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-    "log"
 	"time"
 )
 
@@ -133,7 +132,8 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	username := r.URL.Query().Get("username")
-    sessionId,err := req.Cookie("SESSIONID")
+    cookie,err := r.Cookie("SESSIONID")
+    sessionId := cookie.Value
 
 	if !authenticate(sessionId) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
@@ -172,7 +172,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    sessionId,err := req.Cookie("SESSIONID")
+    cookie,err := r.Cookie("SESSIONID")
+    sessionId := cookie.Value
 
 	if !authenticate(sessionId) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
@@ -212,7 +213,8 @@ func discover(w http.ResponseWriter, r *http.Request) {
 	var genres Genres
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    sessionId,err := req.Cookie("SESSIONID")
+    cookie,err := r.Cookie("SESSIONID")
+    sessionId := cookie.Value
 
 	if !authenticate(sessionId) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
@@ -365,7 +367,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 func logout(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    sessionId,err := req.Cookie("SESSIONID")
+    cookie,err := r.Cookie("SESSIONID")
+    sessionId := cookie.Value
 
 	rows, err := db.Query(RemoveSession, sessionId)
 	logIfErr(err)
@@ -382,7 +385,9 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 	var buf bytes.Buffer
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    sessionId,err := req.Cookie("SESSIONID")
+    cookie,err := r.Cookie("SESSIONID")
+    sessionId := cookie.Value
+
 	desc := r.URL.Query().Get("desc")
 	name := r.URL.Query().Get("name")
 	artist := r.URL.Query().Get("artistid")
