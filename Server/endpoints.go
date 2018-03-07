@@ -1,19 +1,21 @@
 package main
 
 import (
-	"bytes"
+    "bytes"
 	"encoding/json"
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
-	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"time"
+    "io/ioutil"
 )
 
 const (
 	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, $4);"
 	AddArtist  = "insert into Artist(username, name, age, password, followers, description, likeCount, location) VALUES($1, $2, $3, $4, $5, $6, $7, $8);"
-	AddVideo   = "insert into Videos(artist, title, desc, time, views, likes, filePath) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4);"
+	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes, filePath) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4);"
 	AddGenre   = "insert into Genre(name, description) VALUES($1, $2);"
 	AddSession = "insert into Session(userId, sessionKey, time) VALUES($1, $2, now()::timestamp);"
 
@@ -30,11 +32,18 @@ const (
 	SelectUserAuth        = "select id, password from artist where username = $1;"
 	SelectSession         = "select count(userId) from session where sessionkey = $1;"
 	SetExpirationTime     = "expire from session after $1 where sessionKey= $1;"
+	SelectAuthId          = "select userId from session where sessionKey = $1;"
 )
 
 type Authentication struct {
-    Username string
-    Password string
+	Username string
+	Password string
+}
+
+type NewVideo struct {
+	Video string
+	Name  string
+	Desc  string
 }
 
 type Genre struct {
@@ -132,8 +141,8 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	username := r.URL.Query().Get("username")
-    cookie,err := r.Cookie("SESSIONID")
-    sessionId := cookie.Value
+	cookie, err := r.Cookie("SESSIONID")
+	sessionId := cookie.Value
 
 	if !authenticate(sessionId) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
@@ -172,8 +181,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    cookie,err := r.Cookie("SESSIONID")
-    sessionId := cookie.Value
+	cookie, err := r.Cookie("SESSIONID")
+	sessionId := cookie.Value
 
 	if !authenticate(sessionId) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
@@ -183,7 +192,6 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query(SelectArtistVideos, 1)
 	checkErr(err)
 	defer rows.Close()
-
 	for rows.Next() {
 		err = rows.Scan(&filepath, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
@@ -213,8 +221,8 @@ func discover(w http.ResponseWriter, r *http.Request) {
 	var genres Genres
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    cookie,err := r.Cookie("SESSIONID")
-    sessionId := cookie.Value
+	cookie, err := r.Cookie("SESSIONID")
+	sessionId := cookie.Value
 
 	if !authenticate(sessionId) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
@@ -332,16 +340,16 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 func login(w http.ResponseWriter, r *http.Request) {
 	var id int
 	var hashPassword string
-    var auth Authentication
+	var auth Authentication
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    decoder := json.NewDecoder(r.Body)
-    decoder.Decode(&auth)
-    defer r.Body.Close()
+	decoder := json.NewDecoder(r.Body)
+	decoder.Decode(&auth)
+	defer r.Body.Close()
 
-    if auth.Username == "" || auth.Password == "" {
-        return
-    }
+	if auth.Username == "" || auth.Password == "" {
+		return
+	}
 
 	rows, err := db.Query(SelectUserAuth, auth.Username)
 	logIfErr(err)
@@ -367,51 +375,85 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 func logout(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    cookie,err := r.Cookie("SESSIONID")
-    sessionId := cookie.Value
+	cookie, err := r.Cookie("SESSIONID")
+	sessionId := cookie.Value
 
 	rows, err := db.Query(RemoveSession, sessionId)
 	logIfErr(err)
 	rows.Close()
 
 	if err == nil {
-        exp := time.Now().AddDate(0, 0, 1)
+		exp := time.Now().AddDate(0, 0, 1)
 		cookie := http.Cookie{Name: "SESSIONID", Value: "", Expires: exp}
 		http.SetCookie(w, &cookie)
 	}
 }
 
+func getThumbnail(artist string, name string) {
+    var buffer bytes.Buffer
+
+	width := 640
+	height := 360
+	videoPath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
+	thumbnailPath := fmt.Sprintf("./data/thumbnails/%s/%s.jpeg", artist, name)
+	f, err := os.Create(thumbnailPath)
+    logIfErr(err)
+    f.Close()
+
+    cmd := exec.Command("ffmpeg","-i", videoPath,"-vframes","1", "-s", fmt.Sprintf("%dx%d", width, height), "-f", "singlejpeg", "-")
+    cmd.Stdout = &buffer
+    err = cmd.Run()
+    logIfErr(err)
+
+	thumbnail, err := os.OpenFile(thumbnailPath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+    logIfErr(err)
+
+	_, err = thumbnail.Write(buffer.Bytes())
+    logIfErr(err)
+	thumbnail.Close()
+}
+
 func addVideo(w http.ResponseWriter, r *http.Request) {
-	var buf bytes.Buffer
+	var artist string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    cookie,err := r.Cookie("SESSIONID")
-    sessionId := cookie.Value
-
-	desc := r.URL.Query().Get("desc")
-	name := r.URL.Query().Get("name")
-	artist := r.URL.Query().Get("artistid")
+	cookie, err := r.Cookie("SESSIONID")
+	sessionId := cookie.Value
 
 	if !authenticate(sessionId) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
 		return
 	}
 
-	filePath := "./data/videos/" + artist + "/" + name + ".mp4"
+    file, _, err := r.FormFile("file")
+    logIfErr(err)
 
-	videoFile, _, err := r.FormFile(name)
+    name := r.FormValue("name")
+    desc := r.FormValue("desc")
+    data, err := ioutil.ReadAll(file)
+    logIfErr(err)
+
+	rows, err := db.Query(SelectAuthId, sessionId)
 	logIfErr(err)
-	defer videoFile.Close()
 
-	io.Copy(&buf, videoFile)
-	data := buf.String()
+	rows.Next()
+	err = rows.Scan(&artist)
+	logIfErr(err)
+	rows.Close()
+
+	filePath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
+
 	f, err := os.Create(filePath)
-	defer f.Close()
-
-	_, err = f.Write([]byte(data))
 	logIfErr(err)
 
-	rows, err := db.Query(AddVideo, artist, name, desc, filePath)
+	_, err = f.Write(data)
 	logIfErr(err)
-	defer rows.Close()
+	f.Close()
+
+	getThumbnail(artist, name)
+
+
+	rows, err = db.Query(AddVideo, artist, name, desc, filePath)
+	logIfErr(err)
+	rows.Close()
 }
