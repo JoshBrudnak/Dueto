@@ -77,21 +77,15 @@ export const loginUser = async (username, password) => {
   return newData
 }
 
-export const addVideo = async (feedUrl, video) => {
-  const bodyData = {video: video}
-  const formBody = encodeUrl(bodyData)
-
-  const response = await fetch(feedUrl, {
+export const addVideo = async (formBody) => {
+  const response = await fetch("/api/addvideo", {
     body: formBody,
-    credentials: 'omit',
+    credentials: 'include',
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'cache-control': 'no-cache'
-    }
+    headers: {Accept: 'application/json'}
   })
 
   const newData = await response.json()
+
   return newData
 }
