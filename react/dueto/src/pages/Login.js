@@ -22,8 +22,15 @@ class Login extends Component {
 
   login = () => {
     loginUser(this.state.username, this.state.password)
-      .then(data => {})
-      .catch(error => {})
+      .then(data => { 
+        window.location = "/home"
+        console.log(window)
+      })
+      .catch(error => {
+      })
+
+    window.location = "/home"
+    console.log(window)
   }
 
   render() {
