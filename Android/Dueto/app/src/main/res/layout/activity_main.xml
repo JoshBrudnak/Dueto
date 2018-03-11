@@ -11,7 +11,7 @@
         android:id="@+id/sView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Black"
+        android:background="@color/White"
         android:fillViewport="true"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,73 +28,6 @@
             android:layout_height="wrap_content"
             android:background="@color/menuBG"
             android:stretchColumns="1">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/White"
-                android:minHeight="300dp">
-
-                <ImageView
-                    android:id="@+id/pianoView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="240dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/piano" />
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/row2"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="10dp"
-                android:background="@color/White"
-                android:minHeight="300dp">
-
-                <ImageView
-                    android:id="@+id/roomView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="240dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/guitars" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/White"
-                android:minHeight="300dp">
-
-                <ImageView
-                    android:id="@+id/celloView"
-                    android:layout_width="450dp"
-                    android:layout_height="240dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/cello" />
-
-                <Button
-                    android:id="@+id/tabButt"
-                    android:layout_width="192dp"
-                    android:layout_height="wrap_content"
-                    android:text="Notifications" />
-
-                <Button
-                    android:id="@+id/logButt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Log In" />
-
-                <Button
-                    android:id="@+id/signButt"
-                    android:layout_width="100dp"
-                    android:layout_height="48dp"
-                    android:text="Sign Up" />
-
-            </TableRow>
-
         </TableLayout>
 
     </ScrollView>

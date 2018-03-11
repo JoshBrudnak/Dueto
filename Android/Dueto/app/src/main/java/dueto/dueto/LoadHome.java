@@ -23,19 +23,19 @@ public class LoadHome extends Activity
      */
     public void generateVideos(/*User user*/)
     {
-        ArrayList<ImageView> viewers = new ArrayList<>();
-        TableLayout table = (TableLayout)findViewById(R.id.homeTable);
-        TableRow row = new TableRow(null);
-
-
-        //Load videos into viewers
-
-
-        for(ImageView v : viewers)
-        {
-            row.addView(v);
-            table.addView(row);
-        }
+//        ArrayList<ImageView> viewers = new ArrayList<>();
+////        TableLayout table = (TableLayout)findViewById(R.id.homeTable);
+////        TableRow row = new TableRow(null);
+//
+//
+//        //Load videos into viewers
+//
+//
+//        for(ImageView v : viewers)
+//        {
+//            row.addView(v);
+//            table.addView(row);
+//        }
 
 
     }

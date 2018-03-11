@@ -61,19 +61,32 @@ public class MainActivity extends Activity {
         display = getWindowManager().getDefaultDisplay();
         TableLayout t1 = findViewById(R.id.homeTable);
         JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject2 = new JSONObject();
 
         ImageView profilepic = new ImageView(this);
+        ImageView profilepic2 = new ImageView(this);
         ImageView thumbpic = new ImageView(this);
+        ImageView thumbpic2 = new ImageView(this);
         profilepic.setImageResource(R.drawable.profile);
+        profilepic2.setImageResource(R.drawable.coop);
         thumbpic.setImageResource(R.drawable.cello);
+        thumbpic2.setImageResource(R.drawable.guitars);
 
         try
         {
             jsonObject.put("artist", "John Dungeldo");
-            jsonObject.put("name", "Mechikko");
-            jsonObject.put("description", "John Dungeldo");
+            jsonObject.put("description", "John Dungeldo is a striving idiot");
             jsonObject.put("profilepic", profilepic);
             jsonObject.put("thumbpic", thumbpic);
+            jsonObject.put("time", "1d");
+            jsonObject.put("likes", "1");
+
+            jsonObject2.put("artist", "John Dungeldo");
+            jsonObject2.put("description", "John Dungeldo John Dungeldo John Dungeldo");
+            jsonObject2.put("profilepic", profilepic2);
+            jsonObject2.put("thumbpic", thumbpic2);
+            jsonObject2.put("time", "2d");
+            jsonObject2.put("likes", "2");
         }
         catch(JSONException js)
         {
@@ -81,13 +94,9 @@ public class MainActivity extends Activity {
         }
 
         TableCell cell = new TableCell(this, display, jsonObject);
-
+        TableCell cell2 = new TableCell(this, display, jsonObject2);
         t1.addView(cell);
-
-        //Defining login buttons
-        LogIn = (Button) findViewById(R.id.logButt); //the sign-in + log-in buttons on the Main page
-        SignIn = (Button) findViewById(R.id.signButt);
-        Notifications = (Button) findViewById(R.id.tabButt);
+        t1.addView(cell2);
 
 
         //------------------------------------------------------------------------------------------
