@@ -84,9 +84,9 @@ export const loginUser = async (username, password) => {
     headers: {Accept: 'application/json'}
   })
 
-  const newData = await response.json()
+  const newData = await response
 
-  return newData
+  return "" 
 }
 
 export const addVideo = async (formBody) => {

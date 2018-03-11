@@ -21,7 +21,9 @@ class Home extends Component {
       .then(data => {
          this.setState({videos: data.VideoCards}) 
       })
-      .catch(error => {})
+      .catch(error => {
+        window.location = "/login"
+      })
   }
 
   getVideoCards = () => {

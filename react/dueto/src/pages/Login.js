@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextField, Button } from 'material-ui'
+import { TextField, Button, Paper, Typography } from 'material-ui'
 import {loginUser} from '../utils/fetchData.js'
 
 class Login extends Component {
@@ -7,8 +7,8 @@ class Login extends Component {
     super()
 
     this.state = {
-      password: "password",
-      username: "joeshmow"
+      password: "",
+      username: ""
     }
   }
 
@@ -21,40 +21,44 @@ class Login extends Component {
   }
 
   login = () => {
+    console.log(this.state.username)
+    console.log(this.state.password)
     loginUser(this.state.username, this.state.password)
       .then(data => { 
         window.location = "/home"
-        console.log(window)
       })
       .catch(error => {
+        console.error(error)
       })
-
-    window.location = "/home"
-    console.log(window)
   }
 
   render() {
     const loginStyle = {}
     return (
       <div>
-        <div>
-          <TextField
-            label="UserName"
-            margin="normal"
-            value={this.state.username}
-            onChange={this.usernameChange}
-            
-          />
-          <TextField
-            label="Password"
-            type="password"
-            margin="normal"
-            value={this.state.password}
-            onChange={this.passwordChange}
-          />
-        </div>
-        <Button onClick={this.login}>Login</Button>
-        <Button onClick={this.cancel}>Cancel</Button>
+        <Paper style={{padding: 40, margin: 40}}>
+          <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
+          <div style={{display: "flex", flexDirection: "column"}}>
+            <TextField
+              label="UserName"
+              margin="normal"
+              value={this.state.username}
+              onChange={this.usernameChange}
+              
+            />
+            <TextField
+              label="Password"
+              type="password"
+              margin="normal"
+              value={this.state.password}
+              onChange={this.passwordChange}
+            />
+          </div>
+          <div style={{paddingTop: 10}}>
+            <Button onClick={this.login}>Login</Button>
+            <Button onClick={this.cancel}>Cancel</Button>
+          </div>
+        </Paper>
       </div>
     );
   }
