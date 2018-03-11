@@ -46,6 +46,16 @@ type NewVideo struct {
 	Desc  string
 }
 
+type NewUser struct {
+    Name string
+    Username string
+    Password string
+    Repassword string
+    Bio string
+    Age string
+    Loc string
+}
+
 type Genre struct {
 	Name        string
 	Description string
@@ -307,27 +317,29 @@ func thumbnail(w http.ResponseWriter, r *http.Request) {
 func createUser(w http.ResponseWriter, r *http.Request) {
 	var id string
 	var hashPassword string
+    var data NewUser
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	username := r.URL.Query().Get("username")
-	name := r.URL.Query().Get("name")
-	password := r.URL.Query().Get("password")
-	age := r.URL.Query().Get("age")
-	desc := r.URL.Query().Get("description")
-	location := r.URL.Query().Get("location")
+	decoder := json.NewDecoder(r.Body)
+	decoder.Decode(&data)
 
-	bHash, err := bcrypt.GenerateFromPassword([]byte(password), 1)
+	if data.Password != data.Repassword {
+		http.Error(w, "Passwords do not match", http.StatusNotAcceptable)
+		return
+	}
+
+	bHash, err := bcrypt.GenerateFromPassword([]byte(data.Password), 1)
 	hash := string(bHash)
 
-	rows, err := db.Query(AddArtist, username, name, age, hash, 0, desc, 0, location)
+	rows, err := db.Query(AddArtist, data.Username, data.Name, data.Age, hash, 0, data.Bio, 0, data.Loc)
 	defer rows.Close()
 
-	_, err = db.Query(SelectUserAuth, username)
+	authRows, err := db.Query(SelectUserAuth, data.Username)
 	logIfErr(err)
-	defer rows.Close()
+	defer authRows.Close()
 
-	if rows.Next() {
-		err = rows.Scan(&id, &hashPassword)
+	if authRows.Next() {
+		err = authRows.Scan(&id, &hashPassword)
 		logIfErr(err)
 	} else {
 		http.Error(w, "Unable to create user", http.StatusForbidden)

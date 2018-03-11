@@ -89,3 +89,18 @@ export const addVideo = async (formBody) => {
 
   return newData
 }
+
+export const addUser = async (body) => {
+  let formBody = JSON.stringify(body)
+
+  const response = await fetch("/api/createuser", {
+	body: formBody,
+	credentials: 'include',
+	method: 'POST',
+	headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response.json()
+
+  return newData
+}

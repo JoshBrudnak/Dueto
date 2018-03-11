@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {Input, TextField, Button, Typography} from 'material-ui'
-//import {createUser} from '../utils/fetchData.js'
+import {Input, TextField, Button, Typography, Paper} from 'material-ui'
+import {addUser} from '../utils/fetchData.js'
 
 class CreateUser extends Component {
   constructor() {
@@ -23,17 +23,25 @@ class CreateUser extends Component {
   }
 
   create = () => {
-    /*
-    createUser(this.state.username, this.state.password)
+    const userdata = {
+      Name: this.state.name,
+      Password: this.state.password,
+      Repassword: this.state.repassword,
+      Username: this.state.username, 
+      Bio: this.state.bio, 
+      Age: this.state.age,
+      Loc: this.state.loc 
+    }
+       
+    addUser(userdata)
       .then(data => {})
       .catch(error => {})
-    */
   }
 
   render() {
     return (
       <div>
-        <div>
+        <Paper>
           <TextField
             label="Name"
             name="name"
@@ -78,7 +86,7 @@ class CreateUser extends Component {
             value={this.state.repassword}
             onChange={this.textChange}
           />
-        </div>
+        </Paper>
         <Typography>Account Avatar</Typography>
         <Input type="file" value={this.state.videoName} onChange={this.videoChange}/>
         <Button onClick={this.create}>Create Account</Button>
