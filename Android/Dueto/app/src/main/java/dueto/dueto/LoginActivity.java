@@ -1,18 +1,14 @@
 package dueto.dueto;
 
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import java.util.HashMap;
+import dueto.dueto.servercom.Server;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
         Name = (EditText)findViewById(R.id.nameText);
@@ -39,27 +36,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 validID(Name.getText().toString(), Password.getText().toString());
 
-                final ServerCommunicator sc = new ServerCommunicator();
-                final HashMap<String, String> params = new HashMap<>();
-
                 System.out.println("reached 1");
-
-//                params.put("username", Name.getText().toString());
-//                params.put("password", Password.getText().toString());
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        System.out.println(sc.makeRequest("login", params));
-//                    }
-//                }, 10000);
             }
         });
-
     }
 
     private void validID(String userName, String userPass) {
-        if((userName.equals("Admin")) && (userPass.equals("1234"))) {
+
+        if(Server.SERVER.login(userName,userPass)) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
