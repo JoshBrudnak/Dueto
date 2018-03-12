@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import dueto.dueto.servercom.Server;
 import dueto.dueto.templates.TableCell;
 
 public class MainActivity extends Activity {
@@ -71,9 +72,12 @@ public class MainActivity extends Activity {
         profilepic2.setImageResource(R.drawable.coop);
         thumbpic.setImageResource(R.drawable.cello);
         thumbpic2.setImageResource(R.drawable.guitars);
-
+        JSONObject test = new JSONObject();
         try
         {
+            test.put("artist", 1);
+            test.put("name", "Rabbits");
+
             jsonObject.put("artist", "John Dungeldo");
             jsonObject.put("description", "John Dungeldo is a striving idiot");
             jsonObject.put("profilepic", profilepic);
@@ -97,6 +101,10 @@ public class MainActivity extends Activity {
         TableCell cell2 = new TableCell(this, display, jsonObject2);
         t1.addView(cell);
         t1.addView(cell2);
+
+        JSONObject testvid = Server.SERVER.request("video", test);
+
+        //System.out.println(testvid.toString());
 
 
         //------------------------------------------------------------------------------------------

@@ -4,13 +4,14 @@ import android.os.AsyncTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Used to make requests to a server.
  */
@@ -63,6 +64,7 @@ public class Server
             }
             return new GeneralRequest(endpoint, requesttype).execute(information).get();
         }catch(Exception exc) {
+            System.out.println("Exception"+exc.getMessage());
             return null;
         }
     }
@@ -133,7 +135,7 @@ public class Server
         }
     }
 
-    private Map requestTask(String request_type, String endpoint, JSONObject request_body)
+    private JSONObject requestTask(String request_type, String endpoint, JSONObject request_body)
     {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(ADDRESS+endpoint).openConnection();
@@ -153,10 +155,21 @@ public class Server
             outputStream.flush();
             outputStream.close();
 
-            return conn.getHeaderFields();
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            return new JSONObject(response.toString());
         }
         catch(IOException |JSONException exc)
         {
+            System.out.println("Exception "+exc.getMessage());
             return null;
         }
     }
@@ -209,10 +222,10 @@ public class Server
         @Override
         protected JSONObject doInBackground(JSONObject... jsonObjects) {
             try {
-                Map jsonData = requestTask(type, endpoint, jsonObjects[0]);
-                return new JsonManager(jsonData).toJson();
-            }catch(JSONException jsexc)
+                return requestTask(type, endpoint, jsonObjects[0]);
+            }catch(Exception jsexc)
             {
+                System.out.println(jsexc.getMessage() + "\n" + jsexc.getLocalizedMessage());
                 return null;
             }
         }
