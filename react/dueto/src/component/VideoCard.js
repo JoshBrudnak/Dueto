@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, TextField, Typography } from 'material-ui'
+import { Card, Button, Typography } from 'material-ui'
 import { CardMedia, CardContent, CardActions } from 'material-ui/Card'
 import Musvideo from 'material-ui-icons/AccountCircle'
 import { getThumbnailUrl } from '../utils/fetchData.js'

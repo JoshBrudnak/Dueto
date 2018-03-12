@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Input, Button, TextField} from 'material-ui'
+import Header from '../component/Header.js'
 import {getProfileData, addVideo} from '../utils/fetchData.js'
 
 class Profile extends Component {
@@ -59,6 +60,7 @@ class Profile extends Component {
   render() {
     return (
       <div>
+        <Header/>
         <div>
           <TextField
             label="Video Name"

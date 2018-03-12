@@ -1,15 +1,3 @@
-function getSessionId() {
-    let cookies = document.cookie
-    let cookieParts = cookies.split("=")
-
-    if(cookieParts[0] == "SESSIONID") {
-      return cookieParts[1]
-    } 
-    else {
-      return ""
-    }
-}
-
 function encodeUrl(data) {
   const formBody = Object.keys(data)
     .map(
@@ -86,7 +74,7 @@ export const loginUser = async (username, password) => {
 
   const newData = await response
 
-  return "" 
+  return newData 
 }
 
 export const addVideo = async (formBody) => {

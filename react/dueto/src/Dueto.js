@@ -1,16 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Home from "./pages/Home.js"
 import Login from "./pages/Login.js"
 import Profile from "./pages/Profile.js"
 import Discover from "./pages/Discover.js"
 import Video from "./pages/Video.js"
 import CreateUser from "./pages/CreateUser.js"
-import {
-  BrowserRouter,
-  Link,
-  Route,
-  Switch,
-} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom"
 
 class Dueto extends Component {
   render() {
@@ -27,7 +22,7 @@ class Dueto extends Component {
           </Switch>
         </div>
       </BrowserRouter>
-    );
+    )
   }
 }
 

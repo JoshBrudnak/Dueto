@@ -38,37 +38,51 @@ class CreateUser extends Component {
       .catch(error => {})
   }
 
+  profilePicture = () => {
+    this.document.getElementById("profilePic").click()
+  }
+
   render() {
+    const fieldStyle = {
+      marginTop: 10
+    }
+
     return (
-      <div>
-        <Paper>
+      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Paper style={{display: "flex", flexDirection: "column", width: 250, padding: 40}}>
+          <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
           <TextField
             label="Name"
             name="name"
+            style={fieldStyle}
             value={this.state.name}
             onChange={this.textChange}
           />
           <TextField
             label="Username"
             name="username"
+            style={fieldStyle}
             value={this.state.username}
             onChange={this.textChange}
           />
           <TextField
             label="Biography"
             name="bio"
+            style={fieldStyle}
             value={this.state.bio}
             onChange={this.textChange}
           />
           <TextField
             label="Age"
             name="age"
+            style={fieldStyle}
             value={this.state.age}
             onChange={this.textChange}
           />
           <TextField
             label="Location"
             name="loc"
+            style={fieldStyle}
             value={this.state.loc}
             onChange={this.textChange}
           />
@@ -76,6 +90,7 @@ class CreateUser extends Component {
             label="Password"
             name="password"
             type="password"
+            style={fieldStyle}
             value={this.state.password}
             onChange={this.textChange}
           />
@@ -83,14 +98,27 @@ class CreateUser extends Component {
             label="Retype Password"
             name="repassword"
             type="password"
+            style={fieldStyle}
             value={this.state.repassword}
             onChange={this.textChange}
           />
+          <Typography style={{marginTop: 20}}>Account Avatar</Typography>
+          <Input 
+            id="profilePic" 
+            type="file"
+            style={{visibility: "hidden"}} 
+            value={this.state.videoName} 
+            onChange={this.videoChange}
+          />
+          <div style={{display: "flex", flexDirection: "row"}}>
+            <Button onClick={this.profilePicture}>Profile Picture</Button>
+            <Typography style={{marginLeft: 10}}>{this.state.videoName}</Typography> 
+          </div>
+          <div style={{marginTop: 20}}>
+            <Button onClick={this.create}>Create Account</Button>
+            <Button onClick={this.cancel}>Cancel</Button>
+          </div>
         </Paper>
-        <Typography>Account Avatar</Typography>
-        <Input type="file" value={this.state.videoName} onChange={this.videoChange}/>
-        <Button onClick={this.create}>Create Account</Button>
-        <Button onClick={this.cancel}>Cancel</Button>
       </div>
     );
   }

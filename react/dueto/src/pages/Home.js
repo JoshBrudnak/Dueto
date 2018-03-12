@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
-import { Paper, Tab, Tabs, IconButton, TextField } from 'material-ui'
-import AccountCircle from 'material-ui-icons/AccountCircle'
-import {Link} from 'react-router-dom'
-import Header from '../component/Header.js'
 import VideoCard from '../component/VideoCard.js'
-import {getVideoCards, getHomeData} from '../utils/fetchData.js'
+import Header from '../component/Header.js'
+import {getHomeData} from '../utils/fetchData.js'
 
 class Home extends Component {
   constructor() {
     super() 
 
     this.state = {
-      tab: undefined,
       videos: []
     }
   }
@@ -47,8 +43,6 @@ class Home extends Component {
   }
 
   render() {
-    const {tab} = this.state
-
     return (
       <div>
         <Header/>

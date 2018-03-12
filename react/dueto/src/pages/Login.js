@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { TextField, Button, Paper, Typography } from 'material-ui'
+import {Link} from 'react-router-dom'
 import {loginUser} from '../utils/fetchData.js'
 
 class Login extends Component {
@@ -33,10 +34,9 @@ class Login extends Component {
   }
 
   render() {
-    const loginStyle = {}
     return (
-      <div>
-        <Paper style={{padding: 40, margin: 40}}>
+      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Paper style={{padding: 40, margin: 40, width: 250}}>
           <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
           <div style={{display: "flex", flexDirection: "column"}}>
             <TextField
@@ -59,6 +59,10 @@ class Login extends Component {
             <Button onClick={this.cancel}>Cancel</Button>
           </div>
         </Paper>
+        <div style={{display: "flex"}}>
+          <Typography style={{marginLeft: 10}}>New to Dueto?</Typography>
+          <Link to="/createuser"> create account</Link>
+        </div>
       </div>
     );
   }
