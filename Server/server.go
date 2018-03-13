@@ -17,7 +17,7 @@ var db *sql.DB
 var templates *template.Template
 
 const (
-	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, avatar text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int);"
+	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, password text, avatar text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int);"
 	createVideoT   = "create table if not exists Video(id serial primary key, thumbnail text, artistId text, filePath text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
 	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, artistId text, message text, time timestamp);"
 	createGenreT   = "create table if not exists Genre(id serial primary key, name text, description text);"
@@ -74,6 +74,7 @@ func init() {
 	query(createArtistT)
 	query(createVideoT)
 	query(createCommentT)
+	query(createSessionT)
 
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
@@ -103,6 +104,8 @@ func main() {
 	http.HandleFunc("/api/createuser", createUser)
 	http.HandleFunc("/api/video", video)
 	http.HandleFunc("/api/addvideo", addVideo)
+	http.HandleFunc("/api/changeavatar", addAvatar)
+	http.HandleFunc("/api/genreimage", genreImage)
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":8080", nil)
 }

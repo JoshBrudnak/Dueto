@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Input, TextField, Button, Typography, Paper} from 'material-ui'
-import {loginUser, addUser} from '../utils/fetchData.js'
+import {loginUser, addUser, addAvatar} from '../utils/fetchData.js'
 
 class CreateUser extends Component {
   constructor() {
@@ -37,15 +37,33 @@ class CreateUser extends Component {
        
     addUser(userdata)
       .then(data => {
+
         loginUser(this.state.username, this.state.password)
          .then(data => { 
-           window.location = "/home"
+           const {avatarName, avatar} = this.state
+
+           let formData = new FormData()
+
+           formData.append("file", avatar)
+           formData.append("name", avatarName)
+
+           addAvatar(formData)
+             .then(data => { 
+                window.location = "/home"
+             })
+             .catch(error => {
+               console.error(error)
+             })
           })
           .catch(error => {
             console.error(error)
           })
+
+
       })
-      .catch(error => {})
+      .catch(error => { 
+         console.error(error)
+      })
   }
 
   avatarChange = (event) => {

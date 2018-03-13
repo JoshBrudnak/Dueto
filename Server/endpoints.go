@@ -315,6 +315,14 @@ func thumbnail(w http.ResponseWriter, r *http.Request) {
 	serveFile(w, r, "thumbnails")
 }
 
+func genreImage(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	genreName := r.URL.Query().Get("name")
+
+	filePath := "./data/genres/" + genreName + ".png"
+	http.ServeFile(w, r, filePath)
+}
+
 func createUser(w http.ResponseWriter, r *http.Request) {
 	var id string
 	var hashPassword string
@@ -333,11 +341,10 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	hash := string(bHash)
 
 	rows, err := db.Query(AddArtist, data.Username, data.Name, data.Age, hash, 0, data.Bio, 0, data.Loc)
-	defer rows.Close()
+	rows.Close()
 
 	authRows, err := db.Query(SelectUserAuth, data.Username)
 	logIfErr(err)
-	defer authRows.Close()
 
 	if authRows.Next() {
 		err = authRows.Scan(&id, &hashPassword)
@@ -345,6 +352,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "Unable to create user", http.StatusForbidden)
 	}
+	authRows.Close()
 
 	os.Mkdir("./data/videos/"+id, os.ModePerm)
 	os.Mkdir("./data/avatars/"+id, os.ModePerm)
@@ -469,4 +477,42 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 	rows, err = db.Query(AddVideo, artist, name, desc, filePath)
 	logIfErr(err)
 	rows.Close()
+}
+
+func addAvatar(w http.ResponseWriter, r *http.Request) {
+	var artist string
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, err := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	sessionId := cookie.Value
+
+	file, _, err := r.FormFile("file")
+	logIfErr(err)
+
+	name := r.FormValue("name")
+	data, err := ioutil.ReadAll(file)
+	logIfErr(err)
+
+	rows, err := db.Query(SelectAuthId, sessionId)
+	logIfErr(err)
+
+	rows.Next()
+	err = rows.Scan(&artist)
+	logIfErr(err)
+	rows.Close()
+
+	filePath := fmt.Sprintf("./data/avatars/%s/%s", artist, name)
+
+	f, err := os.Create(filePath)
+	logIfErr(err)
+
+	_, err = f.Write(data)
+	logIfErr(err)
+	f.Close()
 }

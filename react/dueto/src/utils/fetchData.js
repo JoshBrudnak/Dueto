@@ -108,6 +108,19 @@ export const addVideo = async (formBody) => {
   return newData
 }
 
+export const addAvatar = async (formBody) => {
+  const response = await fetch("/api/changeavatar", {
+    body: formBody,
+    credentials: 'include',
+    method: 'POST',
+    headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response
+
+  return newData
+}
+
 export const addUser = async (body) => {
   let formBody = JSON.stringify(body)
 
@@ -118,7 +131,7 @@ export const addUser = async (body) => {
 	headers: {Accept: 'application/json'}
   })
 
-  const newData = await response.json()
+  const newData = await response
 
   return newData
 }

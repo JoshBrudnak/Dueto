@@ -16,6 +16,7 @@ class Discover extends Component {
   componentDidMount() {
     getGenres()
       .then(data => {
+        console.log(data.GenreList)
         this.setState({genres: data.GenreList})
       })
       .catch(error => {
@@ -23,15 +24,31 @@ class Discover extends Component {
       })
   }
 
+  getCardRow = (index, cardsLen) => {
+    const rCards = []
+
+    for(let i = index; i < (index + 2) && i < this.state.genres.length; i++) {
+      let genre = this.state.genres[i]
+
+      rCards.push(
+        <div style={{margin: 40}}>
+          <GenreCard name={genre.Name} desc={genre.Description}/>
+        </div>
+      )
+    }
+   
+    return rCards
+  }
+
   getGenres = () => {
     const gCards = []
 
-    for(let i = 0; i < this.state.genres.length; i++) {
-      let genre = this.state.genres[i]
-
-      gCards.push(
-        <GenreCard style={{margin: 20}} name={genre.Name} desc={genre.Description}/>
-      )
+    for(let i = 0; i < this.state.genres.length; i += 2) {
+        gCards.push(
+          <div style={{display: "flex", flexDirection: "row"}}>
+            {this.getCardRow(i)}
+          </div>
+        )
     }
     
     return gCards
@@ -41,7 +58,7 @@ class Discover extends Component {
     return (
       <div>
         <Header/>
-        <div style={{margin: 20}}>
+        <div style={{margin: 20, display: "flex", flexDirection: "column", alignItems: "center"}}>
           {this.getGenres()}
         </div>
       </div>

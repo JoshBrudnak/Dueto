@@ -2,7 +2,7 @@ create table if not exists Artist(id serial primary key, username text, name tex
 create table if not exists Video(id serial primary key, thumbnail text, artistId int, filePath text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);
 create table if not exists Comment(id serial primary key, videoId int, artistId int, message text, time text);
 create table if not exists Genre(id serial primary key, name text, description text);
-create table if not exists Session(userId text, sessionKey text);
+create table if not exists Session(userId text, sessionKey text, time timestamp);
 
 insert into Artist(username, name, password, avatar, age, followers, followerCount, description, location, date, active, likeCount) VALUES('joeshmow', 'Joe Shmow', '$2a$10$VdPNYKHKomEf7aQhspANxOS4Y2vlAbgiOLcn5xWwaL2/NOOcETh5e$2a$10$nctfLFOnJLHkMLz1G3xYWead9Imsx4d8ji8iZNm4An7aWtqoRNiku', 'avatars/sampleAvatar.jpg', 32, 'jimbo, john, rob, brady', 4, 'Piano player', 'Detroit, Michigan', '20140312', true, 450);
 insert into Artist(username, name, password, avatar, age, followers, followerCount, description, location, date, active, likeCount) VALUES('johnDoe', 'John Doe', '$2a$10$VdPNYKHKomEf7aQhspANxOS4Y2vlAbgiOLcn5xWwaL2/NOOcETh5e$2a$10$nctfLFOnJLHkMLz1G3xYWead9Imsx4d8ji8iZNm4An7aWtqoRNiku', 'avatars/sampleAvatar.jpg', 56, 'rodney, robgrocowski', 2, 'Music Enthusiest', 'Santa Barbara, California', '20160723', true, 50);
@@ -22,7 +22,13 @@ insert into Comment(videoId, artistId, message, time) VALUES(4, 1, 'I think you 
 insert into Comment(videoId, artistId, message, time) VALUES(3, 2, 'interesting', '20161014');
 insert into Comment(videoId, artistId, message, time) VALUES(2, 3, 'Thanks for the comments', '20161209');
 
-insert into Genre(name, description) VALUES('classical', 'melodic usually orchestral instumental or vocal');
-insert into Genre(name, description) VALUES('rock', 'Guitar and band music');
-insert into Genre(name, description) VALUES('jazz', '');
-insert into Genre(name, description) VALUES('international', 'Music from other countries');
+insert into Genre(name, description) VALUES('Classical', 'melodic usually orchestral instumental or vocal');
+insert into Genre(name, description) VALUES('Rock', 'Guitar and band music');
+insert into Genre(name, description) VALUES('Jazz', '');
+
+insert into Genre(name) VALUES('Alternative');
+insert into Genre(name) VALUES('Ambient');
+insert into Genre(name) VALUES('Electronic');
+insert into Genre(name) VALUES('Latin');
+insert into Genre(name) VALUES('Pop');
+insert into Genre(name) VALUES('Indie');
