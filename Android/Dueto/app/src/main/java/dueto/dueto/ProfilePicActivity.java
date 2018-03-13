@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,10 +23,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
 import dueto.dueto.R;
 
 public class ProfilePicActivity extends AppCompatActivity {
-
+    private static final String TAG = "ProfilePicPreview";
     ImageView ivImage;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
 
@@ -88,7 +92,8 @@ public class ProfilePicActivity extends AppCompatActivity {
             if(requestCode==REQUEST_CAMERA){
 
                 Bundle bundle = data.getExtras();
-                final Bitmap bmp = (Bitmap) bundle.get("data");
+                Bitmap bmp = (Bitmap) bundle.get("data");
+                bmp = Bitmap.createScaledBitmap(bmp, 100, 100, false);
                 ivImage.setImageBitmap(bmp);
 
             }else if(requestCode==SELECT_FILE){

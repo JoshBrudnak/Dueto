@@ -60,7 +60,8 @@
         </activity>
         <activity
             android:name=".ProfilePicActivity" />
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity
+            android:name=".UserProfileActivity"></activity>
     </application>
 
 </manifest>

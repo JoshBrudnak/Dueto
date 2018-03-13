@@ -29,6 +29,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
-    <include layout="@layout/content_profile_pic" />
+    <include layout="@layout/activity_user_profile" />
 
 </android.support.design.widget.CoordinatorLayout>
