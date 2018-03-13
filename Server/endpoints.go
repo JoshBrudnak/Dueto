@@ -212,8 +212,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		artistRow, aErr := db.Query(SelectBasicArtistData, artistId)
 		logIfErr(aErr)
 		defer artistRow.Close()
-		rows.Next()
 
+		artistRow.Next()
 		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
 		logIfErr(err)
 
