@@ -22,8 +22,6 @@ class Login extends Component {
   }
 
   login = () => {
-    console.log(this.state.username)
-    console.log(this.state.password)
     loginUser(this.state.username, this.state.password)
       .then(data => { 
         window.location = "/home"

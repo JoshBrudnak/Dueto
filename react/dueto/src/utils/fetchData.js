@@ -31,6 +31,24 @@ export const getProfileData = async (name) => {
   return newData
 }
 
+export const getGenres = async () => {
+  const response = await fetch("/api/discover", { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
+}
+
+export const getGenreVideos = async (name) => {
+  const data = {
+     genre: name
+  }
+  const params = encodeUrl(data)
+  const response = await fetch("/api/genre?" + params, { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
+}
+
 export const getHomeData = async () => {
   const response = await fetch("/api/home", { credentials: "include" })
   const newData = await response.json()
