@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Input, TextField, Button, Typography, Paper} from 'material-ui'
-import {addUser} from '../utils/fetchData.js'
+import {loginUser, addUser} from '../utils/fetchData.js'
 
 class CreateUser extends Component {
   constructor() {
@@ -14,7 +14,9 @@ class CreateUser extends Component {
       bio: undefined, 
       avatar: undefined,
       age: undefined,
-      loc: undefined 
+      loc: undefined,
+      avatarPath: undefined, 
+      avatarName: "No file selected"
     }
   }
 
@@ -34,12 +36,25 @@ class CreateUser extends Component {
     }
        
     addUser(userdata)
-      .then(data => {})
+      .then(data => {
+        loginUser(this.state.username, this.state.password)
+         .then(data => { 
+           window.location = "/home"
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      })
       .catch(error => {})
   }
 
+  avatarChange = (event) => {
+    let file = event.target.files[0]
+    this.setState({avatarPath: event.target.value, avatarName: file.name, avatar: file})
+  }
+
   profilePicture = () => {
-    this.document.getElementById("profilePic").click()
+    document.getElementById("profilePic").click()
   }
 
   render() {
@@ -49,7 +64,7 @@ class CreateUser extends Component {
 
     return (
       <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <Paper style={{display: "flex", flexDirection: "column", width: 250, padding: 40}}>
+        <Paper style={{display: "flex", flexDirection: "column", width: 350, padding: 40}}>
           <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
           <TextField
             label="Name"
@@ -102,19 +117,19 @@ class CreateUser extends Component {
             value={this.state.repassword}
             onChange={this.textChange}
           />
-          <Typography style={{marginTop: 20}}>Account Avatar</Typography>
-          <Input 
-            id="profilePic" 
-            type="file"
-            style={{visibility: "hidden"}} 
-            value={this.state.videoName} 
-            onChange={this.videoChange}
-          />
-          <div style={{display: "flex", flexDirection: "row"}}>
+          <div style={{display: "flex", flexDirection: "row", alignItems: "baseline", marginTop: 20}}>
             <Button onClick={this.profilePicture}>Profile Picture</Button>
-            <Typography style={{marginLeft: 10}}>{this.state.videoName}</Typography> 
+            <Typography style={{marginLeft: 10}}>{this.state.avatarName}</Typography> 
           </div>
-          <div style={{marginTop: 20}}>
+          <Input 
+            id="profilePic"
+            type="file"
+            allow=".jpeg"
+            style={{visibility: "collapse"}} 
+            value={this.state.avatarPath} 
+            onChange={this.avatarChange}
+          />
+          <div style={{marginTop: 10}}>
             <Button onClick={this.create}>Create Account</Button>
             <Button onClick={this.cancel}>Cancel</Button>
           </div>
