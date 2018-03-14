@@ -33,7 +33,7 @@ func logIfErr(err error) {
 
 func init() {
 	var c config
-	file, err := os.Open("database.json")
+	file, err := os.Open("../database.json")
 	checkErr(err)
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(&c)

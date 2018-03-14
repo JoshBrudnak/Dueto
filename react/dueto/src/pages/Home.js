@@ -15,10 +15,13 @@ class Home extends Component {
   componentDidMount() {
     getHomeData()
       .then(data => {
-         this.setState({videos: data.VideoCards}) 
+         if(data != null && data.VideoCards != null) {
+           this.setState({videos: data.VideoCards}) 
+         }
       })
       .catch(error => {
-        window.location = "/login"
+        console.log(error)
+        //window.location = "/login"
       })
   }
 
@@ -29,6 +32,7 @@ class Home extends Component {
       const data = this.state.videos[i]
       cards.push(
         <VideoCard
+          style={{margin: 40}}
           artist={data.Artist.Id}
           desc={data.Desc}
           genre={data.Genre}
@@ -46,7 +50,9 @@ class Home extends Component {
     return (
       <div>
         <Header/>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         {this.getVideoCards()}
+        </div>
       </div>
     )
   }

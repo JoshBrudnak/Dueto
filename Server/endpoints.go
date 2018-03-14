@@ -22,8 +22,8 @@ const (
 	RemoveSession = "delete from Session where sessionkey = $1;"
 
 	SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
-	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
-	SelectExtArtistData   = "select username, name, followers, description, date, active, likeCount, id from Artist where username = $1;"
+	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
+	SelectExtArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
 	SelectArtistVideos    = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
 	SelectVideoComments   = "select message, user, timeStamp from Comment where videoId = $1"
 	SelectVideosByGenre   = "select filePath, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
@@ -112,6 +112,7 @@ type IntArtist struct {
 	Date               string
 	Active             string
 	LikeCount          string
+	Id                 string
 	VideoList          []Video
 }
 
@@ -148,25 +149,39 @@ func authenticate(cookie *http.Cookie) bool {
 	return false
 }
 
+func getUserId(sessionId string) string {
+    var id string
+	rows, err := db.Query(SelectAuthId, sessionId)
+	logIfErr(err)
+
+	rows.Next()
+	err = rows.Scan(&id)
+	logIfErr(err)
+	rows.Close()
+
+    return id
+}
+
 func profile(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var a IntArtist
-	var artistId int
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	username := r.URL.Query().Get("username")
-	cookie, err := r.Cookie("SESSIONID")
+	cookie,_ := r.Cookie("SESSIONID")
 
 	if !authenticate(cookie) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
 		return
 	}
 
-	rows, err := db.Query(SelectIntArtistData, username)
+    artistId := getUserId(cookie.Value)
+    a.Id = artistId
+
+	rows, err := db.Query(SelectIntArtistData, artistId)
 	checkErr(err)
 
 	rows.Next()
-	err = rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount, &artistId)
+	err = rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount)
 	logIfErr(err)
 	defer rows.Close()
 
@@ -191,7 +206,6 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var videos VideoList
 	var filepath string
-	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, err := r.Cookie("SESSIONID")
@@ -201,9 +215,12 @@ func homePage(w http.ResponseWriter, r *http.Request) {
         return
 	}
 
-	rows, err := db.Query(SelectArtistVideos, 1)
+    artistId := getUserId(cookie.Value)
+
+	rows, err := db.Query(SelectArtistVideos, artistId)
 	checkErr(err)
 	defer rows.Close()
+
 	for rows.Next() {
 		err = rows.Scan(&filepath, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
@@ -212,8 +229,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		artistRow, aErr := db.Query(SelectBasicArtistData, artistId)
 		logIfErr(aErr)
 		defer artistRow.Close()
-		rows.Next()
 
+		artistRow.Next()
 		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
 		logIfErr(err)
 
@@ -294,25 +311,38 @@ func genre(w http.ResponseWriter, r *http.Request) {
 	logIfErr(err)
 }
 
-func serveFile(w http.ResponseWriter, r *http.Request, fileType string) {
+func video(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	artistId := r.URL.Query().Get("artist")
 	videoName := r.URL.Query().Get("name")
 
-	filePath := "./data/" + fileType + "/" + artistId + "/" + videoName + ".mp4"
+	filePath := "./data/videos/" + artistId + "/" + videoName + ".mp4"
 	http.ServeFile(w, r, filePath)
 }
 
-func video(w http.ResponseWriter, r *http.Request) {
-	serveFile(w, r, "videos")
-}
-
 func avatar(w http.ResponseWriter, r *http.Request) {
-	serveFile(w, r, "avatars")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	artistId := r.URL.Query().Get("artist")
+
+	filePath := "./data/avatars/" + artistId + "/avatar.jpeg"
+	http.ServeFile(w, r, filePath)
 }
 
 func thumbnail(w http.ResponseWriter, r *http.Request) {
-	serveFile(w, r, "thumbnails")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	artistId := r.URL.Query().Get("artist")
+	name := r.URL.Query().Get("name")
+
+	filePath := "./data/thumbnails/" + artistId + "/" + name + ".jpeg"
+	http.ServeFile(w, r, filePath)
+}
+
+func genreImage(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	genreName := r.URL.Query().Get("name")
+
+	filePath := "./data/genres/" + genreName + ".png"
+	http.ServeFile(w, r, filePath)
 }
 
 func createUser(w http.ResponseWriter, r *http.Request) {
@@ -333,11 +363,10 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	hash := string(bHash)
 
 	rows, err := db.Query(AddArtist, data.Username, data.Name, data.Age, hash, 0, data.Bio, 0, data.Loc)
-	defer rows.Close()
+	rows.Close()
 
 	authRows, err := db.Query(SelectUserAuth, data.Username)
 	logIfErr(err)
-	defer authRows.Close()
 
 	if authRows.Next() {
 		err = authRows.Scan(&id, &hashPassword)
@@ -345,8 +374,10 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "Unable to create user", http.StatusForbidden)
 	}
+	authRows.Close()
 
 	os.Mkdir("./data/videos/"+id, os.ModePerm)
+	os.Mkdir("./data/thumbnails/"+id, os.ModePerm)
 	os.Mkdir("./data/avatars/"+id, os.ModePerm)
 }
 
@@ -381,7 +412,7 @@ func login(w http.ResponseWriter, r *http.Request) {
         rows.Close()
 
 		exp := time.Now().Add(time.Hour)
-		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Path: "/", Expires: exp}
+		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Path: "/", Expires: exp, HttpOnly: true}
 		http.SetCookie(w, &cookie)
 	}
 }
@@ -396,8 +427,8 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 
 	if err == nil {
-		exp := time.Now().AddDate(0, 0, 1)
-		cookie := http.Cookie{Name: "SESSIONID", Value: "", Expires: exp}
+		exp := time.Unix(0,0)
+		cookie := http.Cookie{Name: "SESSIONID", Value: "", Expires: exp, HttpOnly: true}
 		http.SetCookie(w, &cookie)
 	}
 }
@@ -427,17 +458,15 @@ func getThumbnail(artist string, name string) {
 }
 
 func addVideo(w http.ResponseWriter, r *http.Request) {
-	var artist string
-
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	cookie, err := r.Cookie("SESSIONID")
+	cookie,_ := r.Cookie("SESSIONID")
 
 	if !authenticate(cookie) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
 		return
 	}
 
-	sessionId := cookie.Value
+    artist := getUserId(cookie.Value)
 
 	file, _, err := r.FormFile("file")
 	logIfErr(err)
@@ -446,14 +475,6 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 	desc := r.FormValue("desc")
 	data, err := ioutil.ReadAll(file)
 	logIfErr(err)
-
-	rows, err := db.Query(SelectAuthId, sessionId)
-	logIfErr(err)
-
-	rows.Next()
-	err = rows.Scan(&artist)
-	logIfErr(err)
-	rows.Close()
 
 	filePath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
 
@@ -466,7 +487,34 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 
 	getThumbnail(artist, name)
 
-	rows, err = db.Query(AddVideo, artist, name, desc, filePath)
+	rows, err := db.Query(AddVideo, artist, name, desc, filePath)
 	logIfErr(err)
 	rows.Close()
+}
+
+func addAvatar(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie,_ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+    artist := getUserId(cookie.Value)
+
+	file, _, err := r.FormFile("file")
+	logIfErr(err)
+
+	data, err := ioutil.ReadAll(file)
+	logIfErr(err)
+
+	filePath := fmt.Sprintf("./data/avatars/%s/avatar.jpeg", artist)
+
+	f, err := os.Create(filePath)
+	logIfErr(err)
+
+	_, err = f.Write(data)
+	logIfErr(err)
+	f.Close()
 }
