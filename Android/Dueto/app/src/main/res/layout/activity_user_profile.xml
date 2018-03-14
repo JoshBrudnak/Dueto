@@ -33,9 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="User Profile"
-                android:textColor="@color/White"
                 android:layout_marginTop="-10dp"
+                android:hint="User Profile"
+                android:maxLength="10"
+                android:textColor="@color/White"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -72,15 +73,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Location..."
                 android:layout_marginTop="-115dp"
+                android:hint="Location"
+                android:maxLength="10"
                 android:textSize="15sp" />
+
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="-25dp"
-                android:text="Description..."
+                android:hint="Description"
+                android:maxLength="10"
                 android:textSize="15sp" />
 
         </LinearLayout>
