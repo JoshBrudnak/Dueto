@@ -68,7 +68,7 @@ public class TableCell extends TableRow
             likes = internal.getInt("likes");
 
             TableLayout tl = new TableLayout(context);
-            tl.setBackgroundColor(Color.WHITE);
+            tl.setBackgroundColor(Color.parseColor("#e6e6e6"));
 
             TableRow trUp = new TableRow(context);
 

@@ -12,6 +12,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/DGrey"
         android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -19,24 +20,27 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabSelectedTextColor="@color/Black"
+            app:tabSelectedTextColor="#00aced"
             app:tabTextColor="@color/Gray"
-            app:tabIndicatorColor="@color/Red">
+            app:tabIndicatorColor="@color/DGrey">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tabItem"
+                android:textSize="8sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tab_text_1" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tabItem2"
+                android:textSize="8sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tab_text_2" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tabItem3"
+                android:textSize="8sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tab_text_3" />
@@ -48,109 +52,9 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
         android:background="@color/White"
+        android:textSize="8sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-<!--    <ScrollView
-        android:id="@+id/sView"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:id="@+id/row1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/Timeline1"
-                android:minHeight="300dp">
-
-                <TabHost
-                    android:layout_width="200dip"
-                    android:layout_height="300dip">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TabWidget
-                            android:id="@android:id/tabs"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/White"/>
-
-                        <FrameLayout
-                            android:id="@android:id/tabcontent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <LinearLayout
-                                android:id="@messagesages"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/Notifications"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                            </LinearLayout>
-
-                        </FrameLayout>
-                    </LinearLayout>
-                </TabHost>
-
-                <VideoView
-                    android:id="@+id/videoView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/row2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/Timeline2"
-                android:minHeight="300dp">
-
-                <VideoView
-                    android:id="@+id/videoView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/row3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/Timeline3"
-                android:minHeight="300dp">
-
-                <VideoView
-                    android:id="@+id/videoView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </TableRow>
-
-        </TableLayout>
-    </ScrollView>-->
 </android.support.design.widget.CoordinatorLayout>

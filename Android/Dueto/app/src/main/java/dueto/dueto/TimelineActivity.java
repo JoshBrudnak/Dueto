@@ -41,7 +41,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MsgsFragment(), "messages");
+        adapter.addFragment(new MsgsFragment(), "Messages");
         adapter.addFragment(new NotifsFragment(), "Notifications");
         viewPager.setAdapter(adapter);
 

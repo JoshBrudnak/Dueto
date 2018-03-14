@@ -42,7 +42,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/menu"
-        app:backgroundTint="@color/Pink"
+        app:backgroundTint="@color/DFloatingButton"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/camera"
-            app:backgroundTint="@color/Pink" />
+            app:backgroundTint="@color/DFloatingButton" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/discoverButton"
@@ -80,7 +80,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/discover"
-            app:backgroundTint="@color/Pink" />
+            app:backgroundTint="@color/DFloatingButton" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/profileButton"
@@ -94,7 +94,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/profile"
-            app:backgroundTint="@color/Pink" />
+            app:backgroundTint="@color/DFloatingButton" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/homeButton"
@@ -107,7 +107,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/home"
-            app:backgroundTint="@color/Pink" />
+            app:backgroundTint="@color/DFloatingButton" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/messagesButton"
@@ -121,7 +121,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/messages"
-            app:backgroundTint="@color/Pink" />
+            app:backgroundTint="@color/DFloatingButton" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/coopButton"
@@ -134,7 +134,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/coop"
-            app:backgroundTint="@color/Pink" />
+            app:backgroundTint="@color/DFloatingButton" />
 
     </RelativeLayout>
 

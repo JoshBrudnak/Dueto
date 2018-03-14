@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -26,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -38,6 +40,8 @@ import java.io.InputStream;
 public class UserProfileActivity extends AppCompatActivity{
 
     private static final String TAG = "ProfilePicPreview";
+    private Button postButton;
+    private Button repostButton;
     ImageView firstView;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
 
@@ -57,15 +61,25 @@ public class UserProfileActivity extends AppCompatActivity{
             }
         });
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+//        postButton = (Button) findViewById(R.id.button1);
+//        repostButton = (Button) findViewById(R.id.button2);
 //
-//                SelectImage();
+//        postButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                postButton.setTextColor(Color.parseColor("#00aced"));
 //            }
 //        });
+//
+//        repostButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                repostButton.setTextColor(Color.parseColor("#00aced"));
+//            }
+//        });
+
     }
+
     public int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <resources>
+        <color android:name="button_pressed">#ff8a00</color>
+        <color android:name="button_focused">#ff8a00</color>
+        <color android:name="button_default">#1c76bb</color>
+    </resources>
+</selector>

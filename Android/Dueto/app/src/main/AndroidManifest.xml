@@ -6,6 +6,9 @@
         android:name="android.hardware.camera"
         android:required="false" />
     <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="false" />
+    <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
     <uses-feature
@@ -25,7 +28,7 @@
     <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- Ensures that the phone has permission to the internetz -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -45,7 +48,8 @@
         <activity
             android:name=".TimelineActivity"
             android:configChanges="orientation|screenSize"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -58,10 +62,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UserProfileActivity" />
         <activity
-            android:name=".ProfilePicActivity" />
-        <activity
-            android:name=".UserProfileActivity"></activity>
+            android:name=".VideoActivity"
+            android:label="@string/title_activity_video"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

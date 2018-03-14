@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 public class PostsFragment extends Fragment {
 
+    private boolean scrollable = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
