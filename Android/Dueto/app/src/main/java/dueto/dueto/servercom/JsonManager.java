@@ -3,6 +3,9 @@ package dueto.dueto.servercom;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,6 +30,11 @@ public class JsonManager
         }
     }
 
+    public JsonManager(JSONObject json)
+    {
+        this.json = json;
+    }
+
     @Override
     public String toString()
     {
@@ -38,4 +46,18 @@ public class JsonManager
         return json;
     }
 
+    public URL jsonToUrl(String url) throws IOException, JSONException
+    {
+        Iterator<String> iter = json.keys();
+
+        while(iter.hasNext())
+        {
+            String temp =iter.next();
+
+            url = url.concat(temp + "=" + json.getString(temp));
+            if(iter.hasNext())
+                url = url.concat("&");
+        }
+        return new URL(url);
+    }
 }

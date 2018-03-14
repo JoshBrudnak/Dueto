@@ -7,10 +7,14 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.HashMap;
 /**
  * Used to make requests to a server.
@@ -64,7 +68,9 @@ public class Server
             }
             return new GeneralRequest(endpoint, requesttype).execute(information).get();
         }catch(Exception exc) {
-            System.out.println("Exception"+exc.getMessage());
+            System.out.println(exc.getMessage());
+            for(StackTraceElement ste : exc.getStackTrace())
+                System.out.println(ste.getLineNumber() + " in " + ste.getMethodName() + " of " + ste.getClassName());
             return null;
         }
     }
@@ -87,12 +93,12 @@ public class Server
             //Creating Objects
             url = new URL(ADDRESS+"login");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            StringBuffer body = new StringBuffer();
+            //StringBuffer body = new StringBuffer();
 
             JsonManager manager;
             HashMap<String, String> sessionCookie = new HashMap<>();
 
-            System.out.println("debug: created objects");
+            //DEBUG: System.out.println("debug: created objects");
 
             //set up connection
             conn.setRequestMethod("POST");
@@ -100,14 +106,14 @@ public class Server
             conn.setConnectTimeout(5000);
             conn.setReadTimeout(5000);
 
-            System.out.println("debug: set up connection");
+            //DEBUG: System.out.println("debug: set up connection");
             //write request body
             DataOutputStream outputStream = new DataOutputStream(conn.getOutputStream());
             outputStream.writeBytes(loginData.toString());
             outputStream.flush();
             outputStream.close();
 
-            System.out.println("debug: wrote bytes");
+            //DEBUG: System.out.println("debug: wrote bytes");
             //get cookie from header
             String cookie = conn.getHeaderField("Set-Cookie");
 
@@ -116,7 +122,7 @@ public class Server
                 sessionCookie.put("session", cookie.split(";")[0]);
                 sessionCookie.put("path", cookie.split(";")[1].split("=")[1]);
                 sessionCookie.put("expiry", cookie.split(";")[2].split("=")[1]);
-                System.out.println("debug: has cookie");
+                //DEBUG: System.out.println("debug: has cookie");
             }
             else
             {
@@ -139,24 +145,31 @@ public class Server
     {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(ADDRESS+endpoint).openConnection();
-            StringBuffer body = new StringBuffer();
+            //StringBuffer body = new StringBuffer();
+            conn.setRequestMethod(request_type);
+            System.out.println("Request method set");
+
+            conn.setDoOutput(true);
+            System.out.println("output is set");
+
+            conn.setDoInput(true);
+            System.out.println("input is set");
 
             conn.setRequestProperty("Accept", "application/json");
             conn.setRequestProperty("Cookie", session_cookie.getString("session"));
-
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestMethod(request_type);
-            conn.setConnectTimeout(1000);
-            conn.setReadTimeout(2500);
 
             DataOutputStream outputStream = new DataOutputStream(conn.getOutputStream());
             outputStream.writeBytes(request_body.toString());
             outputStream.flush();
             outputStream.close();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    conn.getInputStream()));
+            //DEBUG: System.out.println(session_cookie.getString("session"));
+
+            conn.setConnectTimeout(1000);
+            conn.setReadTimeout(2500);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            System.out.println("Got inputStream: " + in);
             String inputLine;
             StringBuffer response = new StringBuffer();
 
@@ -165,11 +178,16 @@ public class Server
             }
             in.close();
 
+            System.out.println("Response: " + response.toString());
+
+            conn.disconnect();
             return new JSONObject(response.toString());
         }
         catch(IOException |JSONException exc)
         {
-            System.out.println("Exception "+exc.getMessage());
+            System.out.println("Exception "+exc.getMessage() + " Cause " + exc.getCause());
+            for(StackTraceElement ste : exc.getStackTrace())
+                System.out.println(ste.getLineNumber() + " in " + ste.getMethodName() + " of " + ste.getClassName());
             return null;
         }
     }
@@ -231,5 +249,20 @@ public class Server
         }
     }
 
+    public void downloadFile(JSONObject json,File file)
+    {
+        try {
+            URL url_with_params = new JsonManager(json).jsonToUrl(ADDRESS);
+            ReadableByteChannel rbc = Channels.newChannel(url_with_params.openStream());
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            fos.close();
+            rbc.close();
+        }
+        catch(IOException | JSONException ioexc)
+        {
+            System.out.println(ioexc);
+        }
+    }
 
 }

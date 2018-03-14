@@ -1,9 +1,9 @@
 package dueto.dueto.templates;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -16,11 +16,13 @@ import android.widget.VideoView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
 
 import dueto.dueto.R;
+import dueto.dueto.servercom.Server;
 
 
 /**
@@ -33,7 +35,8 @@ public class TableCell extends TableRow
                       profile;
     private VideoView videoView;
 
-    private String artist, description, time;
+    private String description, time;
+    private JSONObject artist;
 
     private int likes;
 
@@ -62,10 +65,10 @@ public class TableCell extends TableRow
 
         try {
             JSONObject internal = json;
-            artist = internal.getString("artist");
-            description = internal.getString("description");
-            time = internal.getString("time");
-            likes = internal.getInt("likes");
+            artist = internal.getJSONObject("Artist");
+            description = internal.getString("Desc");
+            time = internal.getString("Time");
+            likes = internal.getInt("Likes");
 
             TableLayout tl = new TableLayout(context);
             tl.setBackgroundColor(Color.parseColor("#e6e6e6"));
@@ -83,7 +86,7 @@ public class TableCell extends TableRow
             horLinLayout.setOrientation(LinearLayout.HORIZONTAL);
             
             TextView artistName = new TextView(context);
-            artistName.setText(artist);
+            artistName.setText(artist.getString("Name"));
             artistName.setTextColor(Color.BLACK);
             artistName.setTextSize(20);
 
@@ -96,12 +99,32 @@ public class TableCell extends TableRow
             nameLinLayout.addView(descriptionView);
             nameLinLayout.setMinimumWidth(width - width/7 - time.length()*24);
 
+            File file = new File("test.png");
+            try {
+                file.createNewFile();
+            }catch (IOException ioexc)
+            {
+                System.out.println(ioexc);
+            }
+
+//            Server.SERVER.downloadFile(new JSONObject().put("artist", "1").put("name", "Sample") , file);
+//            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+//            ImageView test = new ImageView(context);
+//            test.setImageBitmap(bitmap);
+//            //test.set
+
             thumbnail = (ImageView) internal.get("thumbpic");
             thumbnail.setMinimumWidth(width);
             thumbnail.setMinimumHeight(width);
             thumbnail.setMaxHeight(width);
             thumbnail.setMaxWidth(width);
             thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            thumbnail.setOnClickListener(e->
+            {
+
+                //TODO: insert video pla
+            });
 
             profile = (ImageView) internal.get("profilepic");
             profile.setMinimumHeight(width/7);
@@ -110,6 +133,7 @@ public class TableCell extends TableRow
             profile.setMaxHeight(width/7);
 
             profile.setOnClickListener(e->{
+                //TODO: insert link to profile here.
             });
 
             TextView timeView = new TextView(context);
@@ -121,6 +145,7 @@ public class TableCell extends TableRow
             horLinLayout.addView(nameLinLayout);
             horLinLayout.addView(timeView);
             trLow.addView(horLinLayout);
+            nameLinLayout.addView(createSmallLayout(context, likes));
             tl.addView(trUp);
             tl.addView(trLow);
             this.addView(tl);
@@ -147,14 +172,31 @@ public class TableCell extends TableRow
         //Create LikeBar
         View likeBar = new View(context);
         likeView.setImageResource(R.drawable.menu);
-        noOfLikesView.setText(likes);
+
+        DecimalFormat df = new DecimalFormat("0.#");
+
+        String likeString= Integer.toString(likes);
+
+        if(likes > 999 && likes < 1000000)
+            likeString = df.format((double) likes /1000.0) + "k";
+
+        else if(likes > 999999)
+            likeString = df.format((double) likes /1000000.0) + "m";
+
+        noOfLikesView.setText(likeString);
+
         //Resize
-        likeView.setMaxHeight(width/10);
-        likeView.setMaxWidth(width/10);
-        noOfLikesView.setTextSize(10);
+        likeView.setMaxHeight(width/100);
+        likeView.setMaxWidth(width/100);
+        likeView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        likeView.setScaleX((float) 0.5);
+        likeView.setScaleY((float) 0.5);
+        noOfLikesView.setTextSize(13);
         //add to smallLayout
         output.addView(likeView);
         output.addView(noOfLikesView);
+
+        System.out.println("createSmallLayout called and executed");
 
         return output;
     }

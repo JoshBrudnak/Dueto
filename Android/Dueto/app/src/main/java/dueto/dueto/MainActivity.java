@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     private Button SignIn;
     private Button Notifications;
     private int bVisibility = View.INVISIBLE;
-    private int menuButtonRotation = 45;
+    private int menuButtonRotation = 0;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -75,22 +75,22 @@ public class MainActivity extends Activity {
         JSONObject test = new JSONObject();
         try
         {
-            test.put("artist", 1);
-            test.put("name", "Rabbits");
+//            test.put("artist", 1);
+//            test.put("name", "Sample");
 
-            jsonObject.put("artist", "John Dungeldo");
-            jsonObject.put("description", "John Dungeldo is a striving idiot");
+            jsonObject.put("Artist", new JSONObject().put("Name", "Arnold Schwarzenegger"));
+            jsonObject.put("Desc", "John Dungeldo is a striving idiot");
             jsonObject.put("profilepic", profilepic);
             jsonObject.put("thumbpic", thumbpic);
-            jsonObject.put("time", "1d");
-            jsonObject.put("likes", "1");
+            jsonObject.put("Time", "1d");
+            jsonObject.put("Likes", "1512000");
 
-            jsonObject2.put("artist", "John Dungeldo");
-            jsonObject2.put("description", "John Dungeldo John Dungeldo John Dungeldo");
+            jsonObject2.put("Artist", new JSONObject().put("Name", "John Dungeldo"));
+            jsonObject2.put("Desc", "John Dungeldo John Dungeldo John Dungeldo");
             jsonObject2.put("profilepic", profilepic2);
             jsonObject2.put("thumbpic", thumbpic2);
-            jsonObject2.put("time", "2d");
-            jsonObject2.put("likes", "2");
+            jsonObject2.put("Time", "2d");
+            jsonObject2.put("Likes", "2520");
         }
         catch(JSONException js)
         {
@@ -102,11 +102,7 @@ public class MainActivity extends Activity {
         t1.addView(cell);
         t1.addView(cell2);
 
-        JSONObject testvid = Server.SERVER.request("video", test);
-
-        //System.out.println(testvid.toString());
-
-
+        JSONObject home = Server.SERVER.request("home", test);
         //------------------------------------------------------------------------------------------
 
 
@@ -148,7 +144,7 @@ public class MainActivity extends Activity {
         //Setting button visibility to invisible
         constr.setVisibility(bVisibility);
         menuButton.setRotation(menuButtonRotation);
-        menuButtonRotation = 0;
+        menuButtonRotation = 45;
         bVisibility = View.VISIBLE;
 
         menuButton.setOnClickListener(new View.OnClickListener() {
