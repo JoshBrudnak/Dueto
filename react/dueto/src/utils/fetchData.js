@@ -1,3 +1,19 @@
+export const eraseCookie = () => {   
+    document.cookie = 'SESSIONID=; Max-Age=0;';  
+}
+
+export const getSessionId = () => {
+    let cookies = document.cookie
+    let cookieParts = cookies.split("=")
+
+    if(cookieParts[0] === "SESSIONID") {
+      return cookieParts[1]
+    } 
+    else {
+      return ""
+    }
+}
+
 function encodeUrl(data) {
   const formBody = Object.keys(data)
     .map(
@@ -52,6 +68,7 @@ export const getGenreVideos = async (name) => {
 export const getHomeData = async () => {
   const response = await fetch("/api/home", { credentials: "include" })
   const newData = await response.json()
+  console.log(newData)
 
   return newData
 }
@@ -85,6 +102,18 @@ export const loginUser = async (username, password) => {
 
   const response = await fetch("/api/login", {
     body: formBody,
+    credentials: 'include',
+    method: 'POST',
+    headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response
+
+  return newData 
+}
+
+export const logoutUser = async () => {
+  const response = await fetch("/api/logout", {
     credentials: 'include',
     method: 'POST',
     headers: {Accept: 'application/json'}

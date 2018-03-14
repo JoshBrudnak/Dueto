@@ -103,6 +103,8 @@ func main() {
 	http.HandleFunc("/api/logout", logout)
 	http.HandleFunc("/api/createuser", createUser)
 	http.HandleFunc("/api/video", video)
+	http.HandleFunc("/api/avatar", avatar)
+	http.HandleFunc("/api/thumbnail", thumbnail)
 	http.HandleFunc("/api/addvideo", addVideo)
 	http.HandleFunc("/api/changeavatar", addAvatar)
 	http.HandleFunc("/api/genreimage", genreImage)

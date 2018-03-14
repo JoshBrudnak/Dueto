@@ -1,8 +1,28 @@
 import React, { Component } from 'react'
 import { Paper, Tab, Tabs, Button, TextField } from 'material-ui'
 import {Link} from 'react-router-dom'
+import {getSessionId, logoutUser, eraseCookie} from '../utils/fetchData.js'
 
 class Header extends Component {
+  constructor() {
+    super()
+  
+    this.state = {
+      auth: false
+    }
+  }
+
+  componentDidMount() {
+    let session = getSessionId
+
+    if(session !== "") {
+      this.setState({auth: true})
+    }
+    else {
+      this.setState({auth: false})
+    }
+  }
+
   tabChange = (event, value) => {
     switch(value) {
       case 0:
@@ -17,7 +37,33 @@ class Header extends Component {
       default:
         break;
     } 
-        
+  }
+
+  login = () => {
+    document.getElementById("login").click()
+  }
+ 
+  logout = () => {
+    logoutUser()
+      .then(data => {
+        eraseCookie()
+        window.location = "/logout"
+      })
+      .catch(error => {
+      })
+  }
+ 
+  getAuthButton = () => {
+    if(this.state.auth) {
+      return (
+        <Button onClick={this.logout}>Logout</Button>
+      )
+    }
+    else {
+      return (
+        <Button onClick={this.login}>Login</Button>
+      )
+    }
   }
 
   render() {
@@ -33,21 +79,14 @@ class Header extends Component {
           </div>
           <div style={{gridColumn: 3}}>
             <TextField id="search" type="search" margin="normal"/>
-            <Link to="/login">
-              <Button>
-                Login
-              </Button>
-            </Link>
-            <Link to="/createuser">
-              <Button>
-                Create User 
-              </Button>
-            </Link>
+            {this.getAuthButton()}
           </div>
         </Paper>
         <Link id="home" to="/home" style={{visibility: "hidden"}}/>
         <Link id="profile" to="/profile" style={{visibility: "hidden"}}/>
         <Link id="discover" to="/discover" style={{visibility: "hidden"}}/>
+        <Link id="logout" to="/logout" style={{visibility: "collapse"}}/>
+        <Link id="login" to="/login" style={{visibility: "collapse"}}/>
       </div>
     )
   }

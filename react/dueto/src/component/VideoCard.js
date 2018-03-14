@@ -1,24 +1,22 @@
 import React, { Component } from 'react'
 import { Card, Button, Typography } from 'material-ui'
 import { CardMedia, CardContent, CardActions } from 'material-ui/Card'
-import Musvideo from 'material-ui-icons/AccountCircle'
 import { getThumbnailUrl } from '../utils/fetchData.js'
 
 class VideoCard extends Component {
   getVideoImage() {
     let image = getThumbnailUrl(this.props.artist, this.props.name)
-
-    if (image === undefined) {
-      return <Musvideo/>
-    }
+    console.log(image)
     
     return image
   }
 
   render() {
     return (
-        <Card>
-          <CardMedia image={this.getVideoImage()}/>
+        <Card style={{width: 400, margin: 40}}>
+          <CardMedia>
+            <img alt={this.props.name} src={this.getVideoImage()} style={{width: 400}}/>
+          </CardMedia>
           <CardContent>
             <Typography variant="headline" component="h2">
               {this.props.name}

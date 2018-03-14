@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Home from "./pages/Home.js"
 import Login from "./pages/Login.js"
+import Logout from "./pages/Logout.js"
 import Profile from "./pages/Profile.js"
 import EditProfile from "./pages/EditProfile.js"
 import Discover from "./pages/Discover.js"
@@ -19,6 +20,7 @@ class Dueto extends Component {
             <Route path="/profile" component={Profile}/>
             <Route path="/editprofile" component={EditProfile}/>
             <Route path="/login" component={Login}/>
+            <Route path="/logout" component={Logout}/>
             <Route path="/discover" component={Discover}/>
             <Route path="/video" component={Video}/>
             <Route path="/genre:name" component={Genre}/>
