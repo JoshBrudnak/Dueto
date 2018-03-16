@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#ff000000</color>
     <color name="colorAccent">#FF4081</color>
     <color name="test">#FFDD00</color>
-    <color name="menuBG">#803F51B5</color>
+    <color name="menuBG">#803F51FB</color>
     <color name="LightPink">#ffe6e6</color>
     <color name="Pink">#ffcccc</color>
     <color name="DarkPink">#ff9999</color>
@@ -12,4 +12,16 @@
     <color name="Gray">#8B8B95</color>
     <color name="Black">#000000</color>
     <color name="Red">#b30000</color>
+
+    <color name="DBlue">#33659a</color>
+    <color name="DWhite">#fefefe</color>
+    <color name="DGrey">#f7f7f7</color>
+    <color name="DLightBlue">#dde7f0</color>
+    <color name="DFloatingButton">#69d4fe</color>
+    <color name="DTimeline">#e6e6e6</color>
+    <color name="DProfileMusic">#118be0</color>
+
+    <color name="Transparent_White">#7F000000</color>
+    <color name="black_overlay">#66000000</color>
+
 </resources>

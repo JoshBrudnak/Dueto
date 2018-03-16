@@ -2,14 +2,13 @@ package dueto.dueto;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import dueto.dueto.servercom.Server;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
         Name = (EditText)findViewById(R.id.nameText);
@@ -35,14 +35,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validID(Name.getText().toString(), Password.getText().toString());
+
+                System.out.println("reached 1");
             }
         });
-
     }
 
     private void validID(String userName, String userPass) {
-        if((userName.equals("Admin")) && (userPass.equals("1234"))) {
-            Intent intent = new Intent(LoginActivity.this, TimelineActivity.class);
+
+        if(Server.SERVER.login(userName,userPass)) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
         else {

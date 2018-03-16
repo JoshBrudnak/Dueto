@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/live_preview_container"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    tools:context="dueto.dueto.CameraActivity">
+
+    <RelativeLayout
+        android:id="@+id/live_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/takePictureButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:text="Take Picture"/>
+
+</RelativeLayout>
