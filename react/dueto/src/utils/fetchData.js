@@ -37,11 +37,7 @@ function getArtistData(artistId, video, type) {
 }
 
 export const getProfileData = async (name) => {
-  const data = {
-     username: name
-  }
-  const params = encodeUrl(data)
-  const response = await fetch("/api/profile?" + params, { credentials: "include" })
+  const response = await fetch("/api/profile", { credentials: "include" })
   const newData = await response.json()
 
   return newData
