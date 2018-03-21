@@ -108,6 +108,7 @@ func main() {
 	http.HandleFunc("/api/addvideo", addVideo)
 	http.HandleFunc("/api/changeavatar", addAvatar)
 	http.HandleFunc("/api/genreimage", genreImage)
+	http.HandleFunc("/api/edituser", editprofile)
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":8080", nil)
 }

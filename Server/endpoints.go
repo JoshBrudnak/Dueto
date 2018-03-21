@@ -33,6 +33,8 @@ const (
 	SelectSession         = "select count(userId) from session where sessionkey = $1;"
 	SetExpirationTime     = "expire from session after $1 where sessionKey= $1;"
 	SelectAuthId          = "select userId from session where sessionKey = $1;"
+
+    UpdateArtist = "update artist set username = $1, name = $2, description = $3, password = $4 where id = $5;"
 )
 
 type Authentication struct {
@@ -381,6 +383,39 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	os.Mkdir("./data/avatars/"+id, os.ModePerm)
 }
 
+func editprofile(w http.ResponseWriter, r *http.Request) {
+	var id string
+	var hashPassword string
+	var data NewUser
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	decoder := json.NewDecoder(r.Body)
+	decoder.Decode(&data)
+
+	if data.Password != data.Repassword {
+		http.Error(w, "Passwords do not match", http.StatusNotAcceptable)
+		return
+	}
+
+	bHash, err := bcrypt.GenerateFromPassword([]byte(data.Password), 1)
+	hash := string(bHash)
+
+	rows, err := db.Query(UpdateArtist, data.Username, data.Name, hash, data.Bio)
+	rows.Close()
+
+	authRows, err := db.Query(SelectUserAuth, data.Username)
+	logIfErr(err)
+
+	if authRows.Next() {
+		err = authRows.Scan(&id, &hashPassword)
+		logIfErr(err)
+	} else {
+		http.Error(w, "Unable to create user", http.StatusForbidden)
+	}
+
+	authRows.Close()
+}
+
 func login(w http.ResponseWriter, r *http.Request) {
 	var id int
 	var hashPassword string
@@ -394,6 +429,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 	if auth.Username == "" || auth.Password == "" {
 		return
 	}
+    fmt.Println(auth.Username)
+    fmt.Println(auth.Password)
 
 	rows, err := db.Query(SelectUserAuth, auth.Username)
 	logIfErr(err)
@@ -414,7 +451,9 @@ func login(w http.ResponseWriter, r *http.Request) {
 		exp := time.Now().Add(time.Hour)
 		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Path: "/", Expires: exp, HttpOnly: true}
 		http.SetCookie(w, &cookie)
-	}
+	} else {
+      http.Error(w, "Incorrect username or password", 401)
+    }
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {

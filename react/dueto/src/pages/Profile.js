@@ -51,8 +51,8 @@ class Profile extends Component {
     return (
       <div>
         <Header/>
-        <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-          <Paper style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+          <Paper style={{padding: 10, width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{display: "flex", flexDirection: "row"}}> 
               <IconButton onClick={this.edit}>
                 <Settings/>

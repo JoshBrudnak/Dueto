@@ -105,7 +105,7 @@ export const loginUser = async (username, password) => {
 
   const newData = await response
 
-  return newData 
+  return newData.status 
 }
 
 export const logoutUser = async () => {
@@ -139,6 +139,21 @@ export const addAvatar = async (formBody) => {
     credentials: 'include',
     method: 'POST',
     headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response
+
+  return newData
+}
+
+export const updateUser = async (body) => {
+  let formBody = JSON.stringify(body)
+
+  const response = await fetch("/api/updateuser", {
+	body: formBody,
+	credentials: 'include',
+	method: 'POST',
+	headers: {Accept: 'application/json'}
   })
 
   const newData = await response
