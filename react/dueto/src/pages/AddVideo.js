@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Input, Button, TextField, Paper, Typography} from 'material-ui'
 import Header from '../component/Header.js'
+import GenreDialog from '../component/GenreDialog.js'
 import {Link} from "react-router-dom"
 import {getProfileData, addVideo} from '../utils/fetchData.js'
 
@@ -15,6 +16,9 @@ class AddVideo extends Component {
       video: undefined,
       error: false,
       desc: "", 
+      genre: "",
+      genreText: "No genre selected",
+      chGenre: false
     }
   }
 
@@ -64,12 +68,23 @@ class AddVideo extends Component {
   }
 
   changeValue = (event) => {
-    console.log(event.target.name)
     this.setState({[event.target.name]: event.target.value});
   }
 
   cancel = (event) => {
     document.getElementById("done").click()
+  }
+
+  changeGenre = () => {
+    this.setState({chGenre: true})
+  }
+ 
+  setGenre = (value) => {
+    this.setState({genre: value, genreText: value, chGenre: false})
+  }
+
+  closeDialog = () => {
+    this.setState({chGenre: false})
   }
 
   render() {
@@ -78,29 +93,25 @@ class AddVideo extends Component {
       <Header/>
       <div style={{margin: 20, display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Paper style={{display: "flex", flexDirection: "column", width: 350, padding: 40}}>
+          <Typography style={{fontSize: "large"}}>New Video</Typography>
           <div>
             <TextField
               label="Video Name"
               name="name"
-              margin="normal"
-              value={this.state.username}
+              value={this.state.name}
               onChange={this.changeValue}
             />
             <TextField
               label="Description"
               name="desc"
-              margin="normal"
-              value={this.state.username}
+              value={this.state.desc}
               onChange={this.changeValue}
             />
-            <TextField
-              label="Genre"
-              name="genre"
-              margin="normal"
-              value={this.state.username}
-              onChange={this.changeValue}
-            />
-            <div style={{display: "flex", flexDirection: "row", alignItems: "baseline", marginTop: 10}}>
+            <div style={{display: "flex", flexDirection: "row", alignItems: "baseline", marginTop: 20}}>
+              <Button onClick={this.changeGenre}>Genre</Button>
+              <Typography style={{marginLeft: 10}}>{this.state.genreText}</Typography>
+            </div>
+            <div style={{display: "flex", flexDirection: "row", alignItems: "baseline", marginTop: 20}}>
               <Button onClick={this.videoClick}>Video</Button>
               <Typography style={{marginLeft: 10}}>{this.state.videoTitle}</Typography>
             </div>
@@ -115,6 +126,7 @@ class AddVideo extends Component {
               <Button onClick={this.uploadVideo}>Upload</Button>
               <Button onClick={this.cancel}>Cancel</Button>
             </div>
+            <GenreDialog curr={this.state.genre} open={this.state.chGenre} genre={this.setGenre} close={this.closeDialog}/>
             </div>
           </Paper>
         </div>

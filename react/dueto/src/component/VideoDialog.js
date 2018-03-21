@@ -6,7 +6,6 @@ import {getVideoUrl} from "../utils/fetchData.js"
 class VideoDialog extends Component {
   getVideoUrl() {
     let image = getVideoUrl(this.props.artist, this.props.name)
-    console.log(image)
     
     return image
   }

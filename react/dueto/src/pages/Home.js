@@ -20,7 +20,6 @@ class Home extends Component {
          }
       })
       .catch(error => {
-        console.log(error)
         window.location = "/login"
       })
   }

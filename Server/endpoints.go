@@ -429,8 +429,6 @@ func login(w http.ResponseWriter, r *http.Request) {
 	if auth.Username == "" || auth.Password == "" {
 		return
 	}
-    fmt.Println(auth.Username)
-    fmt.Println(auth.Password)
 
 	rows, err := db.Query(SelectUserAuth, auth.Username)
 	logIfErr(err)

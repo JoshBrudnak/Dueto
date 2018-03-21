@@ -17,7 +17,6 @@ class Genre extends Component {
 
     getGenreVideos(params.name)
       .then(data => {
-         console.log(data)
          this.setState({videos: data.VideoCards}) 
       })
       .catch(error => {

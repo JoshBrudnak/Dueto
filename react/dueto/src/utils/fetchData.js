@@ -64,7 +64,6 @@ export const getGenreVideos = async (name) => {
 export const getHomeData = async () => {
   const response = await fetch("/api/home", { credentials: "include" })
   const newData = await response.json()
-  console.log(newData)
 
   return newData
 }
@@ -128,7 +127,7 @@ export const addVideo = async (formBody) => {
     headers: {Accept: 'application/json'}
   })
 
-  const newData = await response.json()
+  const newData = await response
 
   return newData
 }
