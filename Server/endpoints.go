@@ -23,7 +23,7 @@ const (
 
 	SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
 	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
-	SelectExtArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
+	SelectExtArtistData   = "select username, name, description, date, active, followerCount, likeCount from Artist where id = $1;"
 	SelectArtistVideos    = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
 	SelectVideoComments   = "select message, user, timeStamp from Comment where videoId = $1"
 	SelectVideosByGenre   = "select filePath, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
@@ -70,7 +70,7 @@ type Genres struct {
 type BasicArtist struct {
 	Id       string
 	Name     string
-	UserName string
+	Username string
 	Avatar   string
 }
 
@@ -96,16 +96,16 @@ type ExtArtist struct {
 	Name          string
 	Username      string
 	Age           string
-	FollowerCount string
-	Bio           string
-	Date          string
 	Active        string
+	Desc          string
+	Date          string
+	FollowerCount string
 	LikeCount     string
 	VideoList     []Video
 }
 
 type IntArtist struct {
-	UserName           string
+	Username           string
 	Name               string
 	AccountCreationDay string
 	FollowerCount      string
@@ -164,6 +164,43 @@ func getUserId(sessionId string) string {
     return id
 }
 
+func artist(w http.ResponseWriter, r *http.Request) {
+	var v Video
+	var a ExtArtist
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie,_ := r.Cookie("SESSIONID")
+	artistId := r.URL.Query().Get("artist")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	rows, err := db.Query(SelectIntArtistData, artistId)
+	checkErr(err)
+
+	rows.Next()
+	err = rows.Scan(&a.Username, &a.Name, &a.Desc, &a.Date, &a.Active, &a.FollowerCount, &a.LikeCount)
+	logIfErr(err)
+	defer rows.Close()
+
+	videoRows, viderr := db.Query(SelectArtistVideos, artistId)
+	logIfErr(viderr)
+	defer videoRows.Close()
+
+	for videoRows.Next() {
+		err = videoRows.Scan(&v.File, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		logIfErr(err)
+
+		a.VideoList = append(a.VideoList, v)
+	}
+
+	if err := json.NewEncoder(w).Encode(a); err != nil {
+		logIfErr(err)
+	}
+}
+
 func profile(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var a IntArtist
@@ -183,7 +220,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	checkErr(err)
 
 	rows.Next()
-	err = rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount)
+	err = rows.Scan(&a.Username, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount)
 	logIfErr(err)
 	defer rows.Close()
 
@@ -233,7 +270,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		defer artistRow.Close()
 
 		artistRow.Next()
-		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
+		err = artistRow.Scan(&a.Name, &a.Username, &a.Avatar)
 		logIfErr(err)
 
 		a.Id = artistId
@@ -300,7 +337,7 @@ func genre(w http.ResponseWriter, r *http.Request) {
 		defer artistRow.Close()
 		rows.Next()
 
-		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
+		err = artistRow.Scan(&a.Name, &a.Username, &a.Avatar)
 		logIfErr(err)
 
 		a.Id = artistId
