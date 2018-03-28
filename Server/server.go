@@ -117,6 +117,8 @@ func main() {
 	http.HandleFunc("/api/genreimage", genreImage)
 	http.HandleFunc("/api/edituser", editprofile)
 	http.HandleFunc("/api/artist", artist)
+	http.HandleFunc("/api/zipcode", searchByZipCode)
+	http.HandleFunc("/api/city", searchByCity)
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":8080", nil)
 }

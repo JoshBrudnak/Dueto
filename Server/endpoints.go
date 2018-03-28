@@ -31,8 +31,9 @@ const (
 	SelectGenres          = "select name, description from Genre;"
 	SelectUserAuth        = "select id, password from artist where username = $1;"
 	SelectSession         = "select count(userId) from session where sessionkey = $1;"
-	SetExpirationTime     = "expire from session after $1 where sessionKey= $1;"
 	SelectAuthId          = "select userId from session where sessionKey = $1;"
+	SelectArtistByZip     = "select id, name, username from artist where location::json->>'zip_code'::text = (select location::json->>'zip_code' from artist where id = $1)::text;"
+	SelectArtistByCity    = "select id, name, username from artist where location::json->>'city'::text = (select location::json->>'city' from artist where id = $1)::text;"
 
 	UpdateArtist = "update artist set username = $1, name = $2, description = $3, password = $4 where id = $5;"
 )
@@ -71,7 +72,6 @@ type BasicArtist struct {
 	Id       string
 	Name     string
 	Username string
-	Avatar   string
 }
 
 type Video struct {
@@ -270,7 +270,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		defer artistRow.Close()
 
 		artistRow.Next()
-		err = artistRow.Scan(&a.Name, &a.Username, &a.Avatar)
+		err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
 		logIfErr(err)
 
 		a.Id = artistId
@@ -343,7 +343,7 @@ func genre(w http.ResponseWriter, r *http.Request) {
 		defer artistRow.Close()
 		rows.Next()
 
-		err = artistRow.Scan(&a.Name, &a.Username, &a.Avatar)
+		err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
 		logServerErr(w, err)
 
 		a.Id = artistId
@@ -597,4 +597,60 @@ func addAvatar(w http.ResponseWriter, r *http.Request) {
 	_, err = f.Write(data)
 	logServerErr(w, err)
 	f.Close()
+}
+
+func searchByZipCode(w http.ResponseWriter, r *http.Request) {
+	var a BasicArtist
+	var artistList []BasicArtist
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	artistId := getUserId(cookie.Value)
+	rows, err := db.Query(SelectArtistByZip, artistId)
+	checkErr(err)
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&a.Id, &a.Name, &a.Username)
+		logIfErr(err)
+
+		artistList = append(artistList, a)
+	}
+
+	err = json.NewEncoder(w).Encode(artistList)
+	logServerErr(w, err)
+}
+
+func searchByCity(w http.ResponseWriter, r *http.Request) {
+	var a BasicArtist
+	var artistList []BasicArtist
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	artistId := getUserId(cookie.Value)
+	rows, err := db.Query(SelectArtistByCity, artistId)
+	checkErr(err)
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&a.Id, &a.Name, &a.Username)
+		logIfErr(err)
+
+		artistList = append(artistList, a)
+	}
+
+	err = json.NewEncoder(w).Encode(artistList)
+	logServerErr(w, err)
 }
