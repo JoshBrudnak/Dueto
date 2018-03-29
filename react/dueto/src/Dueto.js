@@ -9,7 +9,7 @@ import Discover from "./pages/Discover.js"
 import Video from "./pages/Video.js"
 import Genre from "./pages/Genre.js"
 import CreateUser from "./pages/CreateUser.js"
-import {BrowserRouter, Route, Switch} from "react-router-dom"
+import {BrowserRouter, Switch, Route} from "react-router-dom"
 
 class Dueto extends Component {
   render() {
@@ -25,7 +25,7 @@ class Dueto extends Component {
             <Route path="/logout" component={Logout}/>
             <Route path="/discover" component={Discover}/>
             <Route path="/video" component={Video}/>
-            <Route path="/genre:name" component={Genre}/>
+            <Route name="genre" path="/genre/:name" component={Genre}/>
             <Route path="/createuser" component={CreateUser}/>
           </Switch>
         </div>

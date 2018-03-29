@@ -1,3 +1,12 @@
+//AIzaSyDKscT5t4lFXsQCS2GRoctWJw5aGjSHJ0k
+
+export const getLocation = async () => {
+  const response = await fetch('https://freegeoip.net/json/', {})
+  const newData = await response.json()
+ 
+  return newData 
+}
+
 export const eraseCookie = () => {   
     document.cookie = 'SESSIONID=; Max-Age=0;';  
 }
@@ -70,6 +79,20 @@ export const getHomeData = async () => {
 
 export const getDiscoverData = async () => {
   const response = await fetch("/api/discover", { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
+}
+
+export const getArtistsByZip = async () => {
+  const response = await fetch("/api/zipcode", { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
+}
+
+export const getArtistsByCity = async () => {
+  const response = await fetch("/api/city", { credentials: "include" })
   const newData = await response.json()
 
   return newData

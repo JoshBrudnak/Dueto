@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import VideoCard from '../component/VideoCard.js'
 import Header from '../component/Header.js'
+import ArtistList from '../component/ArtistList.js'
 import {getHomeData} from '../utils/fetchData.js'
 
 class Home extends Component {
   constructor() {
-    super() 
+    super()
 
     this.state = {
       videos: []
@@ -49,8 +50,11 @@ class Home extends Component {
     return (
       <div>
         <Header/>
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        {this.getVideoCards()}
+        <div style={{display: "flex", flexDirection: "row"}}>
+          <ArtistList/>
+          <div style={{width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
+            {this.getVideoCards()}
+          </div>
         </div>
       </div>
     )

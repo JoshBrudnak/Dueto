@@ -13,14 +13,15 @@ class Genre extends Component {
   }
 
   componentDidMount() {
-    const {params} = this.props
+    const value = this.props.match.params.name
 
-    getGenreVideos(params.name)
+    getGenreVideos(value)
       .then(data => {
-         this.setState({videos: data.VideoCards}) 
+        console.log(data)
+        this.setState({videos: data.VideoCards}) 
       })
       .catch(error => {
-        window.location = "/login"
+        console.error(error)
       })
   }
 
@@ -45,6 +46,7 @@ class Genre extends Component {
   }
 
   render() {
+    console.log("render")
     return (
       <div>
         <Header/>

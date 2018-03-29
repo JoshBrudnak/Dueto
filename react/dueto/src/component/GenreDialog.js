@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Typography, Button, Radio, FormControl, FormControlLabel, RadioGroup} from 'material-ui'
+import {Button, Radio, FormControl, FormControlLabel, RadioGroup} from 'material-ui'
 import Dialog, {DialogTitle, DialogContent} from 'material-ui/Dialog'
 import {getGenres} from "../utils/fetchData.js"
 
