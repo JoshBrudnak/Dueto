@@ -20,6 +20,7 @@ const (
 	AddSession = "insert into Session(userId, sessionKey, time) VALUES($1, $2, now()::timestamp);"
 
 	RemoveSession = "delete from Session where sessionkey = $1;"
+    RemoveOldSessions = "delete from session where age(now(), time) > '1 hour';"
 
 	SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
 	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
@@ -36,6 +37,7 @@ const (
 	SelectArtistByCity    = "select id, name, username from artist where location::json->>'city'::text = (select location::json->>'city' from artist where id = $1)::text;"
 
 	UpdateArtist = "update artist set username = $1, name = $2, description = $3, password = $4 where id = $5;"
+    IncreaseViews = "update video set views = (select views from video where artistId = $1 and title = $2) + 1 where artistId = $1 and title = $2;"
 )
 
 type Authentication struct {
@@ -362,6 +364,15 @@ func video(w http.ResponseWriter, r *http.Request) {
 	videoName := r.URL.Query().Get("name")
 
 	filePath := "./data/videos/" + artistId + "/" + videoName + ".mp4"
+    _, err := os.Stat(filePath)
+
+    if os.IsNotExist(err) {
+		http.Error(w, "Video not found", http.StatusNotFound)
+    }
+
+	rows, err := db.Query(SelectVideosByGenre, artistId, videoName)
+    rows.Close()
+
 	http.ServeFile(w, r, filePath)
 }
 
@@ -370,6 +381,12 @@ func avatar(w http.ResponseWriter, r *http.Request) {
 	artistId := r.URL.Query().Get("artist")
 
 	filePath := "./data/avatars/" + artistId + "/avatar.jpeg"
+    _, err := os.Stat(filePath)
+
+    if os.IsNotExist(err) {
+		http.Error(w, "Image not found", http.StatusNotFound)
+    }
+
 	http.ServeFile(w, r, filePath)
 }
 
@@ -379,6 +396,12 @@ func thumbnail(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Query().Get("name")
 
 	filePath := "./data/thumbnails/" + artistId + "/" + name + ".jpeg"
+    _, err := os.Stat(filePath)
+
+    if os.IsNotExist(err) {
+		http.Error(w, "Image not found", http.StatusNotFound)
+    }
+
 	http.ServeFile(w, r, filePath)
 }
 
@@ -473,7 +496,11 @@ func login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rows, err := db.Query(SelectUserAuth, auth.Username)
+	rows, err := db.Query(RemoveOldSessions)
+    logIfErr(err)
+    rows.Close()
+
+	rows, err = db.Query(SelectUserAuth, auth.Username)
 	logIfErr(err)
 
 	rows.Next()
