@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.Display;
 import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 
 import org.json.JSONObject;
 
@@ -18,8 +20,14 @@ public class FriendlyMessageCell extends MessageCell
     public FriendlyMessageCell(Context context, Display display, JSONObject jsonMsg)
     {
         super(context, display, jsonMsg);
+
+//        TableLayout.LayoutParams params = new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        params.weight = 1.0f;
+//        params.gravity = Gravity.END;
+//        this.setLayoutParams(params);
+
         //Configuring linearLayout for friendly messages
-        this.linearLayout.setGravity(Gravity.END);
+        //this.linearLayout.setGravity(Gravity.END);
         this.linearLayout.setBackgroundColor(Color.BLUE);
 
         //Configuring messageView for friendly messages

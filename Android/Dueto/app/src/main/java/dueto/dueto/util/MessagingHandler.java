@@ -43,10 +43,12 @@ public class MessagingHandler
            JSONObject toSend = new JSONObject();
            toSend.put("User", recipient);
            toSend.put("Message", message);
-           toSend.put("Time", Calendar.getInstance().toString());
+           toSend.put("Time", Calendar.getInstance().getTime().toString());
 
-            FriendlyMessageCell out = new FriendlyMessageCell(context, display, toSend);
+           FriendlyMessageCell out = new FriendlyMessageCell(context, display, toSend);
 
+           System.out.println(out);
+           System.out.println(message);
             //TODO: Send message to server
 
            return out;

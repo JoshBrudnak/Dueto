@@ -69,6 +69,13 @@ public class Messenger extends LinearLayout
             messageLayout.addView(messages.pop());
         //Setting scrolling properties
         messageLayout.setScrollBarFadeDuration(2500);
+        //Setting minHeight
+        messageLayout.setMinimumHeight(8*height/10);
+        messageLayout.setMinimumWidth(width);
+        //centering
+        params.gravity = Gravity.CENTER;
+        messageLayout.setLayoutParams(params);
+        messageLayout.setBackgroundColor(Color.LTGRAY);
 
         //Setting up a temporary horizontal linear layout for currentMessageText and sendButton
         LinearLayout hor = new LinearLayout(context);
@@ -94,8 +101,15 @@ public class Messenger extends LinearLayout
         sendButton.setBackgroundColor(Color.GREEN);
         //Setting up on-click listener for sendButton
         sendButton.setOnClickListener(e -> {
-            MessagingHandler.sendMessage(context, display, "peter pan", currentMessageText.getText().toString());
+            messageLayout.addView(MessagingHandler.sendMessage(context, display, "peter pan", currentMessageText.getText().toString()));
             currentMessageText.setText("");
+            messageLayout.postInvalidate();
+
+            for(int i = 0; i < messageLayout.getChildCount(); i++)
+            {
+                System.out.println(messageLayout.getChildAt(i));
+            }
+
         });
 
         hor.addView(currentMessageText);

@@ -62,6 +62,7 @@ class MessageCell extends TableRow {
         messageView.setGravity(Gravity.CENTER_HORIZONTAL);
         //Setting text
         messageView.setText(message);
+        messageView.setTextSize(16);
 
         //Initialising the TimeView
         timeView = new TextView(context);
@@ -79,10 +80,12 @@ class MessageCell extends TableRow {
         //Setting orientation
         linearLayout.setOrientation(VERTICAL);
         //Setting layout parameters to wrap content
-        linearLayout.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT));
+        //linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         //Adding views
         linearLayout.addView(messageView);
         linearLayout.addView(timeView);
+
+        this.addView(linearLayout);
     }
 
 }
