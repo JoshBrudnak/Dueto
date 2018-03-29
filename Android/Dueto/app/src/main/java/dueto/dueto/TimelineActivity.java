@@ -44,7 +44,6 @@ public class TimelineActivity extends AppCompatActivity {
         adapter.addFragment(new MsgsFragment(), "Messages");
         adapter.addFragment(new NotifsFragment(), "Notifications");
         viewPager.setAdapter(adapter);
-
     }
 
 }

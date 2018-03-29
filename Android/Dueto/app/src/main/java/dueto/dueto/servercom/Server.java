@@ -1,5 +1,6 @@
 package dueto.dueto.servercom;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
@@ -9,13 +10,19 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Stack;
+
 /**
  * Used to make requests to a server.
  */
@@ -25,9 +32,19 @@ public class Server
     /* TODO: implement "POST" requests addvideo, addthumbnail, addavatar, add..., logout*/
     public static final Server SERVER = new Server();
 
+    public static int imgCount, videoCount;
+
+    public static List<File> imgList, videoList;
+
     private final String ADDRESS = "http://35.231.109.184:8080/api/";
     private URL url;
     private static JSONObject session_cookie;
+
+    public Server()
+    {
+        imgList = new ArrayList<>();
+        videoList = new ArrayList<>();
+    }
 
     public boolean login(String username, String password)
     {
@@ -249,20 +266,75 @@ public class Server
         }
     }
 
-    public void downloadFile(JSONObject json,File file)
+    public class DownloadRequest extends AsyncTask<Void, Integer, File>
     {
-        try {
-            URL url_with_params = new JsonManager(json).jsonToUrl(ADDRESS);
-            ReadableByteChannel rbc = Channels.newChannel(url_with_params.openStream());
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            fos.close();
-            rbc.close();
-        }
-        catch(IOException | JSONException ioexc)
+        private Context context;
+        private JSONObject json;
+        private boolean video;
+
+        public DownloadRequest(Context context, JSONObject json, boolean video)
         {
-            System.out.println(ioexc);
+            this.context = context;
+            this.json = json;
+            this.video = video;
+        }
+
+        @Override
+        protected File doInBackground(Void... voids) {
+            try {
+                File file = File.createTempFile((video ? "vid":"img") + (video ? videoCount:imgCount), video ? "mp4":"bmp", context.getCacheDir());
+
+                URL url_with_params = new JsonManager(json).jsonToUrl(ADDRESS+(video?"video?":"thumbnail"));
+                ReadableByteChannel rbc = Channels.newChannel(url_with_params.openStream());
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                fos.close();
+                rbc.close();
+
+                if(video)
+                {
+                    videoList.add(file);
+                    videoCount++;
+                }
+                else
+                {
+                    imgList.add(file);
+                    imgCount++;
+                }
+
+                return file;
+
+            }
+            catch(IOException | JSONException ioexc)
+            {
+                System.out.println(ioexc);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
         }
     }
+
+    public File downloadFile(Context context, JSONObject json, boolean video)
+    {
+        try {
+            DownloadRequest dr = new DownloadRequest(context, json, video);
+            return dr.execute().get();
+        }
+        catch(Exception exc)
+        {
+            return null;
+        }
+    }
+
+    //public class
 
 }

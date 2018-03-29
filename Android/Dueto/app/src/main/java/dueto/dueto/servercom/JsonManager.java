@@ -52,7 +52,7 @@ public class JsonManager
 
         while(iter.hasNext())
         {
-            String temp =iter.next();
+            String temp = iter.next();
 
             url = url.concat(temp + "=" + json.getString(temp));
             if(iter.hasNext())

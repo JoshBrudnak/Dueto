@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
+import android.widget.VideoView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +39,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import dueto.dueto.servercom.Server;
+import dueto.dueto.templates.MessageOverviewCell;
 import dueto.dueto.templates.TableCell;
+import dueto.dueto.util.MessagingHandler;
 
 public class MainActivity extends Activity {
 
@@ -75,8 +78,9 @@ public class MainActivity extends Activity {
         JSONObject test = new JSONObject();
         try
         {
-//            test.put("artist", 1);
-//            test.put("name", "Sample");
+            test.put("artist", 1);
+            test.put("name", "Sample");
+            //BitmapFactory.decodeFile(Server.SERVER.downloadFile(this, test, true).getPath());
 
             jsonObject.put("Artist", new JSONObject().put("Name", "Arnold Schwarzenegger"));
             jsonObject.put("Desc", "John Dungeldo is a striving idiot");
@@ -103,6 +107,10 @@ public class MainActivity extends Activity {
         t1.addView(cell2);
 
         JSONObject home = Server.SERVER.request("home", test);
+
+        MessageOverviewCell msgoc = new MessageOverviewCell(this, display,"Peter Pan");
+        MessagingHandler.overviewToMessengerMap.put(msgoc, null);
+
         //------------------------------------------------------------------------------------------
 
 
