@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import {Avatar} from 'material-ui'
+import {Avatar, Typography, Paper, IconButton} from 'material-ui'
 import Header from '../component/Header.js'
+import {AddCircle, Settings} from 'material-ui-icons'
+import {Link} from 'react-router-dom'
 import {getProfileData} from '../utils/fetchData.js'
 
 class Profile extends Component {
@@ -32,16 +34,40 @@ class Profile extends Component {
           avatarUrl: avUrl 
         })
       })
-      .catch(error => {})
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  edit = () => {
+    document.getElementById("edit").click()
+  }
+
+  addVideo = () => {
+    document.getElementById("video").click()
   }
 
   render() {
     return (
       <div>
         <Header/>
-        <div>
-          <Avatar src={this.state.avatarUrl}/>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+          <Paper style={{padding: 10, width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <div style={{display: "flex", flexDirection: "row"}}> 
+              <IconButton onClick={this.edit}>
+                <Settings/>
+              </IconButton>
+              <Avatar src={this.state.avatarUrl} style={{width: 100, height: 100, marginBotton: 10}}/>
+              <IconButton onClick={this.addVideo}>
+                <AddCircle/>
+              </IconButton>
+            </div> 
+            <Typography>{this.state.name}</Typography> 
+            <Typography>{this.state.username}</Typography> 
+          </Paper>
         </div>
+        <Link id="edit" to="/editprofile" style={{visibility: "collapse"}}/>
+        <Link id="video" to="/addvideo" style={{visibility: "collapse"}}/>
       </div>
     )
   }

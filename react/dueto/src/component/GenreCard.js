@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom'
 
 class GenreCard extends Component {
   render() {
-    let genreUrl = "/genre?name=" + this.props.name
     let genreImUrl = "/api/genreimage?name=" + this.props.name
+    let genreUrl = "/genre/" + this.props.name
 
     return (
         <Card>

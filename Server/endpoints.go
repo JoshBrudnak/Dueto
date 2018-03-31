@@ -13,26 +13,32 @@ import (
 )
 
 const (
-	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, $4);"
+	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, now()::timestamp);"
 	AddArtist  = "insert into Artist(username, name, age, password, followers, description, likeCount, location) VALUES($1, $2, $3, $4, $5, $6, $7, $8);"
-	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes, filePath) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4);"
+	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes) VALUES($1, $2, $3, now()::timestamp, 0, 0);"
 	AddGenre   = "insert into Genre(name, description) VALUES($1, $2);"
 	AddSession = "insert into Session(userId, sessionKey, time) VALUES($1, $2, now()::timestamp);"
 
 	RemoveSession = "delete from Session where sessionkey = $1;"
+    RemoveOldSessions = "delete from session where age(now(), time) > '1 hour';"
 
 	SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
 	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
-	SelectExtArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
-	SelectArtistVideos    = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
-	SelectVideoComments   = "select message, user, timeStamp from Comment where videoId = $1"
-	SelectVideosByGenre   = "select filePath, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
-	SelectVideosByArtist  = "select filePath, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
+	SelectExtArtistData   = "select username, name, description, date, active, followerCount, likeCount from Artist where id = $1;"
+	SelectArtistVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1;"
+	SelectVideoComments   = "select message, user, time from Comment where videoId = $1"
+	SelectVideosByGenre   = "select id, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
+	SelectVideosByArtist  = "select id, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
 	SelectGenres          = "select name, description from Genre;"
 	SelectUserAuth        = "select id, password from artist where username = $1;"
 	SelectSession         = "select count(userId) from session where sessionkey = $1;"
-	SetExpirationTime     = "expire from session after $1 where sessionKey= $1;"
 	SelectAuthId          = "select userId from session where sessionKey = $1;"
+	SelectArtistByZip     = "select id, name, username from artist where location::json->>'zip_code'::text = (select location::json->>'zip_code' from artist where id = $1)::text;"
+	SelectArtistByCity    = "select id, name, username from artist where location::json->>'city'::text = (select location::json->>'city' from artist where id = $1)::text;"
+    SelectVideoLoc        = "select artistId, title from video where id = $1;"
+
+	UpdateArtist = "update artist set username = $1, name = $2, description = $3, password = $4 where id = $5;"
+    IncreaseViews = "update video set views = (select views from video where artistId = $1 and title = $2) + 1 where artistId = $1 and title = $2;"
 )
 
 type Authentication struct {
@@ -68,14 +74,12 @@ type Genres struct {
 type BasicArtist struct {
 	Id       string
 	Name     string
-	UserName string
-	Avatar   string
+	Username string
 }
 
 type Video struct {
 	Artist    BasicArtist
 	Id        string
-	Thumbnail string
 	File      string
 	Title     string
 	Desc      string
@@ -94,16 +98,16 @@ type ExtArtist struct {
 	Name          string
 	Username      string
 	Age           string
-	FollowerCount string
-	Bio           string
-	Date          string
 	Active        string
+	Desc          string
+	Date          string
+	FollowerCount string
 	LikeCount     string
 	VideoList     []Video
 }
 
 type IntArtist struct {
-	UserName           string
+	Username           string
 	Name               string
 	AccountCreationDay string
 	FollowerCount      string
@@ -150,7 +154,7 @@ func authenticate(cookie *http.Cookie) bool {
 }
 
 func getUserId(sessionId string) string {
-    var id string
+	var id string
 	rows, err := db.Query(SelectAuthId, sessionId)
 	logIfErr(err)
 
@@ -159,29 +163,27 @@ func getUserId(sessionId string) string {
 	logIfErr(err)
 	rows.Close()
 
-    return id
+	return id
 }
 
-func profile(w http.ResponseWriter, r *http.Request) {
+func artist(w http.ResponseWriter, r *http.Request) {
 	var v Video
-	var a IntArtist
+	var a ExtArtist
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	cookie,_ := r.Cookie("SESSIONID")
+	cookie, _ := r.Cookie("SESSIONID")
+	artistId := r.URL.Query().Get("artist")
 
 	if !authenticate(cookie) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
 		return
 	}
 
-    artistId := getUserId(cookie.Value)
-    a.Id = artistId
-
 	rows, err := db.Query(SelectIntArtistData, artistId)
 	checkErr(err)
 
 	rows.Next()
-	err = rows.Scan(&a.UserName, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount)
+	err = rows.Scan(&a.Username, &a.Name, &a.Desc, &a.Date, &a.Active, &a.FollowerCount, &a.LikeCount)
 	logIfErr(err)
 	defer rows.Close()
 
@@ -190,7 +192,46 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	defer videoRows.Close()
 
 	for videoRows.Next() {
-		err = videoRows.Scan(&v.File, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		err = videoRows.Scan(&v.Id, &v.File, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		logIfErr(err)
+
+		a.VideoList = append(a.VideoList, v)
+	}
+
+	if err := json.NewEncoder(w).Encode(a); err != nil {
+		logIfErr(err)
+	}
+}
+
+func profile(w http.ResponseWriter, r *http.Request) {
+	var v Video
+	var a IntArtist
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	artistId := getUserId(cookie.Value)
+	a.Id = artistId
+
+	rows, err := db.Query(SelectIntArtistData, artistId)
+	checkErr(err)
+
+	rows.Next()
+	err = rows.Scan(&a.Username, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount)
+	logIfErr(err)
+	defer rows.Close()
+
+	videoRows, viderr := db.Query(SelectArtistVideos, artistId)
+	logIfErr(viderr)
+	defer videoRows.Close()
+
+	for videoRows.Next() {
+		err = videoRows.Scan(&v.Id, &v.File, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
 
 		a.VideoList = append(a.VideoList, v)
@@ -205,24 +246,23 @@ func profile(w http.ResponseWriter, r *http.Request) {
 func homePage(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var videos VideoList
-	var filepath string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, err := r.Cookie("SESSIONID")
 
 	if !authenticate(cookie) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
-        return
+		return
 	}
 
-    artistId := getUserId(cookie.Value)
+	artistId := getUserId(cookie.Value)
 
 	rows, err := db.Query(SelectArtistVideos, artistId)
 	checkErr(err)
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&filepath, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		err = rows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
 
 		var a BasicArtist
@@ -231,7 +271,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		defer artistRow.Close()
 
 		artistRow.Next()
-		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
+		err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
 		logIfErr(err)
 
 		a.Id = artistId
@@ -262,25 +302,28 @@ func discover(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		if err := rows.Scan(&g.Name, &g.Description); err != nil {
-			logIfErr(err)
-		}
+		err := rows.Scan(&g.Name, &g.Description)
+		logIfErr(err)
 
 		genres.GenreList = append(genres.GenreList, g)
 	}
 
-	if err := json.NewEncoder(w).Encode(genres); err != nil {
-		logIfErr(err)
-	}
+	err = json.NewEncoder(w).Encode(genres)
+	logServerErr(w, err)
 }
 
 func genre(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var videos VideoList
-	var filepath string
 	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, err := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
 	genre := r.URL.Query().Get("genre")
 
 	rows, err := db.Query(SelectVideosByGenre, genre)
@@ -288,18 +331,18 @@ func genre(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&filepath, &v.Title, &v.Desc, &v.Views, &v.Likes, &v.Time, &artistId)
-		logIfErr(err)
+		err = rows.Scan(&v.Id, &v.Title, &v.Desc, &v.Views, &v.Likes, &v.Time, &artistId)
+		logServerErr(w, err)
 
 		var a BasicArtist
 		v.Genre = genre
 		artistRow, err := db.Query(SelectBasicArtistData, artistId)
-		logIfErr(err)
+		logServerErr(w, err)
 		defer artistRow.Close()
 		rows.Next()
 
-		err = artistRow.Scan(&a.Name, &a.UserName, &a.Avatar)
-		logIfErr(err)
+		err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
+		logServerErr(w, err)
 
 		a.Id = artistId
 		v.Artist = a
@@ -308,15 +351,42 @@ func genre(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = json.NewEncoder(w).Encode(videos)
-	logIfErr(err)
+	logServerErr(w, err)
+}
+
+func fileLoc(w http.ResponseWriter, id string) string {
+    var artistId string
+    var videoName string
+
+	rows, err := db.Query(SelectVideoLoc, id)
+    logIfErr(err)
+
+    if rows.Next() {
+        rows.Scan(&artistId, &videoName)
+    } else {
+        http.Error(w, "Video not found", http.StatusNotFound)
+        return ""
+    }
+
+    return artistId + "/" + videoName
 }
 
 func video(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	artistId := r.URL.Query().Get("artist")
-	videoName := r.URL.Query().Get("name")
+	videoId := r.URL.Query().Get("id")
 
-	filePath := "./data/videos/" + artistId + "/" + videoName + ".mp4"
+    loc := fileLoc(w, videoId)
+	filePath := "./data/videos/" + loc + ".mp4"
+    _, err := os.Stat(filePath)
+
+    if os.IsNotExist(err) {
+		http.Error(w, "Video not found", http.StatusNotFound)
+        return
+    }
+
+	rows, err := db.Query(IncreaseViews, videoId)
+    rows.Close()
+
 	http.ServeFile(w, r, filePath)
 }
 
@@ -325,15 +395,27 @@ func avatar(w http.ResponseWriter, r *http.Request) {
 	artistId := r.URL.Query().Get("artist")
 
 	filePath := "./data/avatars/" + artistId + "/avatar.jpeg"
+    _, err := os.Stat(filePath)
+
+    if os.IsNotExist(err) {
+		http.Error(w, "Image not found", http.StatusNotFound)
+    }
+
 	http.ServeFile(w, r, filePath)
 }
 
 func thumbnail(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	artistId := r.URL.Query().Get("artist")
-	name := r.URL.Query().Get("name")
+	videoId := r.URL.Query().Get("id")
 
-	filePath := "./data/thumbnails/" + artistId + "/" + name + ".jpeg"
+    loc := fileLoc(w, videoId)
+	filePath := "./data/thumbnails/" + loc + ".jpeg"
+    _, err := os.Stat(filePath)
+
+    if os.IsNotExist(err) {
+		http.Error(w, "Image not found", http.StatusNotFound)
+    }
+
 	http.ServeFile(w, r, filePath)
 }
 
@@ -366,7 +448,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 
 	authRows, err := db.Query(SelectUserAuth, data.Username)
-	logIfErr(err)
+	logServerErr(w, err)
 
 	if authRows.Next() {
 		err = authRows.Scan(&id, &hashPassword)
@@ -379,6 +461,39 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	os.Mkdir("./data/videos/"+id, os.ModePerm)
 	os.Mkdir("./data/thumbnails/"+id, os.ModePerm)
 	os.Mkdir("./data/avatars/"+id, os.ModePerm)
+}
+
+func editprofile(w http.ResponseWriter, r *http.Request) {
+	var id string
+	var hashPassword string
+	var data NewUser
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	decoder := json.NewDecoder(r.Body)
+	decoder.Decode(&data)
+
+	if data.Password != data.Repassword {
+		http.Error(w, "Passwords do not match", http.StatusNotAcceptable)
+		return
+	}
+
+	bHash, err := bcrypt.GenerateFromPassword([]byte(data.Password), 1)
+	hash := string(bHash)
+
+	rows, err := db.Query(UpdateArtist, data.Username, data.Name, hash, data.Bio)
+	rows.Close()
+
+	authRows, err := db.Query(SelectUserAuth, data.Username)
+	logIfErr(err)
+
+	if authRows.Next() {
+		err = authRows.Scan(&id, &hashPassword)
+		logIfErr(err)
+	} else {
+		http.Error(w, "Unable to create user", http.StatusForbidden)
+	}
+
+	authRows.Close()
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
@@ -395,7 +510,11 @@ func login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rows, err := db.Query(SelectUserAuth, auth.Username)
+	rows, err := db.Query(RemoveOldSessions)
+    logIfErr(err)
+    rows.Close()
+
+	rows, err = db.Query(SelectUserAuth, auth.Username)
 	logIfErr(err)
 
 	rows.Next()
@@ -409,11 +528,13 @@ func login(w http.ResponseWriter, r *http.Request) {
 		sessionId := createHash()
 		rows, err = db.Query(AddSession, id, sessionId)
 		logIfErr(err)
-        rows.Close()
+		rows.Close()
 
 		exp := time.Now().Add(time.Hour)
 		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Path: "/", Expires: exp, HttpOnly: true}
 		http.SetCookie(w, &cookie)
+	} else {
+		http.Error(w, "Incorrect username or password", 401)
 	}
 }
 
@@ -427,7 +548,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 
 	if err == nil {
-		exp := time.Unix(0,0)
+		exp := time.Unix(0, 0)
 		cookie := http.Cookie{Name: "SESSIONID", Value: "", Expires: exp, HttpOnly: true}
 		http.SetCookie(w, &cookie)
 	}
@@ -459,62 +580,118 @@ func getThumbnail(artist string, name string) {
 
 func addVideo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	cookie,_ := r.Cookie("SESSIONID")
+	cookie, _ := r.Cookie("SESSIONID")
 
 	if !authenticate(cookie) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
 		return
 	}
 
-    artist := getUserId(cookie.Value)
+	artist := getUserId(cookie.Value)
 
 	file, _, err := r.FormFile("file")
-	logIfErr(err)
+	logServerErr(w, err)
 
 	name := r.FormValue("name")
 	desc := r.FormValue("desc")
 	data, err := ioutil.ReadAll(file)
-	logIfErr(err)
+	logServerErr(w, err)
 
 	filePath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
 
 	f, err := os.Create(filePath)
-	logIfErr(err)
+	logServerErr(w, err)
 
 	_, err = f.Write(data)
-	logIfErr(err)
+	logServerErr(w, err)
 	f.Close()
 
 	getThumbnail(artist, name)
 
 	rows, err := db.Query(AddVideo, artist, name, desc, filePath)
-	logIfErr(err)
+	logServerErr(w, err)
 	rows.Close()
 }
 
 func addAvatar(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	cookie,_ := r.Cookie("SESSIONID")
+	cookie, _ := r.Cookie("SESSIONID")
 
 	if !authenticate(cookie) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
 		return
 	}
 
-    artist := getUserId(cookie.Value)
+	artist := getUserId(cookie.Value)
 
 	file, _, err := r.FormFile("file")
-	logIfErr(err)
+	logServerErr(w, err)
 
 	data, err := ioutil.ReadAll(file)
-	logIfErr(err)
+	logServerErr(w, err)
 
 	filePath := fmt.Sprintf("./data/avatars/%s/avatar.jpeg", artist)
 
 	f, err := os.Create(filePath)
-	logIfErr(err)
+	logServerErr(w, err)
 
 	_, err = f.Write(data)
-	logIfErr(err)
+	logServerErr(w, err)
 	f.Close()
+}
+
+func searchByZipCode(w http.ResponseWriter, r *http.Request) {
+	var a BasicArtist
+	var artistList []BasicArtist
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	artistId := getUserId(cookie.Value)
+	rows, err := db.Query(SelectArtistByZip, artistId)
+	checkErr(err)
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&a.Id, &a.Name, &a.Username)
+		logIfErr(err)
+
+		artistList = append(artistList, a)
+	}
+
+	err = json.NewEncoder(w).Encode(artistList)
+	logServerErr(w, err)
+}
+
+func searchByCity(w http.ResponseWriter, r *http.Request) {
+	var a BasicArtist
+	var artistList []BasicArtist
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	artistId := getUserId(cookie.Value)
+	rows, err := db.Query(SelectArtistByCity, artistId)
+	checkErr(err)
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&a.Id, &a.Name, &a.Username)
+		logIfErr(err)
+
+		artistList = append(artistList, a)
+	}
+
+	err = json.NewEncoder(w).Encode(artistList)
+	logServerErr(w, err)
 }

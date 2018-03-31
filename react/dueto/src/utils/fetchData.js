@@ -1,3 +1,12 @@
+//AIzaSyDKscT5t4lFXsQCS2GRoctWJw5aGjSHJ0k
+
+export const getLocation = async () => {
+  const response = await fetch('https://freegeoip.net/json/', {})
+  const newData = await response.json()
+ 
+  return newData 
+}
+
 export const eraseCookie = () => {   
     document.cookie = 'SESSIONID=; Max-Age=0;';  
 }
@@ -26,10 +35,9 @@ function encodeUrl(data) {
   return formBody
 }
 
-function getArtistData(artistId, video, type) {
+function getArtistData(video, type) {
   const data = {
-     artist: artistId,
-     name: video
+     id: video
   }
   const params = encodeUrl(data)
 
@@ -37,11 +45,7 @@ function getArtistData(artistId, video, type) {
 }
 
 export const getProfileData = async (name) => {
-  const data = {
-     username: name
-  }
-  const params = encodeUrl(data)
-  const response = await fetch("/api/profile?" + params, { credentials: "include" })
+  const response = await fetch("/api/profile", { credentials: "include" })
   const newData = await response.json()
 
   return newData
@@ -68,7 +72,6 @@ export const getGenreVideos = async (name) => {
 export const getHomeData = async () => {
   const response = await fetch("/api/home", { credentials: "include" })
   const newData = await response.json()
-  console.log(newData)
 
   return newData
 }
@@ -80,16 +83,30 @@ export const getDiscoverData = async () => {
   return newData
 }
 
-export const getVideoUrl = (artistId, video) => {
-  return getArtistData(artistId, video, "video")
+export const getArtistsByZip = async () => {
+  const response = await fetch("/api/zipcode", { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
 }
 
-export const getThumbnailUrl = (artistId, image) => {
-  return getArtistData(artistId, image, "thumbnail")
+export const getArtistsByCity = async () => {
+  const response = await fetch("/api/city", { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
 }
 
-export const getAvatarUrl = (artistId, image) => {
-  return getArtistData(artistId, image, "avatar")
+export const getVideoUrl = (videoId) => {
+  return getArtistData(videoId, "video")
+}
+
+export const getThumbnailUrl = (videoId) => {
+  return getArtistData(videoId, "thumbnail")
+}
+
+export const getAvatarUrl = (artistId) => {
+  return "/api/avatar?artist=" + artistId 
 }
 
 export const loginUser = async (username, password) => {
@@ -109,7 +126,7 @@ export const loginUser = async (username, password) => {
 
   const newData = await response
 
-  return newData 
+  return newData.status 
 }
 
 export const logoutUser = async () => {
@@ -132,7 +149,7 @@ export const addVideo = async (formBody) => {
     headers: {Accept: 'application/json'}
   })
 
-  const newData = await response.json()
+  const newData = await response
 
   return newData
 }
@@ -143,6 +160,21 @@ export const addAvatar = async (formBody) => {
     credentials: 'include',
     method: 'POST',
     headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response
+
+  return newData
+}
+
+export const updateUser = async (body) => {
+  let formBody = JSON.stringify(body)
+
+  const response = await fetch("/api/updateuser", {
+	body: formBody,
+	credentials: 'include',
+	method: 'POST',
+	headers: {Accept: 'application/json'}
   })
 
   const newData = await response

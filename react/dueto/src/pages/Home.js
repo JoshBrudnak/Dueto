@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import VideoCard from '../component/VideoCard.js'
 import Header from '../component/Header.js'
+import ArtistList from '../component/ArtistList.js'
 import {getHomeData} from '../utils/fetchData.js'
 
 class Home extends Component {
   constructor() {
-    super() 
+    super()
 
     this.state = {
       videos: []
@@ -15,13 +16,13 @@ class Home extends Component {
   componentDidMount() {
     getHomeData()
       .then(data => {
+         console.log(data)
          if(data != null && data.VideoCards != null) {
            this.setState({videos: data.VideoCards}) 
          }
       })
       .catch(error => {
-        console.log(error)
-        //window.location = "/login"
+        window.location = "/login"
       })
   }
 
@@ -34,6 +35,7 @@ class Home extends Component {
         <VideoCard
           style={{margin: 40}}
           artist={data.Artist.Id}
+          id={data.Id}
           desc={data.Desc}
           genre={data.Genre}
           name={data.Title}
@@ -50,8 +52,11 @@ class Home extends Component {
     return (
       <div>
         <Header/>
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        {this.getVideoCards()}
+        <div style={{display: "flex", flexDirection: "row"}}>
+          <ArtistList/>
+          <div style={{width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
+            {this.getVideoCards()}
+          </div>
         </div>
       </div>
     )

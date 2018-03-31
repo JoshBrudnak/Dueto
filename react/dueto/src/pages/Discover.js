@@ -16,7 +16,6 @@ class Discover extends Component {
   componentDidMount() {
     getGenres()
       .then(data => {
-        console.log(data.GenreList)
         this.setState({genres: data.GenreList})
       })
       .catch(error => {

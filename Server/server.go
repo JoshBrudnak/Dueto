@@ -17,11 +17,11 @@ var db *sql.DB
 var templates *template.Template
 
 const (
-	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, password text, avatar text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int);"
-	createVideoT   = "create table if not exists Video(id serial primary key, thumbnail text, artistId text, filePath text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
-	createCommentT = "create table if not exists Comment(id serial primary key, videoId text, artistId text, message text, time timestamp);"
+	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, password text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int);"
+	createVideoT   = "create table if not exists Video(id serial primary key, artistId text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
 	createGenreT   = "create table if not exists Genre(id serial primary key, name text, description text);"
 	createSessionT = "create table if not exists Session(userId text, sessionKey text, time timestamp);"
+	createCommentT = "create table if not exists Comment(id serial primary key, sender text, reciever text, message text, time timestamp);"
 )
 
 type config struct {
@@ -40,6 +40,14 @@ func checkErr(err error) {
 func logIfErr(err error) {
 	if err != nil {
 		log.Println(err)
+	}
+}
+
+func logServerErr(w http.ResponseWriter, err error) {
+	if err != nil {
+        fmt.Println(err)
+		log.Println(err)
+		http.Error(w, "Server error", http.StatusInternalServerError)
 	}
 }
 
@@ -75,6 +83,7 @@ func init() {
 	query(createVideoT)
 	query(createCommentT)
 	query(createSessionT)
+	query(createCommentT)
 
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
@@ -108,6 +117,15 @@ func main() {
 	http.HandleFunc("/api/addvideo", addVideo)
 	http.HandleFunc("/api/changeavatar", addAvatar)
 	http.HandleFunc("/api/genreimage", genreImage)
+	http.HandleFunc("/api/edituser", editprofile)
+	http.HandleFunc("/api/artist", artist)
+	http.HandleFunc("/api/zipcode", searchByZipCode)
+	http.HandleFunc("/api/city", searchByCity)
+    http.HandleFunc("/chat", chatConnection)
 	http.HandleFunc("/", home)
+
+    go chatMessages()
+
 	http.ListenAndServe(":8080", nil)
+
 }
