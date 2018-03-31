@@ -14,7 +14,7 @@ class VideoCard extends Component {
   }
 
   getVideoImage() {
-    let image = getThumbnailUrl(this.props.artist, this.props.name)
+    let image = getThumbnailUrl(this.props.id)
     
     return image
   }
@@ -52,6 +52,7 @@ class VideoCard extends Component {
         <VideoDialog 
           close={this.closeDialog}
           open={this.state.open}
+          videoId={this.props.id}
           artist={this.props.artist}
           name={this.props.name}
         />

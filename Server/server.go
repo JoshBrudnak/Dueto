@@ -45,6 +45,7 @@ func logIfErr(err error) {
 
 func logServerErr(w http.ResponseWriter, err error) {
 	if err != nil {
+        fmt.Println(err)
 		log.Println(err)
 		http.Error(w, "Server error", http.StatusInternalServerError)
 	}

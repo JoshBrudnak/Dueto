@@ -35,10 +35,9 @@ function encodeUrl(data) {
   return formBody
 }
 
-function getArtistData(artistId, video, type) {
+function getArtistData(video, type) {
   const data = {
-     artist: artistId,
-     name: video
+     id: video
   }
   const params = encodeUrl(data)
 
@@ -98,16 +97,16 @@ export const getArtistsByCity = async () => {
   return newData
 }
 
-export const getVideoUrl = (artistId, video) => {
-  return getArtistData(artistId, video, "video")
+export const getVideoUrl = (videoId) => {
+  return getArtistData(videoId, "video")
 }
 
-export const getThumbnailUrl = (artistId, image) => {
-  return getArtistData(artistId, image, "thumbnail")
+export const getThumbnailUrl = (videoId) => {
+  return getArtistData(videoId, "thumbnail")
 }
 
-export const getAvatarUrl = (artistId, image) => {
-  return getArtistData(artistId, image, "avatar")
+export const getAvatarUrl = (artistId) => {
+  return "/api/avatar?artist=" + artistId 
 }
 
 export const loginUser = async (username, password) => {

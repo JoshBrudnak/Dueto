@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Card, Typography, Paper } from 'material-ui'
-import { CardMedia, CardContent, CardActions, Button} from 'material-ui/Card'
+import { Card, Typography, Paper, Button } from 'material-ui'
+import { CardMedia, CardContent, CardActions } from 'material-ui/Card'
 import Menu, {MenuItem} from 'material-ui/Menu'
 import Avatar from 'material-ui/Avatar'
 import { getAvatarUrl, getArtistsByZip, getArtistsByCity } from '../utils/fetchData.js'
@@ -11,7 +11,7 @@ class ArtistList extends Component {
   
     this.state = {
       open: false,
-      anchor: undefined,
+      anchor: null,
       artists: []
     }
   }
@@ -27,7 +27,7 @@ class ArtistList extends Component {
   }
 
   openMenu = event => {
-    this.setState({ open: true, anchorEl: event.currentTarget });
+    this.setState({ open: true, anchorEl: event.target });
   }
 
   closeMenu = event => {

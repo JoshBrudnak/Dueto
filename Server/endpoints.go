@@ -15,7 +15,7 @@ import (
 const (
 	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, now()::timestamp);"
 	AddArtist  = "insert into Artist(username, name, age, password, followers, description, likeCount, location) VALUES($1, $2, $3, $4, $5, $6, $7, $8);"
-	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes, filePath) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4);"
+	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes) VALUES($1, $2, $3, now()::timestamp, 0, 0);"
 	AddGenre   = "insert into Genre(name, description) VALUES($1, $2);"
 	AddSession = "insert into Session(userId, sessionKey, time) VALUES($1, $2, now()::timestamp);"
 
@@ -25,16 +25,17 @@ const (
 	SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
 	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
 	SelectExtArtistData   = "select username, name, description, date, active, followerCount, likeCount from Artist where id = $1;"
-	SelectArtistVideos    = "select filePath, title, description, artistId, thumbnail, uploadTime, views, likes, genre from Video where artistId = $1;"
+	SelectArtistVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1;"
 	SelectVideoComments   = "select message, user, time from Comment where videoId = $1"
-	SelectVideosByGenre   = "select filePath, title, description, views, likes, time, artistId from Video where genre = $1;"
-	SelectVideosByArtist  = "select filePath, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
+	SelectVideosByGenre   = "select id, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
+	SelectVideosByArtist  = "select id, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
 	SelectGenres          = "select name, description from Genre;"
 	SelectUserAuth        = "select id, password from artist where username = $1;"
 	SelectSession         = "select count(userId) from session where sessionkey = $1;"
 	SelectAuthId          = "select userId from session where sessionKey = $1;"
 	SelectArtistByZip     = "select id, name, username from artist where location::json->>'zip_code'::text = (select location::json->>'zip_code' from artist where id = $1)::text;"
 	SelectArtistByCity    = "select id, name, username from artist where location::json->>'city'::text = (select location::json->>'city' from artist where id = $1)::text;"
+    SelectVideoLoc        = "select artistId, title from video where id = $1;"
 
 	UpdateArtist = "update artist set username = $1, name = $2, description = $3, password = $4 where id = $5;"
     IncreaseViews = "update video set views = (select views from video where artistId = $1 and title = $2) + 1 where artistId = $1 and title = $2;"
@@ -79,7 +80,6 @@ type BasicArtist struct {
 type Video struct {
 	Artist    BasicArtist
 	Id        string
-	Thumbnail string
 	File      string
 	Title     string
 	Desc      string
@@ -192,7 +192,7 @@ func artist(w http.ResponseWriter, r *http.Request) {
 	defer videoRows.Close()
 
 	for videoRows.Next() {
-		err = videoRows.Scan(&v.File, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		err = videoRows.Scan(&v.Id, &v.File, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
 
 		a.VideoList = append(a.VideoList, v)
@@ -231,7 +231,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	defer videoRows.Close()
 
 	for videoRows.Next() {
-		err = videoRows.Scan(&v.File, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		err = videoRows.Scan(&v.Id, &v.File, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
 
 		a.VideoList = append(a.VideoList, v)
@@ -246,7 +246,6 @@ func profile(w http.ResponseWriter, r *http.Request) {
 func homePage(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var videos VideoList
-	var filepath string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, err := r.Cookie("SESSIONID")
@@ -263,7 +262,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&filepath, &v.Title, &v.Desc, &artistId, &v.Thumbnail, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		err = rows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
 
 		var a BasicArtist
@@ -303,22 +302,19 @@ func discover(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		if err := rows.Scan(&g.Name, &g.Description); err != nil {
-			logServerErr(w, err)
-		}
+		err := rows.Scan(&g.Name, &g.Description)
+		logIfErr(err)
 
 		genres.GenreList = append(genres.GenreList, g)
 	}
 
-	if err := json.NewEncoder(w).Encode(genres); err != nil {
-		logServerErr(w, err)
-	}
+	err = json.NewEncoder(w).Encode(genres)
+	logServerErr(w, err)
 }
 
 func genre(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var videos VideoList
-	var filepath string
 	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -335,7 +331,7 @@ func genre(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&filepath, &v.Title, &v.Desc, &v.Views, &v.Likes, &v.Time, &artistId)
+		err = rows.Scan(&v.Id, &v.Title, &v.Desc, &v.Views, &v.Likes, &v.Time, &artistId)
 		logServerErr(w, err)
 
 		var a BasicArtist
@@ -358,19 +354,37 @@ func genre(w http.ResponseWriter, r *http.Request) {
 	logServerErr(w, err)
 }
 
+func fileLoc(w http.ResponseWriter, id string) string {
+    var artistId string
+    var videoName string
+
+	rows, err := db.Query(SelectVideoLoc, id)
+    logIfErr(err)
+
+    if rows.Next() {
+        rows.Scan(&artistId, &videoName)
+    } else {
+        http.Error(w, "Video not found", http.StatusNotFound)
+        return ""
+    }
+
+    return artistId + "/" + videoName
+}
+
 func video(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	artistId := r.URL.Query().Get("artist")
-	videoName := r.URL.Query().Get("name")
+	videoId := r.URL.Query().Get("id")
 
-	filePath := "./data/videos/" + artistId + "/" + videoName + ".mp4"
+    loc := fileLoc(w, videoId)
+	filePath := "./data/videos/" + loc + ".mp4"
     _, err := os.Stat(filePath)
 
     if os.IsNotExist(err) {
 		http.Error(w, "Video not found", http.StatusNotFound)
+        return
     }
 
-	rows, err := db.Query(SelectVideosByGenre, artistId, videoName)
+	rows, err := db.Query(IncreaseViews, videoId)
     rows.Close()
 
 	http.ServeFile(w, r, filePath)
@@ -392,10 +406,10 @@ func avatar(w http.ResponseWriter, r *http.Request) {
 
 func thumbnail(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	artistId := r.URL.Query().Get("artist")
-	name := r.URL.Query().Get("name")
+	videoId := r.URL.Query().Get("id")
 
-	filePath := "./data/thumbnails/" + artistId + "/" + name + ".jpeg"
+    loc := fileLoc(w, videoId)
+	filePath := "./data/thumbnails/" + loc + ".jpeg"
     _, err := os.Stat(filePath)
 
     if os.IsNotExist(err) {

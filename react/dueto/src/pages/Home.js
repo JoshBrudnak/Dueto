@@ -16,6 +16,7 @@ class Home extends Component {
   componentDidMount() {
     getHomeData()
       .then(data => {
+         console.log(data)
          if(data != null && data.VideoCards != null) {
            this.setState({videos: data.VideoCards}) 
          }
@@ -34,6 +35,7 @@ class Home extends Component {
         <VideoCard
           style={{margin: 40}}
           artist={data.Artist.Id}
+          id={data.Id}
           desc={data.Desc}
           genre={data.Genre}
           name={data.Title}
