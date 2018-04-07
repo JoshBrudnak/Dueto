@@ -83,7 +83,7 @@ func init() {
 	query(createVideoT)
 	query(createCommentT)
 	query(createSessionT)
-	query(createCommentT)
+	query(createGenreT)
 
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
@@ -121,10 +121,9 @@ func main() {
 	http.HandleFunc("/api/artist", artist)
 	http.HandleFunc("/api/zipcode", searchByZipCode)
 	http.HandleFunc("/api/city", searchByCity)
-    http.HandleFunc("/chat", chatConnection)
+	http.HandleFunc("/api/getmessages", getMessages)
+	http.HandleFunc("/api/postmessages", postMessages)
 	http.HandleFunc("/", home)
-
-    go chatMessages()
 
 	http.ListenAndServe(":8080", nil)
 

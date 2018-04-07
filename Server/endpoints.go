@@ -13,11 +13,11 @@ import (
 )
 
 const (
-	AddComment = "insert into Comment(videoId, message, user, time) VALUES($1, $2, $3, now()::timestamp);"
-	AddArtist  = "insert into Artist(username, name, age, password, followers, description, likeCount, location) VALUES($1, $2, $3, $4, $5, $6, $7, $8);"
+	AddArtist  = "insert into Artist(username, name, age, password, followers, description, likeCount, location) VALUES($1, $2, $3, $4, $5, $6, $7, $8::json);"
 	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes) VALUES($1, $2, $3, now()::timestamp, 0, 0);"
 	AddGenre   = "insert into Genre(name, description) VALUES($1, $2);"
 	AddSession = "insert into Session(userId, sessionKey, time) VALUES($1, $2, now()::timestamp);"
+	AddMessage = "insert into Comment(sender, receiver, message, time) VALUES($1, $2, $3, now()::timestamp);"
 
 	RemoveSession = "delete from Session where sessionkey = $1;"
     RemoveOldSessions = "delete from session where age(now(), time) > '1 hour';"
@@ -26,9 +26,9 @@ const (
 	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount from Artist where id = $1;"
 	SelectExtArtistData   = "select username, name, description, date, active, followerCount, likeCount from Artist where id = $1;"
 	SelectArtistVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1;"
+	SelectVideosByArtist  = "select id, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
 	SelectVideoComments   = "select message, user, time from Comment where videoId = $1"
 	SelectVideosByGenre   = "select id, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
-	SelectVideosByArtist  = "select id, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
 	SelectGenres          = "select name, description from Genre;"
 	SelectUserAuth        = "select id, password from artist where username = $1;"
 	SelectSession         = "select count(userId) from session where sessionkey = $1;"
@@ -36,6 +36,7 @@ const (
 	SelectArtistByZip     = "select id, name, username from artist where location::json->>'zip_code'::text = (select location::json->>'zip_code' from artist where id = $1)::text;"
 	SelectArtistByCity    = "select id, name, username from artist where location::json->>'city'::text = (select location::json->>'city' from artist where id = $1)::text;"
     SelectVideoLoc        = "select artistId, title from video where id = $1;"
+    SelectChatThread = "select sender, receiver, message, time from Comment where (sender = $1 or sender= $2) and (receiver = $1 or receiver = $2);"
 
 	UpdateArtist = "update artist set username = $1, name = $2, description = $3, password = $4 where id = $5;"
     IncreaseViews = "update video set views = (select views from video where artistId = $1 and title = $2) + 1 where artistId = $1 and title = $2;"
@@ -44,6 +45,18 @@ const (
 type Authentication struct {
 	Username string
 	Password string
+}
+
+type Message struct {
+    Artist   string
+    Receiver string
+    Message  string
+    Time     string
+}
+
+type PostMessage struct {
+    Artist   string
+    Message  string
 }
 
 type NewVideo struct {
@@ -109,8 +122,6 @@ type ExtArtist struct {
 type IntArtist struct {
 	Username           string
 	Name               string
-	AccountCreationDay string
-	FollowerCount      string
 	Followers          string
 	Desc               string
 	Date               string
@@ -203,9 +214,13 @@ func artist(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (data *IntArtist) SetVideoList(videos []Video) {
+    data.VideoList = videos
+}
+
 func profile(w http.ResponseWriter, r *http.Request) {
-	var v Video
 	var a IntArtist
+    var videos []Video
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, _ := r.Cookie("SESSIONID")
@@ -228,19 +243,20 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	videoRows, viderr := db.Query(SelectArtistVideos, artistId)
 	logIfErr(viderr)
-	defer videoRows.Close()
 
 	for videoRows.Next() {
-		err = videoRows.Scan(&v.Id, &v.File, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
+	    var v Video
+		err = videoRows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
 		logIfErr(err)
 
-		a.VideoList = append(a.VideoList, v)
+		videos = append(videos, v)
 	}
+	videoRows.Close()
 
-	if err := json.NewEncoder(w).Encode(a); err != nil {
-		logIfErr(err)
-	}
+    a.SetVideoList(videos)
 
+	err = json.NewEncoder(w).Encode(a)
+	logServerErr(w, err)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -694,4 +710,49 @@ func searchByCity(w http.ResponseWriter, r *http.Request) {
 
 	err = json.NewEncoder(w).Encode(artistList)
 	logServerErr(w, err)
+}
+
+func getMessages(w http.ResponseWriter, r *http.Request) {
+    var messages []Message
+
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+    artistId := getUserId(cookie.Value)
+    receiver := r.URL.Query().Get("artist")
+
+    rows, err := db.Query(SelectChatThread, artistId, receiver)
+    logIfErr(err)
+    defer rows.Close()
+
+    for rows.Next() {
+       var m Message
+       err = rows.Scan(&m.Artist, &m.Receiver, &m.Message, &m.Time)
+       logIfErr(err)
+       messages = append(messages, m)
+    }
+
+	err = json.NewEncoder(w).Encode(messages)
+	logServerErr(w, err)
+}
+
+func postMessages(w http.ResponseWriter, r *http.Request) {
+    var message PostMessage
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+    artistId := getUserId(cookie.Value)
+	decoder := json.NewDecoder(r.Body)
+	decoder.Decode(&message)
+
+    rows, err := db.Query(AddMessage, artistId, message.Artist, message.Message)
+    logIfErr(err)
+    rows.Close()
 }

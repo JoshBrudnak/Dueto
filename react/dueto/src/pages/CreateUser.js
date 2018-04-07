@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Input, TextField, Button, Typography, Paper} from 'material-ui'
-import {loginUser, addUser, addAvatar} from '../utils/fetchData.js'
+import {loginUser, addUser, addAvatar, getLocation} from '../utils/fetchData.js'
 import {Link} from "react-router-dom"
 
 class CreateUser extends Component {
@@ -15,7 +15,6 @@ class CreateUser extends Component {
       bio: undefined, 
       avatar: undefined,
       age: undefined,
-      loc: undefined,
       avatarPath: undefined, 
       avatarName: "No file selected",
       nameError: false,
@@ -53,43 +52,50 @@ class CreateUser extends Component {
       return
     }
 
-    const userdata = {
-      Name: s.name,
-      Password: s.password,
-      Repassword: s.repassword,
-      Username: s.username,
-      Bio: s.bio,
-      Age: s.age,
-      Loc: s.loc 
-    }
-       
-    addUser(userdata)
+    getLocation()
       .then(data => {
 
-        loginUser(this.state.username, this.state.password)
-         .then(data => { 
-           const {avatarName, avatar} = this.state
+        const userdata = {
+          Name: s.name,
+          Password: s.password,
+          Repassword: s.repassword,
+          Username: s.username,
+          Bio: s.bio,
+          Age: s.age,
+          Loc: JSON.stringify(data)
+        }
 
-           let formData = new FormData()
-
-           formData.append("file", avatar)
-           formData.append("name", avatarName)
-
-           addAvatar(formData)
+        addUser(userdata)
+          .then(data => {
+            loginUser(this.state.username, this.state.password)
              .then(data => { 
-                window.location = "/home"
-             })
-             .catch(error => {
+               const {avatarName, avatar} = this.state
+    
+               let formData = new FormData()
+               formData.append("file", avatar)
+               formData.append("name", avatarName)
+
+               addAvatar(formData)
+                 .then(data => { 
+                    //window.location = "/home"
+                 })
+                 .catch(error => {
+                   console.error(error)
+                 })
+              })
+              .catch(error => {
+                console.error(error)
+              })
+            })
+            .catch(error => { 
                console.error(error)
-             })
+            })
           })
           .catch(error => {
             console.error(error)
           })
-      })
-      .catch(error => { 
-         console.error(error)
-      })
+
+       
   }
 
   avatarChange = (event) => {
@@ -143,13 +149,6 @@ class CreateUser extends Component {
             name="age"
             style={fieldStyle}
             value={this.state.age}
-            onChange={this.textChange}
-          />
-          <TextField
-            label="Location"
-            name="loc"
-            style={fieldStyle}
-            value={this.state.loc}
             onChange={this.textChange}
           />
           <TextField

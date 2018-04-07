@@ -1,7 +1,7 @@
 //AIzaSyDKscT5t4lFXsQCS2GRoctWJw5aGjSHJ0k
 
 export const getLocation = async () => {
-  const response = await fetch('https://freegeoip.net/json/', {})
+  const response = await fetch('https://freegeoip.net/json/', {credentials: "include"})
   const newData = await response.json()
  
   return newData 
@@ -93,6 +93,35 @@ export const getArtistsByZip = async () => {
 export const getArtistsByCity = async () => {
   const response = await fetch("/api/city", { credentials: "include" })
   const newData = await response.json()
+
+  return newData
+}
+
+export const getMessages = async (artistId, message) => {
+  const data = {
+     Artist: artistId, 
+     Message: message 
+  }
+
+  const params = encodeUrl(data)
+
+  const response = await fetch("/api/getmessage?" + params, { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
+}
+
+export const sendMessage = async (body) => {
+  let formBody = JSON.stringify(body)
+
+  const response = await fetch("/api/createuser", {
+	body: formBody,
+	credentials: 'include',
+	method: 'POST',
+	headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response
 
   return newData
 }
