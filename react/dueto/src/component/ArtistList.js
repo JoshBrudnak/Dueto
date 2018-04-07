@@ -81,8 +81,8 @@ class ArtistList extends Component {
 
   render() {
     return (
-      <Paper>
-        <Typography>Artists near you</Typography>
+      <Paper style={{marginTop: 20}}>
+        <Typography style={{margin: 10, fontSize: 15}}>Artists near you</Typography>
         <Button onClick={this.openMenu}>Open Menu</Button>
         <Menu anchorEl={this.state.anchor} open={this.state.open} onClose={this.closeMenu}>
           <MenuItem onClick={this.zipcodeArtists}>By Zipcode</MenuItem>

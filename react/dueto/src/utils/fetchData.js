@@ -35,7 +35,7 @@ function encodeUrl(data) {
   return formBody
 }
 
-function getArtistData(video, type) {
+function getFileUrl(video, type) {
   const data = {
      id: video
   }
@@ -46,6 +46,18 @@ function getArtistData(video, type) {
 
 export const getProfileData = async (name) => {
   const response = await fetch("/api/profile", { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
+}
+
+export const getArtistData = async (artistId) => {
+  const data = {
+     artist: artistId
+  }
+  const params = encodeUrl(data)
+
+  const response = await fetch("/api/artist?" + params, { credentials: "include" })
   const newData = await response.json()
 
   return newData
@@ -127,11 +139,11 @@ export const sendMessage = async (body) => {
 }
 
 export const getVideoUrl = (videoId) => {
-  return getArtistData(videoId, "video")
+  return getFileUrl(videoId, "video")
 }
 
 export const getThumbnailUrl = (videoId) => {
-  return getArtistData(videoId, "thumbnail")
+  return getFileUrl(videoId, "thumbnail")
 }
 
 export const getAvatarUrl = (artistId) => {

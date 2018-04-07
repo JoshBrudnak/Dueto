@@ -104,6 +104,7 @@ func main() {
 	compileTemplates()
 
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("../react/dueto/build/static/js"))))
+	http.Handle("/resource/", http.StripPrefix("/resource/", http.FileServer(http.Dir("../react/dueto/src/resources"))))
 	http.HandleFunc("/api/home", homePage)
 	http.HandleFunc("/api/profile", profile)
 	http.HandleFunc("/api/discover", discover)

@@ -69,17 +69,20 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <Paper style={{display: "grid"}}>
-          <div style={{gridColumn: 2}}>
+        <Paper style={{display: "grid", padding: 20}}>
+          <img style={{width: 150, height: 150}} src="/resource/dueto.png" alt="Dueto"/>
+          <div style={{gridColumn: 2, display: "flex", alignItems: "flex-end", justifyContent: "center"}}>
             <Tabs onChange={this.tabChange}>
               <Tab style={{width: 100}} label="Home" />
               <Tab style={{width: 100}} label="Profile" />
               <Tab style={{width: 100}} label="Discover"/>
             </Tabs>
           </div>
-          <div style={{gridColumn: 3}}>
-            <TextField id="search" type="search" margin="normal"/>
-            {this.getAuthButton()}
+          <div style={{gridColumn: 3, display: "flex", justifyContent: "flex-end"}}>
+            <div>
+              <TextField id="search" type="search" margin="normal"/>
+              {this.getAuthButton()}
+            </div>
           </div>
         </Paper>
         <Link id="home" to="/home" style={{visibility: "hidden"}}/>

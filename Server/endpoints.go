@@ -108,8 +108,8 @@ type VideoList struct {
 }
 
 type ExtArtist struct {
-	Name          string
 	Username      string
+	Name          string
 	Age           string
 	Active        string
 	Desc          string
@@ -230,7 +230,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	artistId := getUserId(cookie.Value)
+    artistId = getUserId(cookie.Value)
 	a.Id = artistId
 
 	rows, err := db.Query(SelectIntArtistData, artistId)

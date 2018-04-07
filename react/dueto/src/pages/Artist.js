@@ -4,9 +4,9 @@ import Header from '../component/Header.js'
 import {AddCircle, Settings} from 'material-ui-icons'
 import {Link} from 'react-router-dom'
 import VideoCard from '../component/VideoCard.js'
-import {getProfileData} from '../utils/fetchData.js'
+import {getArtistData} from '../utils/fetchData.js'
 
-class Profile extends Component {
+class Artist extends Component {
   constructor() {
     super()
    
@@ -25,7 +25,7 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    getProfileData()
+    getArtistData()
       .then(data => {
         let avUrl = "/api/avatar?artist=" + data.Id
 
@@ -63,7 +63,7 @@ class Profile extends Component {
   }
 
   addVideo = () => {
-    document.getElementById("newvideo").click()
+    document.getElementById("addvideo").click()
   }
 
   getBody = () => {
@@ -100,15 +100,7 @@ class Profile extends Component {
         <Header/>
         <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
           <Paper style={{padding: 10, width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <div style={{display: "flex", flexDirection: "row"}}> 
-              <IconButton onClick={this.edit}>
-                <Settings/>
-              </IconButton>
-              <Avatar src={this.state.avatarUrl} style={{width: 100, height: 100, marginBotton: 10}}/>
-              <IconButton onClick={this.addVideo}>
-                <AddCircle/>
-              </IconButton>
-            </div> 
+            <Avatar src={this.state.avatarUrl} style={{width: 100, height: 100, marginBotton: 10}}/>
             <Typography>{this.state.name}</Typography> 
             <Typography>{this.state.username}</Typography> 
           </Paper>
@@ -124,13 +116,9 @@ class Profile extends Component {
         <div style={{display: "flex", flexWrap: "wrap"}}>
           {this.getBody()}
         </div>
-        <Link id="edit" to="/editprofile" style={{visibility: "collapse"}}/>
-        <Link id="newvideo" to="/addvideo" style={{visibility: "collapse"}}/>
-        <Link id="video" to="/profile" style={{visibility: "collapse"}}/>
-        <Link id="chat" to="/chat" style={{visibility: "collapse"}}/>
       </div>
     )
   }
 }
 
-export default Profile;
+export default Artist;

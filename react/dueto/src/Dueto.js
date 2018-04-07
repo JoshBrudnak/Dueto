@@ -3,6 +3,7 @@ import Home from "./pages/Home.js"
 import Login from "./pages/Login.js"
 import Logout from "./pages/Logout.js"
 import Profile from "./pages/Profile.js"
+import Artist from "./pages/Artist.js"
 import EditProfile from "./pages/EditProfile.js"
 import AddVideo from "./pages/AddVideo.js"
 import Discover from "./pages/Discover.js"
@@ -19,6 +20,7 @@ class Dueto extends Component {
           <Switch>
             <Route path="/home" component={Home}/>
             <Route path="/profile" component={Profile}/>
+            <Route path="/artist/:name" component={Artist}/>
             <Route path="/editprofile" component={EditProfile}/>
             <Route path="/addvideo" component={AddVideo}/>
             <Route path="/login" component={Login}/>
