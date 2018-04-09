@@ -33,18 +33,24 @@
     <application
         android:allowBackup="true"
         android:configChanges="orientation|screenSize"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/dueto"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/dueto"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-        <activity android:name=".LoginActivity" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SigninActivity"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TimelineActivity"
             android:configChanges="orientation|screenSize"
@@ -55,7 +61,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_camera"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".FirstActivity">
+        <activity
+            android:name=".FirstActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,6 +74,13 @@
         <activity
             android:name=".VideoActivity"
             android:label="@string/title_activity_video"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DiscoverActivity" />
+        <activity
+            android:name=".EditProfile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditMusic"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

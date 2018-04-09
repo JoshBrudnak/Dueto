@@ -21,6 +21,10 @@
     <color name="DTimeline">#e6e6e6</color>
     <color name="DProfileMusic">#118be0</color>
 
+    <color name="newBlue">#005492</color>
+    <color name="buttonBlue">#13609d</color>
+    <color name="transBlue">#900048ff</color>
+
     <color name="Transparent_White">#7F000000</color>
     <color name="black_overlay">#66000000</color>
 

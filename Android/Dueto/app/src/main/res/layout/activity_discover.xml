@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dueto.dueto.DiscoverActivity">
+
+    <RelativeLayout
+    android:id="@+id/rel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/classical"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="13dp"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson" />
+
+        <ImageButton
+            android:id="@+id/indie"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/classical"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson2" />
+
+        <ImageButton
+            android:id="@+id/pop"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/classical"
+            android:layout_below="@+id/classical"
+            android:layout_marginTop="14dp"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson3" />
+
+        <ImageButton
+            android:id="@+id/electronic"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/indie"
+            android:layout_alignTop="@+id/pop"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson10" />
+
+        <ImageButton
+            android:id="@+id/ambient"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/pop"
+            android:layout_below="@+id/pop"
+            android:layout_marginTop="14dp"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson4" />
+
+        <ImageButton
+            android:id="@+id/rock"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/electronic"
+            android:layout_alignTop="@+id/ambient"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson5" />
+
+        <ImageButton
+            android:id="@+id/latin"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/ambient"
+            android:layout_below="@+id/ambient"
+            android:layout_marginTop="14dp"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson9" />
+
+        <ImageButton
+            android:id="@+id/alternative"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/rock"
+            android:layout_alignTop="@+id/latin"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson7" />
+
+        <ImageButton
+            android:id="@+id/jazz"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/latin"
+            android:layout_below="@+id/latin"
+            android:layout_marginTop="14dp"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson6" />
+
+        <ImageButton
+            android:id="@+id/hiphop"
+            android:layout_width="157.5dp"
+            android:layout_height="157.5dp"
+            android:layout_alignStart="@+id/alternative"
+            android:layout_alignTop="@+id/jazz"
+            android:background="@null"
+            android:scaleType="fitStart"
+            android:src="@drawable/crimson8" />
+
+    </RelativeLayout>
+
+
+</ScrollView>

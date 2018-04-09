@@ -16,6 +16,8 @@ public class RepostsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private boolean scrollable = true;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

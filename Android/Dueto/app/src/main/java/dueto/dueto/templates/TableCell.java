@@ -1,12 +1,18 @@
 package dueto.dueto.templates;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -24,6 +30,8 @@ import java.text.DecimalFormat;
 import dueto.dueto.R;
 import dueto.dueto.servercom.Server;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * TableCell, defining general accessors as well as fields of a TableCell
@@ -31,9 +39,11 @@ import dueto.dueto.servercom.Server;
 
 public class TableCell extends TableRow
 {
-    private ImageView thumbnail,
-                      profile;
-    private VideoView videoView;
+    private ImageView thumbnail, profile;
+    private VideoView video;
+    Integer SELECT_FILE = 0;
+    int requestCode, resultCode;
+    private int ACTIVITY_START_CAMERA_APP = 0;
 
     private String description, time;
     private JSONObject artist;
@@ -113,25 +123,33 @@ public class TableCell extends TableRow
 //            test.setImageBitmap(bitmap);
 //            //test.set
 
-            thumbnail = (ImageView) internal.get("thumbpic");
+            thumbnail = (ImageButton) internal.get("thumbpic");
+            thumbnail.setClickable(true);
             thumbnail.setMinimumWidth(width);
             thumbnail.setMinimumHeight(width);
             thumbnail.setMaxHeight(width);
             thumbnail.setMaxWidth(width);
-            thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            thumbnail.setScaleType(ImageButton.ScaleType.CENTER_CROP);
 
-            thumbnail.setOnClickListener(e->
-            {
+            //The Actual Video Player
+//            thumbnail.setOnClickListener(e->
+//            {
+//                //thumbnail.setVisibility(View.INVISIBLE);
+//                //TODO: insert video pla
+//            });
 
-                //TODO: insert video pla
-            });
+            video = (VideoView) internal.get("video");
+            video.setMinimumWidth(width);
+            video.setMinimumHeight(width);
+            video.setLayoutParams(new FrameLayout.LayoutParams(width, height));
+
+            //Profile Cell
 
             profile = (ImageView) internal.get("profilepic");
             profile.setMinimumHeight(width/7);
             profile.setMinimumWidth(width/7);
             profile.setMaxWidth(width / 7);
             profile.setMaxHeight(width/7);
-
             profile.setOnClickListener(e->{
                 //TODO: insert link to profile here.
             });
@@ -141,6 +159,7 @@ public class TableCell extends TableRow
             timeView.setTextSize(12);
 
             trUp.addView(this.thumbnail);
+            trUp.addView(this.video);
             horLinLayout.addView(this.profile);
             horLinLayout.addView(nameLinLayout);
             horLinLayout.addView(timeView);
@@ -201,5 +220,12 @@ public class TableCell extends TableRow
         return output;
     }
 
-}
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+//        if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
+//            Uri videoUri = data.getData();
+//            mVideoView.setVideoURI(videoUri);
+//        }
+//
+//    }
 
+}
