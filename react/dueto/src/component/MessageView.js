@@ -55,14 +55,14 @@ class MessageView extends Component {
     if(this.state.messages !== undefined && this.state.messages.length > 0) {
       for(let i = 0; i < this.state.messages.length; i++) {
         const message = this.state.messages[i]
-        if(message.Sender === this.props.artist) {
+        if(message.Artist == this.props.artist) {
           chips.push(
-            <Paper style={{width: "fit-content", padding: 5}}>{message.Message}</Paper> 
+            <Paper style={{width: "fit-content", padding: 5, alignSelf: "flex-start", marginBottom: 10}}>{message.Message}</Paper> 
           )
         }
         else {
           chips.push(
-            <Paper style={{width: "fit-content", padding: 5, alignSelf: "flex-end"}}>{message.Message}</Paper> 
+            <Paper style={{width: "fit-content", padding: 5, alignSelf: "flex-end", marginBottom: 10}}>{message.Message}</Paper> 
           )
         }
       }

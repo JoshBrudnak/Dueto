@@ -67,11 +67,11 @@ class Profile extends Component {
   }
 
   getBody = () => {
-    if(this.state.videoPage && this.state.videos !== null) {
-      const videoCards = []
+    const videoCards = []
+    if(this.state.videos !== null) {
       for(let i = 0; i < this.state.videos.length; i++) {
         const data = this.state.videos[i]
-
+  
         videoCards.push(
           <VideoCard
             style={{margin: 40}}
@@ -82,16 +82,16 @@ class Profile extends Component {
           />
         )
       }
-      
-      return videoCards
     }
-    /*
-    else if(this.state.chatPage) {
-      return (
-        //<Chat/>
+    else {
+      videoCards.push(
+        <Paper style={{padding: 10, margin: 20}}>
+          <Typography>This user has no videos</Typography>
+        </Paper>
       )
     }
-    */
+    
+    return videoCards
   }
 
   render() {
@@ -112,16 +112,8 @@ class Profile extends Component {
             <Typography>{this.state.name}</Typography> 
             <Typography>{this.state.username}</Typography> 
           </Paper>
-          <Paper style={{display: "grid", alignItems: "center"}}>
-            <div style={{gridColumn: 2}}>
-              <Tabs onChange={this.tabChange}>
-                <Tab style={{width: 100}} label="Video" />
-                <Tab style={{width: 100}} label="Chat" />
-              </Tabs>
-            </div>
-          </Paper>
         </div>
-        <div style={{display: "flex", flexWrap: "wrap"}}>
+        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
           {this.getBody()}
         </div>
         <Link id="edit" to="/editprofile" style={{visibility: "collapse"}}/>

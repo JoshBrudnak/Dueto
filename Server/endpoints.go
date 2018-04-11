@@ -275,7 +275,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	rows, err := db.Query(SelectRecentVideos)
-	checkErr(err)
+	logIfErr(err)
 
 	for rows.Next() {
 	    var v Video
@@ -331,9 +331,7 @@ func discover(w http.ResponseWriter, r *http.Request) {
 }
 
 func genre(w http.ResponseWriter, r *http.Request) {
-	var v Video
 	var videos VideoList
-	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, err := r.Cookie("SESSIONID")
@@ -346,33 +344,38 @@ func genre(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query(SelectVideosByGenre, genre)
 	logIfErr(err)
-	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&v.Id, &v.Title, &v.Desc, &v.Views, &v.Likes, &v.Time, &artistId)
-		logServerErr(w, err)
-
+		var v Video
+		var artistId string
 		var a BasicArtist
+
+		err = rows.Scan(&v.Id, &v.Title, &v.Desc, &v.Views, &v.Likes, &v.Time, &artistId)
+		logIfErr(err)
+
 		v.Genre = genre
 		artistRow, err := db.Query(SelectBasicArtistData, artistId)
 		logServerErr(w, err)
-		defer artistRow.Close()
-		rows.Next()
 
-		err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
+		if artistRow.Next() {
+		    err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
+        }
+
 		logServerErr(w, err)
+		artistRow.Close()
 
 		a.Id = artistId
 		v.Artist = a
 
 		videos.VideoCards = append(videos.VideoCards, v)
 	}
+	rows.Close()
 
 	err = json.NewEncoder(w).Encode(videos)
 	logServerErr(w, err)
 }
 
-func fileLoc(w http.ResponseWriter, id string) string {
+func fileLoc(w http.ResponseWriter, id string) (artist string, video string) {
     var artistId string
     var videoName string
 
@@ -383,18 +386,19 @@ func fileLoc(w http.ResponseWriter, id string) string {
         rows.Scan(&artistId, &videoName)
     } else {
         http.Error(w, "Video not found", http.StatusNotFound)
-        return ""
+        return "", ""
     }
+    rows.Close()
 
-    return artistId + "/" + videoName
+    return artistId, videoName
 }
 
 func video(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	videoId := r.URL.Query().Get("id")
 
-    loc := fileLoc(w, videoId)
-	filePath := "./data/videos/" + loc + ".mp4"
+    artistId, videoName := fileLoc(w, videoId)
+	filePath := "./data/videos/" + artistId + "/" + videoName + ".mp4"
     _, err := os.Stat(filePath)
 
     if os.IsNotExist(err) {
@@ -402,7 +406,7 @@ func video(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-	rows, err := db.Query(IncreaseViews, videoId)
+	rows, err := db.Query(IncreaseViews, videoId, videoName)
     rows.Close()
 
 	http.ServeFile(w, r, filePath)
@@ -426,8 +430,8 @@ func thumbnail(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	videoId := r.URL.Query().Get("id")
 
-    loc := fileLoc(w, videoId)
-	filePath := "./data/thumbnails/" + loc + ".jpeg"
+    artistId, videoName := fileLoc(w, videoId)
+	filePath := "./data/thumbnails/" + artistId + "/" + videoName + ".jpeg"
     _, err := os.Stat(filePath)
 
     if os.IsNotExist(err) {
@@ -632,7 +636,7 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 
 	getThumbnail(artist, name)
 
-	rows, err := db.Query(AddVideo, artist, name, desc, filePath)
+	rows, err := db.Query(AddVideo, artist, name, desc)
 	logServerErr(w, err)
 	rows.Close()
 }

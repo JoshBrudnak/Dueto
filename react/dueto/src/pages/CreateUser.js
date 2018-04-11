@@ -84,7 +84,7 @@ class CreateUser extends Component {
 
                addAvatar(formData)
                  .then(data => { 
-                    //window.location = "/home"
+                    window.location = "/home"
                  })
                  .catch(error => {
                    console.error(error)
