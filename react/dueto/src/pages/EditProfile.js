@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {Input, TextField, Button, Typography, Paper} from 'material-ui'
 import {Link} from "react-router-dom"
 import {getProfileData, updateUser} from '../utils/fetchData.js'
-import Header from "../component/Header.js"
 
 class EditProfile extends Component {
   constructor() {
@@ -19,7 +18,6 @@ class EditProfile extends Component {
       avatarTitle: undefined,
       nameError: false,
       usernError: false,
-      passError: false,
       passError: false,
     }
   }

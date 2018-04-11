@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import {Avatar, Typography, Paper, IconButton} from 'material-ui'
+import {Avatar, Typography, Paper, IconButton, Tabs, Tab} from 'material-ui'
 import Header from '../component/Header.js'
 import {AddCircle, Settings} from 'material-ui-icons'
 import {Link} from 'react-router-dom'
+import VideoCard from '../component/VideoCard.js'
 import {getProfileData} from '../utils/fetchData.js'
 
 class Profile extends Component {
@@ -16,6 +17,9 @@ class Profile extends Component {
       id: undefined,
       likes: undefined,
       followers: undefined,
+      videos: [],
+      videoPage: true,
+      chatPage: false, 
       avatarUrl: "/api/avatar?artist=0" 
     }
   }
@@ -31,6 +35,7 @@ class Profile extends Component {
           desc: data.Desc,
           followers: data.FollowerCount,
           likes: data.LikeCount,
+          videos: data.VideoList,
           avatarUrl: avUrl 
         })
       })
@@ -39,19 +44,61 @@ class Profile extends Component {
       })
   }
 
+  tabChange = (event, value) => {
+    switch(value) {
+      case 0:
+        this.setState({videoPage: true, chatPage: false})
+        break
+      case 1:
+        this.setState({videoPage: false, chatPage: true})
+        break
+      default:
+        this.setState({videoPage: true, chatPage: false})
+        break
+    }
+  }
+
   edit = () => {
     document.getElementById("edit").click()
   }
 
   addVideo = () => {
-    document.getElementById("video").click()
+    document.getElementById("newvideo").click()
+  }
+
+  getBody = () => {
+    const videoCards = []
+    if(this.state.videos !== null) {
+      for(let i = 0; i < this.state.videos.length; i++) {
+        const data = this.state.videos[i]
+  
+        videoCards.push(
+          <VideoCard
+            style={{margin: 40}}
+            id={data.Id}
+            artist={data.Artist.Id}
+            desc={data.Desc}
+            name={data.Title}
+          />
+        )
+      }
+    }
+    else {
+      videoCards.push(
+        <Paper style={{padding: 10, margin: 20}}>
+          <Typography>This user has no videos</Typography>
+        </Paper>
+      )
+    }
+    
+    return videoCards
   }
 
   render() {
     return (
       <div>
         <Header/>
-        <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+        <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
           <Paper style={{padding: 10, width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{display: "flex", flexDirection: "row"}}> 
               <IconButton onClick={this.edit}>
@@ -66,8 +113,13 @@ class Profile extends Component {
             <Typography>{this.state.username}</Typography> 
           </Paper>
         </div>
+        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+          {this.getBody()}
+        </div>
         <Link id="edit" to="/editprofile" style={{visibility: "collapse"}}/>
-        <Link id="video" to="/addvideo" style={{visibility: "collapse"}}/>
+        <Link id="newvideo" to="/addvideo" style={{visibility: "collapse"}}/>
+        <Link id="video" to="/profile" style={{visibility: "collapse"}}/>
+        <Link id="chat" to="/chat" style={{visibility: "collapse"}}/>
       </div>
     )
   }

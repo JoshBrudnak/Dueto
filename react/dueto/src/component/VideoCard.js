@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import { Card, Button, Typography } from 'material-ui'
-import { CardMedia, CardContent, CardActions } from 'material-ui/Card'
+import React, { Component } from "react"
+import { Card, Button, Typography } from "material-ui"
+import { CardMedia, CardContent, CardActions } from "material-ui/Card"
 import VideoDialog from "./VideoDialog.js"
-import { getThumbnailUrl } from '../utils/fetchData.js'
+import { Link } from "react-router-dom"
+import { getThumbnailUrl } from "../utils/fetchData.js"
 
 class VideoCard extends Component {
   constructor() {
@@ -27,7 +28,13 @@ class VideoCard extends Component {
     this.setState({open: false})
   }
 
+  profile = () => {
+    document.getElementById("profile").click()
+  }
+
   render() {
+    const profileUrl = "/artist/" + this.props.id    
+
     return (
       <Card style={{width: 400, margin: 40}}>
         <CardMedia>
@@ -45,7 +52,7 @@ class VideoCard extends Component {
           <Button onClick={this.viewVideo} size="small" color="primary">
             View  
           </Button>
-          <Button size="small" color="primary">
+          <Button onClick={this.profile} size="small" color="primary">
             Artist 
           </Button>
         </CardActions> 
@@ -56,6 +63,7 @@ class VideoCard extends Component {
           artist={this.props.artist}
           name={this.props.name}
         />
+        <Link id="profile" to={profileUrl} style={{visibility: "collapsed"}}/>
       </Card>
     )
   }

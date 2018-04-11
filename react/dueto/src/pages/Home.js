@@ -16,7 +16,6 @@ class Home extends Component {
   componentDidMount() {
     getHomeData()
       .then(data => {
-         console.log(data)
          if(data != null && data.VideoCards != null) {
            this.setState({videos: data.VideoCards}) 
          }

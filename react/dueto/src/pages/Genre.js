@@ -17,7 +17,6 @@ class Genre extends Component {
 
     getGenreVideos(value)
       .then(data => {
-        console.log(data)
         this.setState({videos: data.VideoCards}) 
       })
       .catch(error => {
@@ -33,6 +32,7 @@ class Genre extends Component {
         const data = this.state.videos[i]
         cards.push(
           <VideoCard
+            id={data.Id}
             artist={data.Artist.Id}
             desc={data.Desc}
             genre={data.Genre}
@@ -48,11 +48,12 @@ class Genre extends Component {
   }
 
   render() {
-    console.log("render")
     return (
       <div>
         <Header/>
-        {this.getVideoCards()}
+        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+          {this.getVideoCards()}
+        </div>
       </div>
     )
   }

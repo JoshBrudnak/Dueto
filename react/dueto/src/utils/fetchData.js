@@ -1,7 +1,5 @@
-//AIzaSyDKscT5t4lFXsQCS2GRoctWJw5aGjSHJ0k
-
-export const getLocation = async () => {
-  const response = await fetch('https://freegeoip.net/json/', {})
+export const getLocation =  async () => {
+  const response = await fetch('http://ip-api.com/json', {credentials: "exclude"})
   const newData = await response.json()
  
   return newData 
@@ -35,7 +33,7 @@ function encodeUrl(data) {
   return formBody
 }
 
-function getArtistData(video, type) {
+function getFileUrl(video, type) {
   const data = {
      id: video
   }
@@ -46,6 +44,18 @@ function getArtistData(video, type) {
 
 export const getProfileData = async (name) => {
   const response = await fetch("/api/profile", { credentials: "include" })
+  const newData = await response.json()
+
+  return newData
+}
+
+export const getArtistData = async (artistId) => {
+  const data = {
+     artist: artistId
+  }
+  const params = encodeUrl(data)
+
+  const response = await fetch("/api/artist?" + params, { credentials: "include" })
   const newData = await response.json()
 
   return newData
@@ -97,12 +107,42 @@ export const getArtistsByCity = async () => {
   return newData
 }
 
+export const getMessages = async (artistId) => {
+  const data = {artist: artistId}
+
+  const params = encodeUrl(data)
+  const response = await fetch("/api/getmessages?" + params, { credentials: "include" })
+  const newData = await response.json()
+ 
+  return newData
+}
+
+export const sendMessage = async (message, artist) => {
+  const data = {
+     Message: message,
+     Artist: artist
+  }
+  const formBody = JSON.stringify(data)
+  console.log(formBody)
+
+  const response = await fetch("/api/postmessage", {
+	body: formBody,
+	credentials: 'include',
+	method: 'POST',
+	headers: {Accept: 'application/json'}
+  })
+
+  const newData = await response
+
+  return newData
+}
+
 export const getVideoUrl = (videoId) => {
-  return getArtistData(videoId, "video")
+  return getFileUrl(videoId, "video")
 }
 
 export const getThumbnailUrl = (videoId) => {
-  return getArtistData(videoId, "thumbnail")
+  return getFileUrl(videoId, "thumbnail")
 }
 
 export const getAvatarUrl = (artistId) => {
@@ -174,7 +214,6 @@ export const updateUser = async (body) => {
 	body: formBody,
 	credentials: 'include',
 	method: 'POST',
-	headers: {Accept: 'application/json'}
   })
 
   const newData = await response
@@ -189,7 +228,6 @@ export const addUser = async (body) => {
 	body: formBody,
 	credentials: 'include',
 	method: 'POST',
-	headers: {Accept: 'application/json'}
   })
 
   const newData = await response

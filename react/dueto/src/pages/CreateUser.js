@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Input, TextField, Button, Typography, Paper} from 'material-ui'
-import {loginUser, addUser, addAvatar} from '../utils/fetchData.js'
+import {loginUser, addUser, addAvatar, getLocation} from '../utils/fetchData.js'
 import {Link} from "react-router-dom"
 
 class CreateUser extends Component {
@@ -15,10 +15,11 @@ class CreateUser extends Component {
       bio: undefined, 
       avatar: undefined,
       age: undefined,
-      loc: undefined,
+      email: undefined,
       avatarPath: undefined, 
       avatarName: "No file selected",
       nameError: false,
+      emailError: false,
       usernError: false,
       passError: false,
       repassError: false
@@ -48,48 +49,60 @@ class CreateUser extends Component {
       this.setState({repassError: true})
       return
     }
+    if(s.email === undefined || s.email === "") {
+      this.setState({emailError: true})
+      return
+    }
  
-    if(this.state.nameError || this.state.usernError || this.state.passError || this.state.repassError) {
+    const ns = this.state
+    if(ns.nameError || ns.usernError || ns.passError || ns.repassError || ns.emailError) {
       return
     }
 
-    const userdata = {
-      Name: s.name,
-      Password: s.password,
-      Repassword: s.repassword,
-      Username: s.username,
-      Bio: s.bio,
-      Age: s.age,
-      Loc: s.loc 
-    }
-       
-    addUser(userdata)
+    getLocation()
       .then(data => {
+        const userdata = {
+          Name: s.name,
+          Password: s.password,
+          Repassword: s.repassword,
+          Username: s.username,
+          Email: s.email,
+          Bio: s.bio,
+          Age: s.age,
+          Loc: JSON.stringify(data)
+        }
 
-        loginUser(this.state.username, this.state.password)
-         .then(data => { 
-           const {avatarName, avatar} = this.state
-
-           let formData = new FormData()
-
-           formData.append("file", avatar)
-           formData.append("name", avatarName)
-
-           addAvatar(formData)
+        addUser(userdata)
+          .then(data => {
+            loginUser(this.state.username, this.state.password)
              .then(data => { 
-                window.location = "/home"
+               const {avatarName, avatar} = this.state
+    
+               let formData = new FormData()
+               formData.append("file", avatar)
+               formData.append("name", avatarName)
+
+               addAvatar(formData)
+                 .then(data => { 
+                    window.location = "/home"
+                 })
+                 .catch(error => {
+                   console.error(error)
+                 })
              })
              .catch(error => {
                console.error(error)
              })
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      })
-      .catch(error => { 
-         console.error(error)
-      })
+           })
+         .catch(error => { 
+           console.error(error)
+         })
+       })
+       .catch(error => { 
+          console.error(error)
+       })
+
+       
   }
 
   avatarChange = (event) => {
@@ -146,10 +159,11 @@ class CreateUser extends Component {
             onChange={this.textChange}
           />
           <TextField
-            label="Location"
-            name="loc"
+            label="E-mail"
+            name="email"
+            error={this.state.emailError}
             style={fieldStyle}
-            value={this.state.loc}
+            value={this.state.email}
             onChange={this.textChange}
           />
           <TextField

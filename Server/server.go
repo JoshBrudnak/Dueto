@@ -21,7 +21,7 @@ const (
 	createVideoT   = "create table if not exists Video(id serial primary key, artistId text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
 	createGenreT   = "create table if not exists Genre(id serial primary key, name text, description text);"
 	createSessionT = "create table if not exists Session(userId text, sessionKey text, time timestamp);"
-	createCommentT = "create table if not exists Comment(id serial primary key, sender text, reciever text, message text, time timestamp);"
+	createCommentT = "create table if not exists Comment(id serial primary key, sender text, reciever text, message text, time timestamp, sent bool);"
 )
 
 type config struct {
@@ -83,7 +83,7 @@ func init() {
 	query(createVideoT)
 	query(createCommentT)
 	query(createSessionT)
-	query(createCommentT)
+	query(createGenreT)
 
 	f, err := os.OpenFile("dueto.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	log.SetOutput(f)
@@ -104,6 +104,7 @@ func main() {
 	compileTemplates()
 
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("../react/dueto/build/static/js"))))
+	http.Handle("/resource/", http.StripPrefix("/resource/", http.FileServer(http.Dir("../react/dueto/src/resources"))))
 	http.HandleFunc("/api/home", homePage)
 	http.HandleFunc("/api/profile", profile)
 	http.HandleFunc("/api/discover", discover)
@@ -121,10 +122,9 @@ func main() {
 	http.HandleFunc("/api/artist", artist)
 	http.HandleFunc("/api/zipcode", searchByZipCode)
 	http.HandleFunc("/api/city", searchByCity)
-    http.HandleFunc("/chat", chatConnection)
+	http.HandleFunc("/api/getmessages", getMessages)
+	http.HandleFunc("/api/postmessage", postMessages)
 	http.HandleFunc("/", home)
-
-    go chatMessages()
 
 	http.ListenAndServe(":8080", nil)
 
