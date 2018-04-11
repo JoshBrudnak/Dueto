@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Card, Typography, Paper, Button } from 'material-ui'
-import { CardMedia, CardContent, CardActions } from 'material-ui/Card'
+import { Typography, Paper, Button, Avatar } from 'material-ui'
+import Card, { CardContent } from 'material-ui/Card'
 import Menu, {MenuItem} from 'material-ui/Menu'
-import Avatar from 'material-ui/Avatar'
+import {Link} from "react-router-dom"
 import { getAvatarUrl, getArtistsByZip, getArtistsByCity } from '../utils/fetchData.js'
 
 class ArtistList extends Component {
@@ -33,7 +33,6 @@ class ArtistList extends Component {
   closeMenu = event => {
     this.setState({ open: false });
   }
-
    
   zipcodeArtists = () => {
     getArtistsByZip()
@@ -57,20 +56,33 @@ class ArtistList extends Component {
 
   getArtistCards = () => {
     const artistCards = []
-    
-    for(let i = 0; i < this.state.artists.length; i++) {
-      const data = this.state.artists[i]
+    if(this.state.artists != null) { 
+      for(let i = 0; i < this.state.artists.length; i++) {
+        const data = this.state.artists[i]
+        const profileUrl = "/artist/" + data.Id
 
+        artistCards.push(
+          <Link to={profileUrl} style={{textDecoration: "none"}}> 
+            <Card style={{width: 200, margin: 20, display: "flex", paddingLeft: 10, alignItems: "center"}}>
+              <Avatar alt={data.Name} src={getAvatarUrl(data.Id)}/>
+              <CardContent>
+                <Typography variant="headline" component="h2">
+                  {data.Name}
+                </Typography>
+                <Typography>
+                  {data.Username}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Link>
+        )
+      }
+    }
+    else {
       artistCards.push(
         <Card style={{width: 200, margin: 20, display: "flex", paddingLeft: 10, alignItems: "center"}}>
-          <Avatar alt={data.Name} src={getAvatarUrl(data.Id)}/>
           <CardContent>
-            <Typography variant="headline" component="h2">
-              {data.Name}
-            </Typography>
-            <Typography>
-              {data.Username}
-            </Typography>
+            <Typography>There are no artists in your area.</Typography>
           </CardContent>
         </Card>
       )

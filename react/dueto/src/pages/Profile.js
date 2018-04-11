@@ -67,7 +67,7 @@ class Profile extends Component {
   }
 
   getBody = () => {
-    if(this.state.videoPage) {
+    if(this.state.videoPage && this.state.videos !== null) {
       const videoCards = []
       for(let i = 0; i < this.state.videos.length; i++) {
         const data = this.state.videos[i]

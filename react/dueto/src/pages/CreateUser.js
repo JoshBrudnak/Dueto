@@ -15,9 +15,11 @@ class CreateUser extends Component {
       bio: undefined, 
       avatar: undefined,
       age: undefined,
+      email: undefined,
       avatarPath: undefined, 
       avatarName: "No file selected",
       nameError: false,
+      emailError: false,
       usernError: false,
       passError: false,
       repassError: false
@@ -47,19 +49,24 @@ class CreateUser extends Component {
       this.setState({repassError: true})
       return
     }
+    if(s.email === undefined || s.email === "") {
+      this.setState({emailError: true})
+      return
+    }
  
-    if(this.state.nameError || this.state.usernError || this.state.passError || this.state.repassError) {
+    const ns = this.state
+    if(ns.nameError || ns.usernError || ns.passError || ns.repassError || ns.emailError) {
       return
     }
 
     getLocation()
       .then(data => {
-
         const userdata = {
           Name: s.name,
           Password: s.password,
           Repassword: s.repassword,
           Username: s.username,
+          Email: s.email,
           Bio: s.bio,
           Age: s.age,
           Loc: JSON.stringify(data)
@@ -82,18 +89,18 @@ class CreateUser extends Component {
                  .catch(error => {
                    console.error(error)
                  })
-              })
-              .catch(error => {
-                console.error(error)
-              })
-            })
-            .catch(error => { 
+             })
+             .catch(error => {
                console.error(error)
-            })
-          })
-          .catch(error => {
-            console.error(error)
-          })
+             })
+           })
+         .catch(error => { 
+           console.error(error)
+         })
+       })
+       .catch(error => { 
+          console.error(error)
+       })
 
        
   }
@@ -149,6 +156,14 @@ class CreateUser extends Component {
             name="age"
             style={fieldStyle}
             value={this.state.age}
+            onChange={this.textChange}
+          />
+          <TextField
+            label="E-mail"
+            name="email"
+            error={this.state.emailError}
+            style={fieldStyle}
+            value={this.state.email}
             onChange={this.textChange}
           />
           <TextField

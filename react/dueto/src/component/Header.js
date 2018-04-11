@@ -70,7 +70,9 @@ class Header extends Component {
     return (
       <div>
         <Paper style={{display: "grid", padding: 20}}>
-          <img style={{width: 150, height: 150}} src="/resource/dueto.png" alt="Dueto"/>
+          <Link to="/home">
+            <img style={{width: 150, height: 150}} src="/resource/dueto.png" alt="Dueto"/>
+          </Link>
           <div style={{gridColumn: 2, display: "flex", alignItems: "flex-end", justifyContent: "center"}}>
             <Tabs onChange={this.tabChange}>
               <Tab style={{width: 100}} label="Home" />

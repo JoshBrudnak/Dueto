@@ -21,7 +21,7 @@ const (
 	createVideoT   = "create table if not exists Video(id serial primary key, artistId text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
 	createGenreT   = "create table if not exists Genre(id serial primary key, name text, description text);"
 	createSessionT = "create table if not exists Session(userId text, sessionKey text, time timestamp);"
-	createCommentT = "create table if not exists Comment(id serial primary key, sender text, reciever text, message text, time timestamp);"
+	createCommentT = "create table if not exists Comment(id serial primary key, sender text, reciever text, message text, time timestamp, sent bool);"
 )
 
 type config struct {
@@ -123,7 +123,7 @@ func main() {
 	http.HandleFunc("/api/zipcode", searchByZipCode)
 	http.HandleFunc("/api/city", searchByCity)
 	http.HandleFunc("/api/getmessages", getMessages)
-	http.HandleFunc("/api/postmessages", postMessages)
+	http.HandleFunc("/api/postmessage", postMessages)
 	http.HandleFunc("/", home)
 
 	http.ListenAndServe(":8080", nil)

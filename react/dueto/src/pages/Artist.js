@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import {Avatar, Typography, Paper, IconButton, Tabs, Tab} from 'material-ui'
+import {Avatar, Typography, Paper, Tabs, Tab} from 'material-ui'
 import Header from '../component/Header.js'
-import {AddCircle, Settings} from 'material-ui-icons'
-import {Link} from 'react-router-dom'
 import VideoCard from '../component/VideoCard.js'
+import MessageView from '../component/MessageView.js'
 import {getArtistData} from '../utils/fetchData.js'
 
 class Artist extends Component {
@@ -25,11 +24,14 @@ class Artist extends Component {
   }
 
   componentDidMount() {
-    getArtistData()
-      .then(data => {
-        let avUrl = "/api/avatar?artist=" + data.Id
+    const id = this.props.match.params.name
 
+    getArtistData(id)
+      .then(data => {
+        const avUrl = "/api/avatar?artist=" + id
+        
         this.setState({
+          id: id,
           name: data.Name,
           username: data.UserName,
           desc: data.Desc,
@@ -67,7 +69,7 @@ class Artist extends Component {
   }
 
   getBody = () => {
-    if(this.state.videoPage) {
+    if(this.state.videoPage && this.state.videos !== null) {
       const videoCards = []
       for(let i = 0; i < this.state.videos.length; i++) {
         const data = this.state.videos[i]
@@ -85,13 +87,12 @@ class Artist extends Component {
       
       return videoCards
     }
-    /*
     else if(this.state.chatPage) {
+      console.log(this.state.id)
       return (
-        //<Chat/>
+        <MessageView artist={this.state.id}/>
       )
     }
-    */
   }
 
   render() {
@@ -113,7 +114,7 @@ class Artist extends Component {
             </div>
           </Paper>
         </div>
-        <div style={{display: "flex", flexWrap: "wrap"}}>
+        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
           {this.getBody()}
         </div>
       </div>

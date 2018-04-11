@@ -1,7 +1,5 @@
-//AIzaSyDKscT5t4lFXsQCS2GRoctWJw5aGjSHJ0k
-
-export const getLocation = async () => {
-  const response = await fetch('https://freegeoip.net/json/', {credentials: "include"})
+export const getLocation =  async () => {
+  const response = await fetch('http://ip-api.com/json', {credentials: "exclude"})
   const newData = await response.json()
  
   return newData 
@@ -109,24 +107,25 @@ export const getArtistsByCity = async () => {
   return newData
 }
 
-export const getMessages = async (artistId, message) => {
-  const data = {
-     Artist: artistId, 
-     Message: message 
-  }
+export const getMessages = async (artistId) => {
+  const data = {artist: artistId}
 
   const params = encodeUrl(data)
-
-  const response = await fetch("/api/getmessage?" + params, { credentials: "include" })
+  const response = await fetch("/api/getmessages?" + params, { credentials: "include" })
   const newData = await response.json()
-
+ 
   return newData
 }
 
-export const sendMessage = async (body) => {
-  let formBody = JSON.stringify(body)
+export const sendMessage = async (message, artist) => {
+  const data = {
+     Message: message,
+     Artist: artist
+  }
+  const formBody = JSON.stringify(data)
+  console.log(formBody)
 
-  const response = await fetch("/api/createuser", {
+  const response = await fetch("/api/postmessage", {
 	body: formBody,
 	credentials: 'include',
 	method: 'POST',
@@ -215,7 +214,6 @@ export const updateUser = async (body) => {
 	body: formBody,
 	credentials: 'include',
 	method: 'POST',
-	headers: {Accept: 'application/json'}
   })
 
   const newData = await response
@@ -230,7 +228,6 @@ export const addUser = async (body) => {
 	body: formBody,
 	credentials: 'include',
 	method: 'POST',
-	headers: {Accept: 'application/json'}
   })
 
   const newData = await response

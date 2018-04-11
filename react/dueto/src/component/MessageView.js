@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {Button, TextField} from 'material-ui'
+import {Button, TextField, Paper} from 'material-ui'
+import Card, { CardContent } from "material-ui/Card"
 import {getMessages, sendMessage} from "../utils/fetchData.js"
 
 class MessageView extends Component {
@@ -13,18 +14,31 @@ class MessageView extends Component {
   }
 
   componentDidMount() {
-    getMessages()
+    getMessages(this.props.artist)
       .then(data => {
-        this.setState({genres: data.GenreList})
+        if(data !== null && data !== undefined) {
+          this.setState({messages: data})
+        }
       })
       .catch(error => {
         console.error(error)
       })
   }
 
-  postMessage() {
-    sendMessages(this.state.newMessage)
-      .then(data => {})
+  postMessage = () => {
+    sendMessage(this.state.newMessage, this.props.artist)
+      .then(data => {
+        this.setState({newMessage: ""})
+        getMessages(this.props.artist)
+          .then(data => {
+            if(data !== null && data !== undefined) {
+              this.setState({messages: data})
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
+      })
       .catch(error => {
         console.error(error)
       })
@@ -36,21 +50,27 @@ class MessageView extends Component {
 
   getMessageChips() {
     const chips = []
+    console.log(this.state.messages)
 
-    if(this.state.messages != undefined) {
+    if(this.state.messages !== undefined && this.state.messages.length > 0) {
       for(let i = 0; i < this.state.messages.length; i++) {
         const message = this.state.messages[i]
-        if(message.sender = this.state.id) {
+        if(message.Sender === this.props.artist) {
           chips.push(
-            <Chip>message.message</Chip> 
+            <Paper style={{width: "fit-content", padding: 5}}>{message.Message}</Paper> 
           )
         }
-        else if(message.sender = this.state.id) {
+        else {
           chips.push(
-            <Chip style={{alignSelf: "right"}}>message.message</Chip> 
+            <Paper style={{width: "fit-content", padding: 5, alignSelf: "flex-end"}}>{message.Message}</Paper> 
           )
         }
       }
+    }
+    else {
+      return (
+        <label>No messages</label>
+      )
     }
 
     return chips
@@ -58,17 +78,18 @@ class MessageView extends Component {
 
   render() {
     return (
-      <div style={{display: "flex", alignItems: "center"}}>
+      <div style={{display: "flex", justifyContent: "center", marginTop: 20}}>
         <Card>
           <CardContent>
-            {this.getMessageChips()}
+            <div style={{margin: 10, display: "flex", flexDirection: "column"}}>
+              {this.getMessageChips()}
+            </div>
             <div style={{display: "flex", flexDirection: "row"}}>
               <TextField 
-                label="Password" 
                 value={this.state.newMessage} 
                 onChange={this.textChange}
               />
-              <Button/>
+              <Button onClick={this.postMessage}>Send</Button>
             </div>
           </CardContent>
         </Card> 

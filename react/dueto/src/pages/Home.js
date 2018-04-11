@@ -21,7 +21,7 @@ class Home extends Component {
          }
       })
       .catch(error => {
-        window.location = "/login"
+        //window.location = "/login"
       })
   }
 
