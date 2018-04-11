@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -53,6 +54,7 @@ public class UserProfileActivity extends AppCompatActivity{
     private Button repostButton;
     private ImageButton editProfile;
     private ImageButton editMusic;
+    private MediaPlayer player;
     //ImageView firstView;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
 
@@ -84,7 +86,6 @@ public class UserProfileActivity extends AppCompatActivity{
             Bitmap _bitmap = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("byteArray"),0,getIntent().getByteArrayExtra("byteArray").length);
             _imv.setImageBitmap(_bitmap);
         }
-
 
 
 

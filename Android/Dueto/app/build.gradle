@@ -23,6 +23,7 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/raw'] } }
 }
 
 dependencies {
@@ -38,6 +39,8 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
 
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+//    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
 }
 
 

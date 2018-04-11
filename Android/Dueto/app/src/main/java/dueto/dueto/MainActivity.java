@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
     private boolean scrollable = true; //Scroll always
 
     private VideoView realVideo;
+    private VideoView realVideo2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,10 @@ public class MainActivity extends Activity {
         realVideo = (VideoView) findViewById(R.id.realVideo);
         realVideo.setVisibility(View.INVISIBLE);
         realVideo.bringToFront();
+
+        realVideo2 = (VideoView) findViewById(R.id.realVideo);
+        realVideo2.setVisibility(View.INVISIBLE);
+        realVideo2.bringToFront();
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
@@ -114,6 +119,7 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent, SELECT_FILE);
 
                 //thumbpic.setVisibility(View.INVISIBLE);
+                realVideo.bringToFront();
                 realVideo.setVisibility(View.VISIBLE);
 
                 realVideo.start();
@@ -123,11 +129,26 @@ public class MainActivity extends Activity {
         thumbpic2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI); //This code selects a video from the phone's gallery
+                intent.setType("video/*");
+                startActivityForResult(intent, SELECT_FILE);
 
+                //thumbpic.setVisibility(View.INVISIBLE);
+                realVideo2.bringToFront();
+                realVideo2.setVisibility(View.VISIBLE);
+
+                realVideo2.start();
             }
         });
 
         realVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        realVideo2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -259,9 +280,11 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
-            realVideo.setVideoURI(videoUri);
-        }
+            Uri videoUri2 = data.getData();
 
+            realVideo.setVideoURI(videoUri);
+            realVideo2.setVideoURI(videoUri2);
+        }
     }
 
 }
