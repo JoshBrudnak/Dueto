@@ -36,7 +36,7 @@ class VideoCard extends Component {
     const profileUrl = "/artist/" + this.props.id    
 
     return (
-      <Card style={{width: 400, margin: 40}}>
+      <Card style={{width: 400, maxHeight: 350, margin: 40}}>
         <CardMedia>
           <img alt={this.props.name} src={this.getVideoImage()} style={{width: 400}}/>
         </CardMedia>

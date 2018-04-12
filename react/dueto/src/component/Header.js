@@ -12,17 +12,6 @@ class Header extends Component {
     }
   }
 
-  componentDidMount() {
-    let session = getSessionId
-
-    if(session !== "") {
-      this.setState({auth: true})
-    }
-    else {
-      this.setState({auth: false})
-    }
-  }
-
   tabChange = (event, value) => {
     switch(value) {
       case 0:
@@ -52,28 +41,15 @@ class Header extends Component {
       .catch(error => {
       })
   }
- 
-  getAuthButton = () => {
-    if(this.state.auth) {
-      return (
-        <Button onClick={this.logout}>Logout</Button>
-      )
-    }
-    else {
-      return (
-        <Button onClick={this.login}>Login</Button>
-      )
-    }
-  }
 
   render() {
     return (
       <div>
-        <Paper style={{display: "grid", padding: 20}}>
+        <Paper style={{display: "grid", padding: 20, backgroundColor: "#29507a"}}>
           <Link to="/home">
             <img style={{width: 150, height: 150}} src="/resource/dueto.png" alt="Dueto"/>
           </Link>
-          <div style={{gridColumn: 2, display: "flex", alignItems: "flex-end", justifyContent: "center"}}>
+          <div style={{color: "#e8e8e8", gridColumn: 2, display: "flex", alignItems: "flex-end", justifyContent: "center"}}>
             <Tabs onChange={this.tabChange}>
               <Tab style={{width: 100}} label="Home" />
               <Tab style={{width: 100}} label="Profile" />
@@ -81,10 +57,7 @@ class Header extends Component {
             </Tabs>
           </div>
           <div style={{gridColumn: 3, display: "flex", justifyContent: "flex-end"}}>
-            <div>
-              <TextField id="search" type="search" margin="normal"/>
-              {this.getAuthButton()}
-            </div>
+            <Button style={{color: "#e8e8e8", height: "fit-content"}}  onClick={this.logout}>Logout</Button>
           </div>
         </Paper>
         <Link id="home" to="/home" style={{visibility: "hidden"}}/>

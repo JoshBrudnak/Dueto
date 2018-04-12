@@ -60,7 +60,7 @@ class AddVideo extends Component {
     addVideo(formData)
       .then(data => {
         document.getElementById("done").click()
-        window.location = "/home"
+        //window.location = "/home"
       })
       .catch(error => {
         this.setState({error: true})
@@ -91,8 +91,8 @@ class AddVideo extends Component {
     return (
       <div>
       <Header/>
-      <div style={{margin: 20, display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <Paper style={{display: "flex", flexDirection: "column", width: 350, padding: 40}}>
+      <div style={{height: "-webkit-fill-available", backgroundColor: "#e8e8e8", padding: 20, display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Paper style={{height: "fit-content", display: "flex", flexDirection: "column", width: 350, padding: 40}}>
           <Typography style={{fontSize: "large"}}>New Video</Typography>
           <div>
             <TextField

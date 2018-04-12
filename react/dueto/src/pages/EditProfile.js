@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Input, TextField, Button, Typography, Paper} from 'material-ui'
 import {Link} from "react-router-dom"
+import Header from "../component/Header.js"
 import {getProfileData, updateUser} from '../utils/fetchData.js'
 
 class EditProfile extends Component {
@@ -25,6 +26,7 @@ class EditProfile extends Component {
   componentDidMount() {
     getProfileData()
       .then(data => {
+        console.log(data)
         this.setState({
           name: data.Name,
           username: data.UserName,
@@ -105,79 +107,82 @@ class EditProfile extends Component {
     }
 
     return (
-      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <Paper style={{display: "flex", flexDirection: "column", width: 350, padding: 40}}>
-          <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
-          <TextField
-            name="name"
-            error={this.state.nameError}
-            style={fieldStyle}
-            value={this.state.name}
-            onChange={this.textChange}
-          />
-          <TextField
-            name="username"
-            error={this.state.usernError}
-            style={fieldStyle}
-            value={this.state.username}
-            onChange={this.textChange}
-          />
-          <TextField
-            name="bio"
-            style={fieldStyle}
-            value={this.state.bio}
-            onChange={this.textChange}
-          />
-          <TextField
-            name="age"
-            style={fieldStyle}
-            value={this.state.age}
-            onChange={this.textChange}
-          />
-          <TextField
-            name="loc"
-            style={fieldStyle}
-            value={this.state.loc}
-            onChange={this.textChange}
-          />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            error={this.state.passError}
-            style={fieldStyle}
-            value={this.state.password}
-            onChange={this.textChange}
-          />
-          <TextField
-            label="Retype Password"
-            name="repassword"
-            type="password"
-            error={this.state.repassError}
-            style={fieldStyle}
-            value={this.state.repassword}
-            onChange={this.textChange}
-          />
-          <div style={{display: "flex", flexDirection: "row", alignItems: "baseline", marginTop: 20}}>
-            <Button onClick={this.profilePicture}>Profile Picture</Button>
-            <Typography style={{marginLeft: 10}}>{this.state.avatarName}</Typography> 
-          </div>
-          <Input 
-            id="profilePic"
-            type="file"
-            allow=".jpeg"
-            style={{visibility: "collapse"}} 
-            value={this.state.avatarPath} 
-            onChange={this.avatarChange}
-          />
-          <div style={{marginTop: 10}}>
-            <Button onClick={this.create}>Update Account</Button>
-            <Button onClick={this.cancel}>Cancel</Button>
-          </div>
-        </Paper>
-        <Link style={{visibility: "collapse"}}  id="cancel" to="/profile"/>
+      <div>
+        <Header/>
+        <div style={{height: "-webkit-fill-available", backgroundColor: "#e8e8e8", display: "flex", flexDirection: "column", alignItems: "center"}}>
+          <Paper style={{display: "flex", flexDirection: "column", width: 350, margin: 40, padding: 40}}>
+            <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
+            <TextField
+              name="name"
+              error={this.state.nameError}
+              style={fieldStyle}
+              value={this.state.name}
+              onChange={this.textChange}
+            />
+            <TextField
+              name="username"
+              error={this.state.usernError}
+              style={fieldStyle}
+              value={this.state.username}
+              onChange={this.textChange}
+            />
+            <TextField
+              name="bio"
+              style={fieldStyle}
+              value={this.state.bio}
+              onChange={this.textChange}
+            />
+            <TextField
+              name="age"
+              style={fieldStyle}
+              value={this.state.age}
+              onChange={this.textChange}
+            />
+            <TextField
+              name="loc"
+              style={fieldStyle}
+              value={this.state.loc}
+              onChange={this.textChange}
+            />
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              error={this.state.passError}
+              style={fieldStyle}
+              value={this.state.password}
+              onChange={this.textChange}
+            />
+            <TextField
+              label="Retype Password"
+              name="repassword"
+              type="password"
+              error={this.state.repassError}
+              style={fieldStyle}
+              value={this.state.repassword}
+              onChange={this.textChange}
+            />
+            <div style={{display: "flex", flexDirection: "row", alignItems: "baseline", marginTop: 20}}>
+              <Button onClick={this.profilePicture}>Profile Picture</Button>
+              <Typography style={{marginLeft: 10}}>{this.state.avatarName}</Typography> 
+            </div>
+            <Input 
+              id="profilePic"
+              type="file"
+              allow=".jpeg"
+              style={{visibility: "collapse"}} 
+              value={this.state.avatarPath} 
+              onChange={this.avatarChange}
+            />
+            <div style={{marginTop: 10}}>
+              <Button onClick={this.create}>Update Account</Button>
+              <Button onClick={this.cancel}>Cancel</Button>
+            </div>
+          </Paper>
+          <Link style={{visibility: "collapse"}}  id="cancel" to="/profile"/>
+        </div>
       </div>
-    );
+    )
   }
 }
 

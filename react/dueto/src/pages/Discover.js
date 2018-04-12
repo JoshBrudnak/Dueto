@@ -57,7 +57,7 @@ class Discover extends Component {
     return (
       <div>
         <Header/>
-        <div style={{margin: 20, display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <div style={{backgroundColor: "#e8e8e8", padding: 20, display: "flex", flexDirection: "column", alignItems: "center"}}>
           {this.getGenres()}
         </div>
       </div>

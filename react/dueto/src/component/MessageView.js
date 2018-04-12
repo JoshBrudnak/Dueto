@@ -15,7 +15,6 @@ class MessageView extends Component {
   }
 
   tick = () => {
-    console.log("render") 
     this.setState({ time: Date.now() })
   }
 
@@ -58,7 +57,6 @@ class MessageView extends Component {
 
   getMessageChips() {
     const chips = []
-    console.log(this.state.messages)
 
     if(this.state.messages !== undefined && this.state.messages.length > 0) {
       for(let i = 0; i < this.state.messages.length; i++) {

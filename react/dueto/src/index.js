@@ -7,7 +7,7 @@ import { MuiThemeProvider, createMuiTheme } from "material-ui/styles"
 
 ReactDOM.render(
   <MuiThemeProvider>
-    <Dueto/>
+    <Dueto style={{backgroundColor: "#e8e8e8"}}/>
   </MuiThemeProvider>
   , document.getElementById('dueto'));
 

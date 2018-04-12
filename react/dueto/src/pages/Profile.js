@@ -20,7 +20,7 @@ class Profile extends Component {
       videos: [],
       videoPage: true,
       chatPage: false, 
-      avatarUrl: "/api/avatar?artist=0" 
+      avatarUrl: "" 
     }
   }
 
@@ -31,7 +31,7 @@ class Profile extends Component {
 
         this.setState({
           name: data.Name,
-          username: data.UserName,
+          username: data.Username,
           desc: data.Desc,
           followers: data.FollowerCount,
           likes: data.LikeCount,
@@ -95,10 +95,17 @@ class Profile extends Component {
   }
 
   render() {
+    const bodyStyle = {
+      backgroundColor: "#e8e8e8",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start"
+    }
+
     return (
       <div>
         <Header/>
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+        <div style={bodyStyle}>
           <Paper style={{padding: 10, width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{display: "flex", flexDirection: "row"}}> 
               <IconButton onClick={this.edit}>
@@ -113,7 +120,7 @@ class Profile extends Component {
             <Typography>{this.state.username}</Typography> 
           </Paper>
         </div>
-        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+        <div style={{height: "-webkit-fill-available", backgroundColor: "#e8e8e8", display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
           {this.getBody()}
         </div>
         <Link id="edit" to="/editprofile" style={{visibility: "collapse"}}/>
