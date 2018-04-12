@@ -61,6 +61,7 @@ class VideoCard extends Component {
           open={this.state.open}
           videoId={this.props.id}
           artist={this.props.artist}
+          desc={this.props.desc}
           name={this.props.name}
         />
         <Link id="profile" to={profileUrl} style={{visibility: "collapsed"}}/>

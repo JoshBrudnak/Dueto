@@ -14,7 +14,7 @@ class VideoDialog extends Component {
     return (
         <Dialog open={this.props.open} onClose={this.props.close}>
           <DialogContent>
-            <video controls>
+            <video controls style={{maxWidth: 500}}>
               <source src={this.getVideoUrl()} type="video/mp4"/>
             </video>
             <Typography variant="headline" component="h2">

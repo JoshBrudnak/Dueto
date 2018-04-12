@@ -9,8 +9,14 @@ class MessageView extends Component {
 
     this.state = {
       newMessage: undefined,
-      messages: []
+      messages: [],
+      time: undefined
     }
+  }
+
+  tick = () => {
+    console.log("render") 
+    this.setState({ time: Date.now() })
   }
 
   componentDidMount() {
@@ -23,6 +29,8 @@ class MessageView extends Component {
       .catch(error => {
         console.error(error)
       })
+
+    this.interval = setInterval(() => this.tick(), 5000)
   }
 
   postMessage = () => {
