@@ -21,13 +21,13 @@ public class FriendlyMessageCell extends MessageCell
     {
         super(context, display, jsonMsg);
 
-//        TableLayout.LayoutParams params = new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        TableCell.LayoutParams params = new TableCell.LayoutParams();
 //        params.weight = 1.0f;
 //        params.gravity = Gravity.END;
 //        this.setLayoutParams(params);
 
         //Configuring linearLayout for friendly messages
-        //this.linearLayout.setGravity(Gravity.END);
+        this.linearLayout.setGravity(Gravity.END);
         this.linearLayout.setBackgroundColor(Color.BLUE);
 
         //Configuring messageView for friendly messages

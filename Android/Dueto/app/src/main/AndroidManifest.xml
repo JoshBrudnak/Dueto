@@ -42,6 +42,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".messaging.MessageListActivity"/>
         <activity
             android:name=".SigninActivity"
             android:configChanges="orientation|screenSize" />
@@ -67,7 +68,6 @@
             android:name=".VideoActivity"
             android:label="@string/title_activity_video"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MessengerActivity"></activity>
     </application>
 
 </manifest>

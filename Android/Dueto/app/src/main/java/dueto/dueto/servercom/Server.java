@@ -1,8 +1,12 @@
 package dueto.dueto.servercom;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,18 +14,21 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Stack;
+
+import dueto.dueto.messaging.Message;
+import dueto.dueto.util.MessagingHandler;
+import dueto.dueto.util.Utility;
 
 /**
  * Used to make requests to a server.
@@ -60,6 +67,50 @@ public class Server
         return false;
     }
 
+    public File downloadFile(Context context, JSONObject json, boolean video)
+    {
+        try {
+            DownloadRequest dr = new DownloadRequest(context, json, video);
+            return dr.execute().get();
+        }
+        catch(Exception exc)
+        {
+            return null;
+        }
+    }
+
+    public List<Message> retrieveMessage(String user)
+    {
+        try{
+            ArrayList<Message> out = new ArrayList<>();
+            ArrayList<JSONObject> messages = (ArrayList) new MessageRetriever().execute(user).get();
+
+            for(JSONObject msg : messages)
+                out.add(new Message(msg, msg.getString("Artist").equals(user) ? Message.SENT : Message.RECEIVED));
+
+            return out;
+        }catch(Exception exc)
+        {
+            System.out.println("------------------------------------------------");
+            System.out.println("Exception in Server.retrieveMessage:");
+            System.out.println(exc.getMessage());
+            System.out.println("------------------------------------------------");
+        }
+        return null;
+    }
+
+    public Bitmap getImage(String endpoint, String id)
+    {
+        try {
+            return new ImageRequest(endpoint + (endpoint.equals("avatar") ? "?artist=" : "?id=") + id).execute().get();
+        }
+        catch(Exception exc)
+        {
+            System.out.println(exc);
+            return null;
+        }
+    }
+
     public JSONObject request(String type, JSONObject information)
     {
         try {
@@ -70,9 +121,9 @@ public class Server
                 case "profile":
                 case "discover":
                 case "genre":
+                case "artist":
                     endpoint = type.toLowerCase();
-                    requesttype = "GET";
-                    break;
+                    return new URLParamRequest(endpoint, information).execute().get();
                 case "createuser":
                     endpoint = type.toLowerCase();
                     requesttype = "POST";
@@ -104,15 +155,15 @@ public class Server
 
             //Creating JSON
             JSONObject loginData = new JSONObject();
-            loginData.put("username", username);
-            loginData.put("password", password);
+            loginData.put("Username", username);
+            loginData.put("Password", password);
 
             //Creating Objects
             url = new URL(ADDRESS+"login");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             //StringBuffer body = new StringBuffer();
 
-            JsonManager manager;
+            ParamManager manager;
             HashMap<String, String> sessionCookie = new HashMap<>();
 
             //DEBUG: System.out.println("debug: created objects");
@@ -146,8 +197,8 @@ public class Server
                 sessionCookie.put("invalid", "invalid");
             }
 
-            //create JsonManager and set cookie JSON
-            manager = new JsonManager(sessionCookie);
+            //create ParamManager and set cookie JSON
+            manager = new ParamManager(sessionCookie);
             session_cookie = manager.toJson();
 
             conn.disconnect();
@@ -209,13 +260,13 @@ public class Server
         }
     }
 
-    class LoginRequest extends AsyncTask<String, Integer, JSONObject>
+    private class LoginRequest extends AsyncTask<String, Integer, JSONObject>
     {
+
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
         }
-
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
@@ -232,10 +283,12 @@ public class Server
             }
             return null;
         }
+
     }
 
-    class GeneralRequest extends AsyncTask<JSONObject, Integer, JSONObject>
+    private class GeneralRequest extends AsyncTask<JSONObject, Integer, JSONObject>
     {
+
         String endpoint, type;
 
         public GeneralRequest(String endpoint, String type)
@@ -253,7 +306,6 @@ public class Server
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
         }
-
         @Override
         protected JSONObject doInBackground(JSONObject... jsonObjects) {
             try {
@@ -264,12 +316,79 @@ public class Server
                 return null;
             }
         }
+
     }
 
-    public class DownloadRequest extends AsyncTask<Void, Integer, File>
+    private class URLParamRequest extends AsyncTask<String, Integer, JSONObject>
+    {
+
+        private URL mURL;
+
+        public URLParamRequest(String endpoint, JSONObject jsonParams)
+        {
+            try {
+                mURL = new ParamManager(jsonParams).jsonToUrl(ADDRESS + endpoint);
+                //mURL = new URL("http://35.231.109.184:8080/api/artist?artist=1");
+                System.out.println("--------------------------------");
+                System.out.println(mURL);
+                System.out.println("--------------------------------");
+            }
+            catch(IOException | JSONException exc)
+            {
+                System.out.println("--------------------------------");
+                System.out.println("Exception in Server.URLParamRequest.URLParamRequest(): ");
+                System.out.println(exc);
+                System.out.println("--------------------------------");
+            }
+        }
+
+
+        @Override
+        protected JSONObject doInBackground(String... strings) {
+            try {
+                HttpURLConnection conn = (HttpURLConnection) mURL.openConnection();
+                //StringBuffer body = new StringBuffer();
+                conn.setRequestMethod("GET");
+                //DEBUG: System.out.println("Request method set");
+
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("Cookie", session_cookie.getString("session"));
+
+                //DEBUG: System.out.println(session_cookie.getString("session"));
+
+                conn.setConnectTimeout(1000);
+                conn.setReadTimeout(2500);
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                System.out.println("Got inputStream: " + in);
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                //DEBUG: System.out.println("Response: " + response.toString());
+
+                conn.disconnect();
+                return new JSONObject(response.toString());
+            }
+            catch(IOException |JSONException exc)
+            {
+                System.out.println("Exception "+exc.getMessage() + " Cause " + exc.getCause());
+                for(StackTraceElement ste : exc.getStackTrace())
+                    System.out.println(ste.getLineNumber() + " in " + ste.getMethodName() + " of " + ste.getClassName());
+                return null;
+            }
+        }
+    }
+
+    private class DownloadRequest extends AsyncTask<Void, Integer, File>
     {
         private Context context;
         private JSONObject json;
+
         private boolean video;
 
         public DownloadRequest(Context context, JSONObject json, boolean video)
@@ -284,7 +403,7 @@ public class Server
             try {
                 File file = File.createTempFile((video ? "vid":"img") + (video ? videoCount:imgCount), video ? "mp4":"bmp", context.getCacheDir());
 
-                URL url_with_params = new JsonManager(json).jsonToUrl(ADDRESS+(video?"video?":"thumbnail"));
+                URL url_with_params = new ParamManager(json).jsonToUrl(ADDRESS+(video?"video?":"thumbnail"));
                 ReadableByteChannel rbc = Channels.newChannel(url_with_params.openStream());
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
@@ -316,25 +435,130 @@ public class Server
         protected void onCancelled() {
             super.onCancelled();
         }
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+    }
+
+    private class ImageRequest extends AsyncTask<Void, Integer, Bitmap>
+    {
+        public URL imageURL;
+
+        public ImageRequest(String imageURL) {
+            try {
+                this.imageURL = new URL(ADDRESS+imageURL);
+            }
+            catch(MalformedURLException exc)
+            {
+
+            }
+        }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
         }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            try {
+                InputStream is = imageURL.openStream();
+                return BitmapFactory.decodeStream(is);
+            }catch(IOException ioexc)
+            {
+                return null;
+            }
+        }
     }
 
-    public File downloadFile(Context context, JSONObject json, boolean video)
+    /**
+     * Executes an asynchronous request to the server
+     */
+    private class MessageRetriever extends AsyncTask<String, Integer, List<JSONObject>>
     {
-        try {
-            DownloadRequest dr = new DownloadRequest(context, json, video);
-            return dr.execute().get();
-        }
-        catch(Exception exc)
+        private String endpointAddress = ADDRESS.concat("getmessages?Artist=");
+
+        @Override
+        protected List<JSONObject> doInBackground(String... user)
         {
+            try {
+                URL url = new URL(endpointAddress.concat(user[0]));
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+                //DEBUG: System.out.println("Request method set");
+
+                conn.setDoInput(true);
+                //DEBUG: System.out.println("input is set");
+
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("Cookie", session_cookie.getString("session"));
+
+                //DEBUG: System.out.println(session_cookie.getString("session"));
+
+                conn.setConnectTimeout(1000);
+                conn.setReadTimeout(2500);
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                //DEBUG: System.out.println("Got inputStream: " + in);
+
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                //DEBUG: System.out.println("Response: " + response.toString());
+
+                conn.disconnect();
+
+                JSONArray messages = new JSONArray(response.toString());
+                //put messages in list of JSONObjects
+
+                ArrayList<JSONObject> messageList = new ArrayList<>();
+
+                for(int i = 0; i < messages.length(); i++)
+                {
+                    messageList.add(messages.getJSONObject(i));
+                }
+
+                return messageList;
+
+            }
+            catch(IOException | JSONException exc)
+            {
+                System.out.println("------------------------------------------------");
+                System.out.println("Exception in Server.MessageRetriever.doInBackground:");
+                System.out.println(exc.getMessage());
+                System.out.println("------------------------------------------------");
+            }
+
             return null;
         }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
     }
-
-    //public class
-
 }
