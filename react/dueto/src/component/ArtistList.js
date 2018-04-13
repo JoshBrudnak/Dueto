@@ -12,6 +12,7 @@ class ArtistList extends Component {
     this.state = {
       open: false,
       anchor: null,
+      buttonText: "by zip-code",
       artists: []
     }
   }

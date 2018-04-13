@@ -17,7 +17,7 @@ var db *sql.DB
 var templates *template.Template
 
 const (
-	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, password text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int);"
+	createArtistT  = "create table if not exists Artist(id serial primary key, username text, name text, password text, age int, followerCount int, followers text, description text, location text, date timestamp, active boolean, likeCount int, email text);"
 	createVideoT   = "create table if not exists Video(id serial primary key, artistId text, title text, description text, uploadTime text, views int, likes int, genre text, tags text);"
 	createGenreT   = "create table if not exists Genre(id serial primary key, name text, description text);"
 	createSessionT = "create table if not exists Session(userId text, sessionKey text, time timestamp);"
@@ -45,7 +45,6 @@ func logIfErr(err error) {
 
 func logServerErr(w http.ResponseWriter, err error) {
 	if err != nil {
-        fmt.Println(err)
 		log.Println(err)
 		http.Error(w, "Server error", http.StatusInternalServerError)
 	}
@@ -124,6 +123,7 @@ func main() {
 	http.HandleFunc("/api/city", searchByCity)
 	http.HandleFunc("/api/getmessages", getMessages)
 	http.HandleFunc("/api/postmessage", postMessages)
+	http.HandleFunc("/api/getnewmessages", getRecentMessages)
 	http.HandleFunc("/", home)
 
 	http.ListenAndServe(":8080", nil)

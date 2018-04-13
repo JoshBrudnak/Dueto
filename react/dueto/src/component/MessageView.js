@@ -9,8 +9,13 @@ class MessageView extends Component {
 
     this.state = {
       newMessage: undefined,
-      messages: []
+      messages: [],
+      time: undefined
     }
+  }
+
+  tick = () => {
+    this.setState({ time: Date.now() })
   }
 
   componentDidMount() {
@@ -23,6 +28,8 @@ class MessageView extends Component {
       .catch(error => {
         console.error(error)
       })
+
+    this.interval = setInterval(() => this.tick(), 5000)
   }
 
   postMessage = () => {
@@ -50,7 +57,6 @@ class MessageView extends Component {
 
   getMessageChips() {
     const chips = []
-    console.log(this.state.messages)
 
     if(this.state.messages !== undefined && this.state.messages.length > 0) {
       for(let i = 0; i < this.state.messages.length; i++) {
@@ -78,7 +84,7 @@ class MessageView extends Component {
 
   render() {
     return (
-      <div style={{display: "flex", justifyContent: "center", marginTop: 20}}>
+      <div style={{height: "fit-content", display: "flex", justifyContent: "center", marginTop: 20}}>
         <Card>
           <CardContent>
             <div style={{margin: 10, display: "flex", flexDirection: "column"}}>

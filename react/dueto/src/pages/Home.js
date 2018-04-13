@@ -51,7 +51,7 @@ class Home extends Component {
     return (
       <div>
         <Header/>
-        <div style={{display: "flex", flexDirection: "row"}}>
+        <div style={{display: "flex", flexDirection: "row", backgroundColor: "#e8e8e8"}}>
           <ArtistList/>
           <div style={{width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
             {this.getVideoCards()}

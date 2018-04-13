@@ -33,7 +33,7 @@ class Artist extends Component {
         this.setState({
           id: id,
           name: data.Name,
-          username: data.UserName,
+          username: data.Username,
           desc: data.Desc,
           followers: data.FollowerCount,
           likes: data.LikeCount,
@@ -88,9 +88,8 @@ class Artist extends Component {
       return videoCards
     }
     else if(this.state.chatPage) {
-      console.log(this.state.id)
       return (
-        <MessageView artist={this.state.id}/>
+        <MessageView style={{height: "fit-content", maxHeight: 800}} artist={this.state.id}/>
       )
     }
   }
@@ -99,7 +98,7 @@ class Artist extends Component {
     return (
       <div>
         <Header/>
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+        <div style={{backgroundColor: "#e8e8e8", display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
           <Paper style={{padding: 10, width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
             <Avatar src={this.state.avatarUrl} style={{width: 100, height: 100, marginBotton: 10}}/>
             <Typography>{this.state.name}</Typography> 
@@ -114,7 +113,7 @@ class Artist extends Component {
             </div>
           </Paper>
         </div>
-        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+        <div style={{backgroundColor: "#e8e8e8", height: "-webkit-fill-available", display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
           {this.getBody()}
         </div>
       </div>

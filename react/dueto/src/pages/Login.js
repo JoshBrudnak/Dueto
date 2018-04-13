@@ -51,13 +51,15 @@ class Login extends Component {
 
   render() {
     return (
-      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+      <div style={{backgroundColor: "#e8e8e8", height: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Paper style={{padding: 40, margin: 40, width: 250}}>
-          <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
+          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <img style={{width: 100, height: 100}} src="/resource/dueto.png" alt="Dueto"/>
+          </div>
           {this.errorText()}
           <div style={{display: "flex", flexDirection: "column"}}>
             <TextField
-              label="UserName"
+              label="Username"
               margin="normal"
               value={this.state.username}
               onChange={this.usernameChange}

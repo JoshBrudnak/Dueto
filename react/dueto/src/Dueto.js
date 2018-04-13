@@ -7,7 +7,6 @@ import Artist from "./pages/Artist.js"
 import EditProfile from "./pages/EditProfile.js"
 import AddVideo from "./pages/AddVideo.js"
 import Discover from "./pages/Discover.js"
-import Video from "./pages/Video.js"
 import Genre from "./pages/Genre.js"
 import CreateUser from "./pages/CreateUser.js"
 import {BrowserRouter, Switch, Route} from "react-router-dom"
@@ -26,7 +25,6 @@ class Dueto extends Component {
             <Route path="/login" component={Login}/>
             <Route path="/logout" component={Logout}/>
             <Route path="/discover" component={Discover}/>
-            <Route path="/video" component={Video}/>
             <Route name="genre" path="/genre/:name" component={Genre}/>
             <Route path="/createuser" component={CreateUser}/>
           </Switch>
