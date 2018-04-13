@@ -23,6 +23,7 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/raw'] } }
 }
 
 dependencies {
@@ -33,33 +34,20 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     implementation 'com.android.support:design:26.1.0'
+
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile('com.mikepenz:fastadapter:1.5.2@aar') {
+        transitive = true
+    }
+    compile 'com.mikepenz:fastadapter-extensions:1.5.1@aar'
+    compile 'com.android.support.constraint:constraint-layout:1.1.0-beta6'
+    compile 'com.linsea:universalvideoview:1.1.0@aar'
+//    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

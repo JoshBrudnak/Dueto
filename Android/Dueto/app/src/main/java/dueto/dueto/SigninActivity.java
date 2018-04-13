@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.regex.Pattern;
+
 public class SigninActivity extends AppCompatActivity {
 
     private EditText Username;
@@ -15,6 +19,7 @@ public class SigninActivity extends AppCompatActivity {
     private EditText Password;
     private EditText Confirmation;
     private Button SignIn;
+    private TextView Cancel;
 
     private TextView Message;
 
@@ -29,6 +34,7 @@ public class SigninActivity extends AppCompatActivity {
         Confirmation = (EditText)findViewById(R.id.confirmText);
         SignIn = (Button)findViewById(R.id.suButt);
         Message = (TextView)findViewById(R.id.errMessage);
+        Cancel = (TextView) findViewById(R.id.cancelView);
 
         //Message.setText("Welcome to Dueto!");
 
@@ -36,6 +42,13 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validPass(Password.getText().toString(), Confirmation.getText().toString(), Username.getText().toString(), Address.getText().toString());
+            }
+        });
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SigninActivity.this, FirstActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -57,12 +70,41 @@ public class SigninActivity extends AppCompatActivity {
         else if (userName.isEmpty()) {
             Message.setText("Enter a Username!");
         }
-        else if (userAddress.isEmpty()) {
+        else if (userAddress.isEmpty() || !userAddress.contains("@")) {
             Message.setText("Enter an e-mail address!");
         }
+        else if (!isValid(userAddress)){
+            Message.setText("Enter a valid e-mail address!");
+        }
+//        else if (userAddress.contains("@")){
+//            String[] parts = userAddress.split("@", 0);
+//            String part1 = parts[0]; //before the @
+//            String part2 = parts[1]; //after the @
+//            if (!parts[1].contains(".")){
+//                Message.setText("Enter a valid e-mail address!");
+//            }
+//            else if (part2 == "") {
+//                Message.setText("Enter a valid e-mail address!");
+//            }
+//        }
         else {
             Intent intent = new Intent(SigninActivity.this, MainActivity.class);
             startActivity(intent);
         }
+        }
+
+        public static boolean isValid(String email)
+        {
+            String emailRegex = "^[a-zA-Z0-9_+&*-]+" +
+                                "(?:\\." +
+                                "[a-zA-Z0-9_+&*-]+)*@" +
+                                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                                "A-Z]{2,7}$";
+            Pattern pat = Pattern.compile(emailRegex);
+            if (email == null) {
+                return false;
+            }
+
+            return pat.matcher(email).matches();
         }
     }

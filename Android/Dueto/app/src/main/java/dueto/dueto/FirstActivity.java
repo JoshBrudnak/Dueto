@@ -11,6 +11,7 @@ public class FirstActivity extends AppCompatActivity {
 
     private Button Login;
     private Button SignIn;
+    private Button Main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class FirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
         Login = (Button)findViewById(R.id.logButt);
         SignIn = (Button)findViewById(R.id.suButt);
+        Main = (Button) findViewById(R.id.dueto);
 
         Login.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
             @Override
@@ -30,6 +32,12 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FirstActivity.this, SigninActivity.class));
+            }
+        });
+        Main.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirstActivity.this, MainActivity.class));
             }
         });
     }

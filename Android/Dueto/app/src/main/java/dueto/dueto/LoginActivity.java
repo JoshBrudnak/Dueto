@@ -8,6 +8,9 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
+
+import org.w3c.dom.Text;
+
 import dueto.dueto.servercom.Server;
 
 public class LoginActivity extends AppCompatActivity {
@@ -16,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText Password;
     private TextView Info;
     private Button Login;
+    private TextView Create;
     private int counter = 3;
 
     @Override
@@ -28,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         Password = (EditText) findViewById(R.id.passText);
         Info = (TextView)findViewById(R.id.logInfo);
         Login = (Button)findViewById(R.id.logButt);
+        Create = (TextView) findViewById(R.id.createView);
 
         //Info.setText("Attempts Remaining: 3");
 
@@ -37,6 +42,13 @@ public class LoginActivity extends AppCompatActivity {
                 validID(Name.getText().toString(), Password.getText().toString());
 
                 System.out.println("reached 1");
+            }
+        });
+        Create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SigninActivity.class);
+                startActivity(intent);
             }
         });
     }
