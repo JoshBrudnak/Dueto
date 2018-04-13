@@ -17,15 +17,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="true">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:background="@color/newBlue"
                 android:descendantFocusability="beforeDescendants"
-                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView

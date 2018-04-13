@@ -3,6 +3,7 @@ package dueto.dueto;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -30,6 +31,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -44,8 +46,13 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import dueto.dueto.servercom.Server;
+import dueto.dueto.templates.MainCell;
+import dueto.dueto.templates.MainListAdapter;
+import dueto.dueto.templates.ProfileCell;
+import dueto.dueto.templates.ProfileListAdapter;
 import dueto.dueto.templates.TableCell;
 
 import static android.content.ContentValues.TAG;
@@ -77,116 +84,148 @@ public class MainActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        realVideo = (VideoView) findViewById(R.id.realVideo);
-        realVideo.setVisibility(View.INVISIBLE);
-        realVideo.bringToFront();
+        ListView mListView = (ListView) findViewById(R.id.listView);
 
-        realVideo2 = (VideoView) findViewById(R.id.realVideo);
-        realVideo2.setVisibility(View.INVISIBLE);
-        realVideo2.bringToFront();
+        MainCell arnold = new MainCell("Arnold Schwarze","John Dungeldo is a striving idiot",
+                "1.5m likes", "X comments", "Y reposts", "2d",
+                "drawable://" + R.drawable.profile,"https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            if(bundle.getString("some") != null){
-                Toast.makeText(getApplicationContext(), "data: " + bundle.getString("some"), Toast.LENGTH_SHORT).show();
-            }
-        }
+        MainCell john = new MainCell("John Dungeldo","John Dungeldo John Dungeldo John",
+                "2.5k likes", "X comments", "Y reposts", "3d",
+                "drawable://" + R.drawable.coop,"https://s3.amazonaws.com/androidvideostutorial/862014834.mp4");
+
+        MainCell stacy = new MainCell("User 1","Leader",
+                "Z likes", "X comments", "Y reposts", "4w",
+                "drawable://" + R.drawable.icon, "https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
+
+        MainCell ashley = new MainCell("User 1","Web",
+                "Z likes", "X comments", "Y reposts", "1m",
+                "drawable://" + R.drawable.icon,"https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
 
 
-        display = getWindowManager().getDefaultDisplay();
-        TableLayout t1 = findViewById(R.id.homeTable);
-        JSONObject jsonObject = new JSONObject();
-        JSONObject jsonObject2 = new JSONObject();
 
-        ImageView profilepic = new ImageView(this);
-        ImageView profilepic2 = new ImageView(this);
-        ImageView thumbpic = new ImageButton(this);
-        ImageView thumbpic2 = new ImageButton(this);
-        video = new VideoView(this);
-        video2 = new VideoView(this);
-        profilepic.setImageResource(R.drawable.profile);
-        profilepic2.setImageResource(R.drawable.coop);
-        thumbpic.setImageResource(R.drawable.cello);
-        thumbpic2.setImageResource(R.drawable.guitars);
+        //Add the Person objects to an ArrayList
+        ArrayList<MainCell> mainList = new ArrayList<>();
 
-        JSONObject test = new JSONObject();
+        mainList.add(arnold);
+        mainList.add(john);
 
-        thumbpic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI); //This code selects a video from the phone's gallery
-                intent.setType("video/*");
-                startActivityForResult(intent, SELECT_FILE);
+        MainListAdapter adapter = new MainListAdapter(this, R.layout.main_adapter, mainList);
+        mListView.setAdapter(adapter);
 
-                //thumbpic.setVisibility(View.INVISIBLE);
-                realVideo.bringToFront();
-                realVideo.setVisibility(View.VISIBLE);
 
-                realVideo.start();
-            }
-        });
 
-        thumbpic2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI); //This code selects a video from the phone's gallery
-                intent.setType("video/*");
-                startActivityForResult(intent, SELECT_FILE);
 
-                //thumbpic.setVisibility(View.INVISIBLE);
-                realVideo2.bringToFront();
-                realVideo2.setVisibility(View.VISIBLE);
-
-                realVideo2.start();
-            }
-        });
-
-        realVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        realVideo2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        try
-        {
-//            test.put("artist", 1);
-//            test.put("name", "Sample");
-
-            jsonObject.put("Artist", new JSONObject().put("Name", "Arnold Schwarzenegger"));
-            jsonObject.put("Desc", "John Dungeldo is a striving idiot");
-            jsonObject.put("profilepic", profilepic);
-            jsonObject.put("video", video);
-            jsonObject.put("thumbpic", thumbpic);
-            jsonObject.put("Time", "1d");
-            jsonObject.put("Likes", "1512000");
-
-            jsonObject2.put("Artist", new JSONObject().put("Name", "John Dungeldo"));
-            jsonObject2.put("Desc", "John Dungeldo John Dungeldo John Dungeldo");
-            jsonObject2.put("profilepic", profilepic2);
-            jsonObject2.put("video", video2);
-            jsonObject2.put("thumbpic", thumbpic2);
-            jsonObject2.put("Time", "2d");
-            jsonObject2.put("Likes", "2520");
-        }
-        catch(JSONException js)
-        {
-            System.out.println(js.getMessage());
-        }
-
-        TableCell cell = new TableCell(this, display, jsonObject);
-        TableCell cell2 = new TableCell(this, display, jsonObject2);
-        t1.addView(cell);
-        t1.addView(cell2);
-
-        JSONObject home = Server.SERVER.request("home", test);
+//        realVideo = (VideoView) findViewById(R.id.realVideo);
+//        realVideo.setVisibility(View.INVISIBLE);
+//        realVideo.bringToFront();
+//
+//        realVideo2 = (VideoView) findViewById(R.id.realVideo);
+//        realVideo2.setVisibility(View.INVISIBLE);
+//        realVideo2.bringToFront();
+//
+//        Bundle bundle = getIntent().getExtras();
+//        if(bundle != null) {
+//            if(bundle.getString("some") != null){
+//                Toast.makeText(getApplicationContext(), "data: " + bundle.getString("some"), Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//
+//        display = getWindowManager().getDefaultDisplay();
+//        TableLayout t1 = findViewById(R.id.homeTable);
+//        JSONObject jsonObject = new JSONObject();
+//        JSONObject jsonObject2 = new JSONObject();
+//
+//        ImageView profilepic = new ImageView(this);
+//        ImageView profilepic2 = new ImageView(this);
+//        ImageView thumbpic = new ImageButton(this);
+//        ImageView thumbpic2 = new ImageButton(this);
+//        video = new VideoView(this);
+//        video2 = new VideoView(this);
+//        profilepic.setImageResource(R.drawable.profile);
+//        profilepic2.setImageResource(R.drawable.coop);
+//        thumbpic.setImageResource(R.drawable.cello);
+//        thumbpic2.setImageResource(R.drawable.guitars);
+//
+//        JSONObject test = new JSONObject();
+//
+//        thumbpic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI); //This code selects a video from the phone's gallery
+//                intent.setType("video/*");
+//                startActivityForResult(intent, SELECT_FILE);
+//
+//                //thumbpic.setVisibility(View.INVISIBLE);
+//                realVideo.bringToFront();
+//                realVideo.setVisibility(View.VISIBLE);
+//
+//                realVideo.start();
+//            }
+//        });
+//
+//        thumbpic2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI); //This code selects a video from the phone's gallery
+//                intent.setType("video/*");
+//                startActivityForResult(intent, SELECT_FILE);
+//
+//                //thumbpic.setVisibility(View.INVISIBLE);
+//                realVideo2.bringToFront();
+//                realVideo2.setVisibility(View.VISIBLE);
+//
+//                realVideo2.start();
+//            }
+//        });
+//
+//        realVideo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        realVideo2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        try
+//        {
+////            test.put("artist", 1);
+////            test.put("name", "Sample");
+//
+//            jsonObject.put("Artist", new JSONObject().put("Name", "Arnold Schwarzenegger"));
+//            jsonObject.put("Desc", "John Dungeldo is a striving idiot");
+//            jsonObject.put("profilepic", profilepic);
+//            jsonObject.put("video", video);
+//            jsonObject.put("thumbpic", thumbpic);
+//            jsonObject.put("Time", "1d");
+//            jsonObject.put("Likes", "1512000");
+//
+//            jsonObject2.put("Artist", new JSONObject().put("Name", "John Dungeldo"));
+//            jsonObject2.put("Desc", "John Dungeldo John Dungeldo John Dungeldo");
+//            jsonObject2.put("profilepic", profilepic2);
+//            jsonObject2.put("video", video2);
+//            jsonObject2.put("thumbpic", thumbpic2);
+//            jsonObject2.put("Time", "2d");
+//            jsonObject2.put("Likes", "2520");
+//        }
+//        catch(JSONException js)
+//        {
+//            System.out.println(js.getMessage());
+//        }
+//
+//        TableCell cell = new TableCell(this, display, jsonObject);
+//        TableCell cell2 = new TableCell(this, display, jsonObject2);
+//        t1.addView(cell);
+//        t1.addView(cell2);
+//
+//        JSONObject home = Server.SERVER.request("home", test);
         //------------------------------------------------------------------------------------------
 
 
@@ -277,14 +316,14 @@ public class MainActivity extends Activity {
 
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
-            Uri videoUri = data.getData();
-            Uri videoUri2 = data.getData();
-
-            realVideo.setVideoURI(videoUri);
-            realVideo2.setVideoURI(videoUri2);
-        }
-    }
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+//        if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
+//            Uri videoUri = data.getData();
+//            Uri videoUri2 = data.getData();
+//
+//            realVideo.setVideoURI(videoUri);
+//            realVideo2.setVideoURI(videoUri2);
+//        }
+//    }
 
 }
