@@ -40,7 +40,7 @@ class Profile extends Component {
         })
       })
       .catch(error => {
-        console.error(error)
+        window.location = "/login"
       })
   }
 
@@ -85,7 +85,7 @@ class Profile extends Component {
     }
     else {
       videoCards.push(
-        <Paper style={{padding: 10, margin: 20}}>
+        <Paper style={{height: "fit-content", padding: 10, margin: 20}}>
           <Typography>This user has no videos</Typography>
         </Paper>
       )

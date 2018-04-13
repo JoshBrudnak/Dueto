@@ -123,7 +123,6 @@ export const sendMessage = async (message, artist) => {
      Artist: artist
   }
   const formBody = JSON.stringify(data)
-  console.log(formBody)
 
   const response = await fetch("/api/postmessage", {
 	body: formBody,

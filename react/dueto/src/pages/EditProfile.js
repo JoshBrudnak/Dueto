@@ -10,10 +10,11 @@ class EditProfile extends Component {
 
     this.state = {
       name: undefined,
-      password: undefined,
-      repassword: undefined,
-      username: undefined, 
-      bio: undefined, 
+      password: "",
+      repassword: "",
+      username: undefined,
+      desc: undefined,
+      email: undefined,
       avatar: undefined,
       avatarName: undefined,
       avatarTitle: undefined,
@@ -26,12 +27,11 @@ class EditProfile extends Component {
   componentDidMount() {
     getProfileData()
       .then(data => {
-        console.log(data)
         this.setState({
           name: data.Name,
-          username: data.UserName,
+          username: data.Username,
           desc: data.Desc,
-          loc: data.Loc,
+          email: data.Email
         })
       })
       .catch(error => {
@@ -55,16 +55,8 @@ class EditProfile extends Component {
       this.setState({usernError: true})
       return
     }
-    if(s.password === undefined || s.password === "") {
-      this.setState({passError: true})
-      return
-    }
-    if(s.repassword === undefined || s.repassword === "") {
-      this.setState({repassError: true})
-      return
-    }
  
-    if(this.state.nameError || this.state.usernError || this.state.passError || this.state.repassError) {
+    if(this.state.nameError || this.state.usernError) {
       return
     }
 
@@ -73,9 +65,7 @@ class EditProfile extends Component {
       Password: s.password,
       Repassword: s.repassword,
       Username: s.username,
-      Bio: s.bio,
-      Age: s.age,
-      Loc: s.loc
+      Bio: s.desc
     }
        
     updateUser(userdata)
@@ -116,33 +106,35 @@ class EditProfile extends Component {
               name="name"
               error={this.state.nameError}
               style={fieldStyle}
+              defaultValue={this.state.name}
               value={this.state.name}
               onChange={this.textChange}
+              helperText="Name"
             />
             <TextField
               name="username"
               error={this.state.usernError}
               style={fieldStyle}
+              defaultValue={this.state.username}
               value={this.state.username}
               onChange={this.textChange}
+              helperText="Username"
             />
             <TextField
-              name="bio"
+              name="desc"
               style={fieldStyle}
-              value={this.state.bio}
+              defaultValue={this.state.desc}
+              value={this.state.desc}
               onChange={this.textChange}
+              helperText="Biography"
             />
             <TextField
-              name="age"
+              name="email"
               style={fieldStyle}
-              value={this.state.age}
+              defaultValue={this.state.email}
+              value={this.state.email}
               onChange={this.textChange}
-            />
-            <TextField
-              name="loc"
-              style={fieldStyle}
-              value={this.state.loc}
-              onChange={this.textChange}
+              helperText="E-mail"
             />
             <TextField
               label="Password"

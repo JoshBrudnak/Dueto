@@ -84,7 +84,7 @@ class MessageView extends Component {
 
   render() {
     return (
-      <div style={{display: "flex", justifyContent: "center", marginTop: 20}}>
+      <div style={{height: "fit-content", display: "flex", justifyContent: "center", marginTop: 20}}>
         <Card>
           <CardContent>
             <div style={{margin: 10, display: "flex", flexDirection: "column"}}>
