@@ -15,7 +15,7 @@ import (
 
 const (
 	AddArtist  = "insert into Artist(username, name, age, email, password, followers, description, likeCount, location, date, active) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9::json, now()::timestamp, true);"
-	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes) VALUES($1, $2, $3, now()::timestamp, 0, 0);"
+	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes, genre) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4);"
 	AddGenre   = "insert into Genre(name, description) VALUES($1, $2);"
 	AddSession = "insert into Session(userId, sessionKey, time) VALUES($1, $2, now()::timestamp);"
 	AddMessage = "insert into Comment(sender, reciever, message, time, sent) VALUES($1, $2, $3, now()::timestamp, false);"
@@ -23,7 +23,7 @@ const (
 	RemoveSession     = "delete from Session where sessionkey = $1;"
 	RemoveOldSessions = "delete from session where age(now(), time) > '1 hour';"
 
-	SelectBasicArtistData = "select username, name, avatar from artist where id = $1;"
+	SelectBasicArtistData = "select id, username, name from artist where id = $1;"
 	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, email from Artist where id = $1;"
 	SelectExtArtistData   = "select username, name, description, date, active, followerCount, likeCount from Artist where id = $1;"
 	SelectArtistVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1;"
@@ -290,7 +290,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		logIfErr(aErr)
 
 		artistRow.Next()
-		err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
+		err = artistRow.Scan(&a.Id, &a.Username, &a.Name)
 		logIfErr(err)
 		artistRow.Close()
 
@@ -359,7 +359,7 @@ func genre(w http.ResponseWriter, r *http.Request) {
 		logServerErr(w, err)
 
 		if artistRow.Next() {
-			err = artistRow.Scan(&a.Id, &a.Name, &a.Username)
+			err = artistRow.Scan(&a.Id, &a.Username, &a.Name)
 		}
 
 		logServerErr(w, err)
@@ -594,12 +594,6 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query(RemoveSession, sessionId)
 	logIfErr(err)
 	rows.Close()
-
-	if err == nil {
-		exp := time.Unix(0, 0)
-		cookie := http.Cookie{Name: "SESSIONID", Value: "", Expires: exp, HttpOnly: true}
-		http.SetCookie(w, &cookie)
-	}
 }
 
 func getThumbnail(artist string, name string) {
@@ -642,6 +636,7 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 
 	name := r.FormValue("name")
 	desc := r.FormValue("desc")
+	genre := r.FormValue("genre")
 	data, err := ioutil.ReadAll(file)
 	logServerErr(w, err)
 
@@ -656,7 +651,7 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 
 	getThumbnail(artist, name)
 
-	rows, err := db.Query(AddVideo, artist, name, desc)
+	rows, err := db.Query(AddVideo, artist, name, desc, genre)
 	logServerErr(w, err)
 	rows.Close()
 }

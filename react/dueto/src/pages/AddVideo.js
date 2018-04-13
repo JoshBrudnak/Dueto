@@ -51,16 +51,17 @@ class AddVideo extends Component {
       //TODO: flag error  
     }
 
-    const {video, name, desc} = this.state
+    const {video, name, desc, genre} = this.state
     let formData = new FormData()
     formData.append("file", video)
     formData.append("name", name)
     formData.append("desc", desc)
+    formData.append("genre", genre)
 
     addVideo(formData)
       .then(data => {
         document.getElementById("done").click()
-        //window.location = "/home"
+        window.location = "/home"
       })
       .catch(error => {
         this.setState({error: true})

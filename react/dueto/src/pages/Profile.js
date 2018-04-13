@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Avatar, Typography, Paper, IconButton, Tabs, Tab} from 'material-ui'
+import {Avatar, Typography, Paper, IconButton} from 'material-ui'
 import Header from '../component/Header.js'
 import {AddCircle, Settings} from 'material-ui-icons'
 import {Link} from 'react-router-dom'
@@ -85,8 +85,8 @@ class Profile extends Component {
     }
     else {
       videoCards.push(
-        <Paper style={{height: "fit-content", padding: 10, margin: 20}}>
-          <Typography>This user has no videos</Typography>
+        <Paper style={{height: "fit-content", padding: 20, margin: 20}}>
+          <Typography style={{fontSize: "large"}}>This user has no videos</Typography>
         </Paper>
       )
     }
@@ -116,8 +116,8 @@ class Profile extends Component {
                 <AddCircle/>
               </IconButton>
             </div> 
-            <Typography>{this.state.name}</Typography> 
-            <Typography>{this.state.username}</Typography> 
+            <Typography style={{fontSize: "large"}}>{this.state.name}</Typography> 
+            <Typography style={{fontSize: "large"}}>{this.state.username}</Typography> 
           </Paper>
         </div>
         <div style={{height: "-webkit-fill-available", backgroundColor: "#e8e8e8", display: "flex", flexWrap: "wrap", justifyContent: "center"}}>

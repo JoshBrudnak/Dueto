@@ -53,14 +53,16 @@ class GenreDialog extends Component {
     return (
       <Dialog open={this.props.open} onClose={this.props.close}>
         <DialogTitle>Genres</DialogTitle>
-        <DialogContent>
+        <DialogContent style={{display: "flex", flexDirection: "column"}}>
           <FormControl>
             <RadioGroup value={this.state.selGenre} onChange={this.genreChange}>
               {this.getGenreList()}
             </RadioGroup>
           </FormControl>
-          <Button size="small" color="primary" onClick={this.save}>Ok</Button>
-          <Button size="small" color="primary" onClick={this.cancel}>Cancel</Button>
+          <div>
+            <Button size="small" color="primary" onClick={this.save}>Ok</Button>
+            <Button size="small" color="primary" onClick={this.cancel}>Cancel</Button>
+          </div>
         </DialogContent> 
       </Dialog>
     )

@@ -23,7 +23,7 @@ class VideoDialog extends Component {
             <Typography>
               {this.props.desc}
             </Typography>
-            <Button size="small" color="primary" onClick={this.props.back}>Back</Button>
+            <Button style={{marginTop: 10}} size="small" color="primary" onClick={this.props.close}>Back</Button>
           </DialogContent> 
         </Dialog>
     )

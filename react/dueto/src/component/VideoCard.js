@@ -29,11 +29,11 @@ class VideoCard extends Component {
   }
 
   profile = () => {
-    document.getElementById("profile").click()
+    document.getElementById("art").click()
   }
 
   render() {
-    const profileUrl = "/artist/" + this.props.id    
+    const profileUrl = "/artist/" + this.props.artist   
 
     return (
       <Card style={{width: 400, maxHeight: 350, margin: 40}}>
@@ -64,7 +64,7 @@ class VideoCard extends Component {
           desc={this.props.desc}
           name={this.props.name}
         />
-        <Link id="profile" to={profileUrl} style={{visibility: "collapsed"}}/>
+        <Link id="art" to={profileUrl} style={{visibility: "collapsed"}}/>
       </Card>
     )
   }
