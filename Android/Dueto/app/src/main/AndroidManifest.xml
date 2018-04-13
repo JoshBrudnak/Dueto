@@ -40,22 +40,28 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:noHistory="true"
+            />
+        <activity
+            android:name=".messaging.MessageListActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
         <activity
             android:name=".SigninActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:noHistory="true"
+            />
         <activity
             android:name=".TimelineActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -75,6 +81,7 @@
             android:name=".VideoActivity"
             android:label="@string/title_activity_video"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".DiscoverActivity" />
         <activity
             android:name=".EditProfile"

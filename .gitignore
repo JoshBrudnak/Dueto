@@ -1,3 +1,9 @@
+# Server data files
+Server/data/
+Server/Server
+Server/server
+Server/database.json
+
 # Built application files
 *.apk
 *.ap_

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "dueto.dueto"
-        minSdkVersion 19
+        minSdkVersion 26
         targetSdkVersion 26
         versionCode 1
         versionName "0.0.1"
@@ -48,27 +48,6 @@ dependencies {
     compile 'com.linsea:universalvideoview:1.1.0@aar'
 //    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

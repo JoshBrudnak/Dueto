@@ -13,33 +13,35 @@ class Genre extends Component {
   }
 
   componentDidMount() {
-    const {params} = this.props
+    const value = this.props.match.params.name
 
-    getGenreVideos(params.name)
+    getGenreVideos(value)
       .then(data => {
-         console.log(data)
-         this.setState({videos: data.VideoCards}) 
+        this.setState({videos: data.VideoCards}) 
       })
       .catch(error => {
-        window.location = "/login"
+        console.error(error)
       })
   }
 
   getVideoCards = () => {
     const cards = [] 
     
-    for(let i = 0; i < this.state.videos.length; i++) {
-      const data = this.state.videos[i]
-      cards.push(
-        <VideoCard
-          artist={data.Artist.Id}
-          desc={data.Desc}
-          genre={data.Genre}
-          name={data.Title}
-          likes={data.Likes}
-          views={data.Views}
-        />
-      )
+    if(this.state.videos !== null) {
+      for(let i = 0; i < this.state.videos.length; i++) {
+        const data = this.state.videos[i]
+        cards.push(
+          <VideoCard
+            id={data.Id}
+            artist={data.Artist.Id}
+            desc={data.Desc}
+            genre={data.Genre}
+            name={data.Title}
+            likes={data.Likes}
+            views={data.Views}
+          />
+        )
+      }
     }
 
     return cards
@@ -49,7 +51,9 @@ class Genre extends Component {
     return (
       <div>
         <Header/>
-        {this.getVideoCards()}
+        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+          {this.getVideoCards()}
+        </div>
       </div>
     )
   }

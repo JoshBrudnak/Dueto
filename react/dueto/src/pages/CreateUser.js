@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Input, TextField, Button, Typography, Paper} from 'material-ui'
-import {loginUser, addUser, addAvatar} from '../utils/fetchData.js'
+import {loginUser, addUser, addAvatar, getLocation} from '../utils/fetchData.js'
+import {Link} from "react-router-dom"
 
 class CreateUser extends Component {
   constructor() {
@@ -14,9 +15,14 @@ class CreateUser extends Component {
       bio: undefined, 
       avatar: undefined,
       age: undefined,
-      loc: undefined,
+      email: undefined,
       avatarPath: undefined, 
-      avatarName: "No file selected"
+      avatarName: "No file selected",
+      nameError: false,
+      emailError: false,
+      usernError: false,
+      passError: false,
+      repassError: false
     }
   }
 
@@ -25,45 +31,78 @@ class CreateUser extends Component {
   }
 
   create = () => {
-    const userdata = {
-      Name: this.state.name,
-      Password: this.state.password,
-      Repassword: this.state.repassword,
-      Username: this.state.username, 
-      Bio: this.state.bio, 
-      Age: this.state.age,
-      Loc: this.state.loc 
+    const s = this.state
+    
+    if(s.name === undefined || s.name === "") {
+      this.setState({nameError: true})
+      return
     }
-       
-    addUser(userdata)
+    if(s.username === undefined || s.username === "") {
+      this.setState({usernError: true})
+      return
+    }
+    if(s.password === undefined || s.password === "") {
+      this.setState({passError: true})
+      return
+    }
+    if(s.repassword === undefined || s.repassword === "") {
+      this.setState({repassError: true})
+      return
+    }
+    if(s.email === undefined || s.email === "") {
+      this.setState({emailError: true})
+      return
+    }
+ 
+    const ns = this.state
+    if(ns.nameError || ns.usernError || ns.passError || ns.repassError || ns.emailError) {
+      return
+    }
+
+    getLocation()
       .then(data => {
+        const userdata = {
+          Name: s.name,
+          Password: s.password,
+          Repassword: s.repassword,
+          Username: s.username,
+          Email: s.email,
+          Bio: s.bio,
+          Age: s.age,
+          Loc: JSON.stringify(data)
+        }
 
-        loginUser(this.state.username, this.state.password)
-         .then(data => { 
-           const {avatarName, avatar} = this.state
-
-           let formData = new FormData()
-
-           formData.append("file", avatar)
-           formData.append("name", avatarName)
-
-           addAvatar(formData)
+        addUser(userdata)
+          .then(data => {
+            loginUser(this.state.username, this.state.password)
              .then(data => { 
-                window.location = "/home"
+               const {avatarName, avatar} = this.state
+    
+               let formData = new FormData()
+               formData.append("file", avatar)
+               formData.append("name", avatarName)
+
+               addAvatar(formData)
+                 .then(data => { 
+                    window.location = "/home"
+                 })
+                 .catch(error => {
+                   console.error(error)
+                 })
              })
              .catch(error => {
                console.error(error)
              })
-          })
-          .catch(error => {
-            console.error(error)
-          })
+           })
+         .catch(error => { 
+           console.error(error)
+         })
+       })
+       .catch(error => { 
+          console.error(error)
+       })
 
-
-      })
-      .catch(error => { 
-         console.error(error)
-      })
+       
   }
 
   avatarChange = (event) => {
@@ -75,18 +114,26 @@ class CreateUser extends Component {
     document.getElementById("profilePic").click()
   }
 
+  cancel = () => {
+    document.getElementById("cancel").click()
+  }
+     
+
   render() {
     const fieldStyle = {
       marginTop: 10
     }
 
     return (
-      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <Paper style={{display: "flex", flexDirection: "column", width: 350, padding: 40}}>
-          <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
+      <div style={{backgroundColor: "#e8e8e8", height: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Paper style={{display: "flex", flexDirection: "column", width: 350, margin: 40, padding: 40}}>
+          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <img style={{width: 100, height: 100}} src="/resource/dueto.png" alt="Dueto"/>
+          </div>
           <TextField
             label="Name"
             name="name"
+            error={this.state.nameError}
             style={fieldStyle}
             value={this.state.name}
             onChange={this.textChange}
@@ -94,6 +141,7 @@ class CreateUser extends Component {
           <TextField
             label="Username"
             name="username"
+            error={this.state.usernError}
             style={fieldStyle}
             value={this.state.username}
             onChange={this.textChange}
@@ -113,16 +161,18 @@ class CreateUser extends Component {
             onChange={this.textChange}
           />
           <TextField
-            label="Location"
-            name="loc"
+            label="E-mail"
+            name="email"
+            error={this.state.emailError}
             style={fieldStyle}
-            value={this.state.loc}
+            value={this.state.email}
             onChange={this.textChange}
           />
           <TextField
             label="Password"
             name="password"
             type="password"
+            error={this.state.passError}
             style={fieldStyle}
             value={this.state.password}
             onChange={this.textChange}
@@ -131,6 +181,7 @@ class CreateUser extends Component {
             label="Retype Password"
             name="repassword"
             type="password"
+            error={this.state.repassError}
             style={fieldStyle}
             value={this.state.repassword}
             onChange={this.textChange}
@@ -152,6 +203,7 @@ class CreateUser extends Component {
             <Button onClick={this.cancel}>Cancel</Button>
           </div>
         </Paper>
+        <Link id="cancel" to="/login"/>
       </div>
     );
   }

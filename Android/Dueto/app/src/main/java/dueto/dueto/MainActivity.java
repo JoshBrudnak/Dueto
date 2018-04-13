@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,21 +13,20 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
+
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -38,6 +38,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +54,12 @@ import dueto.dueto.templates.MainCell;
 import dueto.dueto.templates.MainListAdapter;
 import dueto.dueto.templates.ProfileCell;
 import dueto.dueto.templates.ProfileListAdapter;
-import dueto.dueto.templates.TableCell;
+
+import dueto.dueto.messageoverview.MessageOverviewObject;
+
+import dueto.dueto.util.MessagingHandler;
+import dueto.dueto.util.Utility;
+import dueto.dueto.util.VideoCardMaker;
 
 import static android.content.ContentValues.TAG;
 
@@ -82,6 +88,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Utility man = Utility.getMan(this);
         setContentView(R.layout.activity_main);
 
         ListView mListView = (ListView) findViewById(R.id.listView);
@@ -134,19 +141,23 @@ public class MainActivity extends Activity {
 //
 //        display = getWindowManager().getDefaultDisplay();
 //        TableLayout t1 = findViewById(R.id.homeTable);
+
 //        JSONObject jsonObject = new JSONObject();
 //        JSONObject jsonObject2 = new JSONObject();
 //
 //        ImageView profilepic = new ImageView(this);
 //        ImageView profilepic2 = new ImageView(this);
+
 //        ImageView thumbpic = new ImageButton(this);
 //        ImageView thumbpic2 = new ImageButton(this);
 //        video = new VideoView(this);
 //        video2 = new VideoView(this);
+
 //        profilepic.setImageResource(R.drawable.profile);
 //        profilepic2.setImageResource(R.drawable.coop);
 //        thumbpic.setImageResource(R.drawable.cello);
 //        thumbpic2.setImageResource(R.drawable.guitars);
+
 //
 //        JSONObject test = new JSONObject();
 //
@@ -202,6 +213,7 @@ public class MainActivity extends Activity {
 //            jsonObject.put("Artist", new JSONObject().put("Name", "Arnold Schwarzenegger"));
 //            jsonObject.put("Desc", "John Dungeldo is a striving idiot");
 //            jsonObject.put("profilepic", profilepic);
+
 //            jsonObject.put("video", video);
 //            jsonObject.put("thumbpic", thumbpic);
 //            jsonObject.put("Time", "1d");
@@ -210,6 +222,7 @@ public class MainActivity extends Activity {
 //            jsonObject2.put("Artist", new JSONObject().put("Name", "John Dungeldo"));
 //            jsonObject2.put("Desc", "John Dungeldo John Dungeldo John Dungeldo");
 //            jsonObject2.put("profilepic", profilepic2);
+
 //            jsonObject2.put("video", video2);
 //            jsonObject2.put("thumbpic", thumbpic2);
 //            jsonObject2.put("Time", "2d");
@@ -226,8 +239,8 @@ public class MainActivity extends Activity {
 //        t1.addView(cell2);
 //
 //        JSONObject home = Server.SERVER.request("home", test);
-        //------------------------------------------------------------------------------------------
 
+        //------------------------------------------------------------------------------------------
 
         //Defining buttons to use them later
         final FloatingActionButton

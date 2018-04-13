@@ -9,7 +9,9 @@ class Login extends Component {
 
     this.state = {
       password: "",
-      username: ""
+      username: "",
+      servError: false,
+      error: false
     }
   }
 
@@ -23,26 +25,44 @@ class Login extends Component {
 
   login = () => {
     loginUser(this.state.username, this.state.password)
-      .then(data => { 
-        window.location = "/home"
+      .then(stat => { 
+        if(stat >= 400 && stat < 404) {
+          this.setState({error: true})
+        }
+        else if(stat >= 404) {
+          this.setState({servError: true})
+        }
+        else {
+          window.location = "/home"
+        }
       })
       .catch(error => {
-        console.error(error)
+        console.error(error) 
       })
+  }
+
+  errorText = () => {
+    if(this.state.error) {
+      return (
+        <Typography style={{color: "red"}}>Incorrect username or password</Typography>
+      )
+    }
   }
 
   render() {
     return (
-      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+      <div style={{backgroundColor: "#e8e8e8", height: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Paper style={{padding: 40, margin: 40, width: 250}}>
-          <Typography style={{fontSize: "large"}} variant="heading1">Dueto</Typography>
+          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <img style={{width: 100, height: 100}} src="/resource/dueto.png" alt="Dueto"/>
+          </div>
+          {this.errorText()}
           <div style={{display: "flex", flexDirection: "column"}}>
             <TextField
-              label="UserName"
+              label="Username"
               margin="normal"
               value={this.state.username}
               onChange={this.usernameChange}
-              
             />
             <TextField
               label="Password"
@@ -62,7 +82,7 @@ class Login extends Component {
           <Link to="/createuser"> create account</Link>
         </div>
       </div>
-    );
+    )
   }
 }
 
