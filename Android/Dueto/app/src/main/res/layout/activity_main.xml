@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:visibility="visible"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="1.0">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,6 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dueto.dueto.MainActivity">
+
+    <ScrollView
+        android:id="@+id/sView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="visible">
 
         <TableLayout
             android:id="@+id/homeTable"
@@ -29,11 +22,14 @@
             android:stretchColumns="1">
         </TableLayout>
 
+    </ScrollView>
+
     <VideoView
         android:id="@+id/realVideo"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_gravity="center" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/menuButton"
@@ -142,4 +138,3 @@
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
-</ScrollView>

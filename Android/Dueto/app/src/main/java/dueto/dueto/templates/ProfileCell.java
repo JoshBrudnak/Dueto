@@ -1,16 +1,35 @@
 package dueto.dueto.templates;
 
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
+import com.mikepenz.fastadapter.items.AbstractItem;
+
+import dueto.dueto.R;
+
 public class ProfileCell {
     private String name;
-    private String birthday;
-    private String sex;
+    private String description;
+    private String likes;
+    private String comments;
+    private String reposts;
+    private String timeStamp;
     private String imgURL;
+    private String videoURL;
 
-    public ProfileCell(String name, String birthday, String sex, String imgURL) {
-        this.birthday = birthday;
+
+
+    public ProfileCell(String name, String description, String likes, String comments, String reposts, String timeStamp, String imgURL, String videoURL) {
+        this.description = description;
         this.name = name;
-        this.sex = sex;
+        this.likes = likes;
+        this.comments = comments;
+        this.reposts = reposts;
+        this.timeStamp = timeStamp;
         this.imgURL = imgURL;
+        this.videoURL = videoURL;
     }
 
     public String getImgURL() {
@@ -21,12 +40,20 @@ public class ProfileCell {
         this.imgURL = imgURL;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public String getVideoURL() {
+        return videoURL;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -37,12 +64,36 @@ public class ProfileCell {
         this.name = name;
     }
 
-    public String getSex() {
-        return sex;
+    public String getLikes() {
+        return likes;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setLikes(String likes) {
+        this.likes = likes;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getReposts() {
+        return reposts;
+    }
+
+    public void setReposts(String reposts) {
+        this.reposts = reposts;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
 }
