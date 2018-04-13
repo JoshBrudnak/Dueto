@@ -240,7 +240,6 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query(SelectIntArtistData, artistId)
 	checkErr(err)
-	"select username, name, followers, description, date, active, likeCount, email from Artist where id = $1;"
 
 	rows.Next()
 	err = rows.Scan(&a.Username, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount, &a.Email)
