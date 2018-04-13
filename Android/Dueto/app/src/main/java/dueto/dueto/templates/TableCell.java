@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -122,8 +123,7 @@ public class TableCell extends TableRow
 
             thumbnail.setOnClickListener(e->
             {
-
-                //TODO: insert video pla
+                //TODO: insert video player
             });
 
             profile = (ImageView) internal.get("profilepic");

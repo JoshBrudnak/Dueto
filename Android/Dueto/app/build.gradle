@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "dueto.dueto"
-        minSdkVersion 19
+        minSdkVersion 26
         targetSdkVersion 26
         versionCode 1
         versionName "0.0.1"
@@ -37,6 +37,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     implementation 'com.android.support:design:26.1.0'
 }
+
+
+
+
 
 
 

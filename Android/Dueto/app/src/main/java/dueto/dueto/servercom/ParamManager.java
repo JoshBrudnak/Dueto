@@ -14,11 +14,11 @@ import java.util.Set;
  * Convert a map parameters to JSON
  */
 
-public class JsonManager
+public class ParamManager
 {
     private JSONObject json;
 
-    public JsonManager(Map params) throws JSONException
+    public ParamManager(Map params) throws JSONException
     {
         if(!params.isEmpty())
         {
@@ -30,7 +30,7 @@ public class JsonManager
         }
     }
 
-    public JsonManager(JSONObject json)
+    public ParamManager(JSONObject json)
     {
         this.json = json;
     }
@@ -50,9 +50,12 @@ public class JsonManager
     {
         Iterator<String> iter = json.keys();
 
+        if(url.charAt(url.length()-1) != '?')
+            url = url.concat("?");
+
         while(iter.hasNext())
         {
-            String temp =iter.next();
+            String temp = iter.next();
 
             url = url.concat(temp + "=" + json.getString(temp));
             if(iter.hasNext())

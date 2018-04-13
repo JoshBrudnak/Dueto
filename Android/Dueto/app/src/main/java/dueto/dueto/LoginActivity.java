@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(Server.SERVER.login(userName,userPass)) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
         else {
