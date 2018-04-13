@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import dueto.dueto.R;
+import dueto.dueto.servercom.Server;
 import dueto.dueto.util.MessagingHandler;
 
 public class MessageListActivity extends AppCompatActivity {
@@ -21,12 +22,14 @@ public class MessageListActivity extends AppCompatActivity {
     private MessageAdapter mMessageAdapter;
     private Button sendButton;
 
+    private Server messageSender = new Server();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_window);
 
-        List<Message> mMessageList = MessagingHandler.loadMessages(MessagingHandler.getCurrentMessagedUser());
+        List<Message> mMessageList = MessagingHandler.getCurrentChat();
         mMessageRecycler = (RecyclerView) findViewById(R.id.layout_chat);
         mMessageAdapter = new MessageAdapter(this, mMessageList);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -45,7 +48,11 @@ public class MessageListActivity extends AppCompatActivity {
                     }
                     try {
                         JSONObject jsonMessage = new JSONObject();
+                        jsonMessage.put("Artist", MessagingHandler.getCurrentMessagedUser());
                         jsonMessage.put("Message", message);
+
+                        //jsonMessage.put("Time",messageSender.request("postmessages", jsonMessage).getString("Time"));
+                        messageSender.request("postmessages", jsonMessage);
                         jsonMessage.put("Time", "now");
 
                         mMessageList.add(new Message(jsonMessage, Message.SENT));

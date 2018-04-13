@@ -40,6 +40,13 @@ public class Utility {
         toast.show();
     }
 
+    public static void printError(String location, Exception exc)
+    {
+        System.out.println("----------------------------");
+        System.out.println("Exception at " + location + ": ");
+        System.out.println(exc);
+        System.out.println("----------------------------");
+    }
 
 
 }

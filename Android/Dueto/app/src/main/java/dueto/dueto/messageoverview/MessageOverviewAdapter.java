@@ -59,23 +59,28 @@ public class MessageOverviewAdapter extends RecyclerView.Adapter
         TextView name;
         ImageView avatar;
 
+        View view;
+
         MessageOverviewViewHolder(View itemView)
         {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.overview_name);
             avatar = (ImageView) itemView.findViewById(R.id.overview_avatar);
-            itemView.setOnClickListener(e->
-            {
-                Intent intent = new Intent(context, MessageListActivity.class);
-                context.startActivity(intent);
-            });
+            this.view = itemView;
         }
 
         void bind(MessageOverviewObject overviewObject)
         {
             name.setText(overviewObject.getName());
             avatar.setImageBitmap(overviewObject.getAvatar());
+
+            view.setOnClickListener(e->
+            {
+                MessagingHandler.setCurrentMessagedUser(overviewObject.getUser());
+                Intent intent = new Intent(context, MessageListActivity.class);
+                context.startActivity(intent);
+            });
         }
 
     }

@@ -65,12 +65,7 @@ public class MessagingHandler {
     public static List<Message> loadMessages(String user) {
         ArrayList<Message> out = new ArrayList<>();
         try {
-            out.add(new Message(
-                    new JSONObject().put("Message", "Tom")
-                            .put("Time", "N/A"), Message.SENT));
-            out.add(new Message(
-                    new JSONObject().put("Message", "Tom")
-                            .put("Time", "N/A"), Message.RECEIVED));
+
         } catch (Exception e) {
             System.out.println("lol exception");
         }
@@ -115,6 +110,11 @@ public class MessagingHandler {
     public static void addMessage(String user, Message message)
     {
         userNameToChatMap.get(user).add(message);
+    }
+
+    public static List<Message> getCurrentChat()
+    {
+        return userNameToChatMap.get(currentMessagedUser);
     }
 
     public static void setCurrentMessagedUser(String user)

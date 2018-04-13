@@ -9,8 +9,9 @@ import org.json.JSONObject;
 
 public class Message
 {
-    private String message, time;
+    private String message, time, user;
     private int type;
+    private JSONObject json;
 
     public static final int SENT = 0, RECEIVED = 1;
 
@@ -20,6 +21,8 @@ public class Message
         try {
             message = jsonMessage.getString("Message");
             time = jsonMessage.getString("Time");
+            user = jsonMessage.getString("Artist");
+            this.json = jsonMessage;
         }catch (JSONException j)
         {
             message = "Message cannot be retrieved at the moment";
@@ -37,5 +40,10 @@ public class Message
 
     public int getType() {
         return type;
+    }
+
+    public JSONObject toJSON()
+    {
+        return json;
     }
 }

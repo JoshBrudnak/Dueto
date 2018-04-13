@@ -41,16 +41,27 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".messaging.MessageListActivity"/>
+        <activity
+            android:name=".LoginActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:noHistory="true"
+            />
+        <activity
+            android:name=".messaging.MessageListActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
         <activity
             android:name=".SigninActivity"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:noHistory="true"
+            />
         <activity
             android:name=".TimelineActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.json.JSONArray;
@@ -13,15 +14,21 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +53,8 @@ public class Server
     private final String ADDRESS = "http://35.231.109.184:8080/api/";
     private URL url;
     private static JSONObject session_cookie;
+
+    private static final String CRLF = "\r\n";
 
     public Server()
     {
@@ -111,7 +120,7 @@ public class Server
         }
     }
 
-    public JSONObject request(String type, JSONObject information)
+    public JSONObject request(String type, @Nullable JSONObject information)
     {
         try {
             String endpoint, requesttype;
@@ -122,9 +131,11 @@ public class Server
                 case "discover":
                 case "genre":
                 case "artist":
+                case "getmessages":
                     endpoint = type.toLowerCase();
                     return new URLParamRequest(endpoint, information).execute().get();
                 case "createuser":
+                case "postmessages":
                     endpoint = type.toLowerCase();
                     requesttype = "POST";
                     break;
@@ -233,8 +244,8 @@ public class Server
 
             //DEBUG: System.out.println(session_cookie.getString("session"));
 
-            conn.setConnectTimeout(1000);
-            conn.setReadTimeout(2500);
+            conn.setConnectTimeout(750);
+            conn.setReadTimeout(1250);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             System.out.println("Got inputStream: " + in);
@@ -478,8 +489,58 @@ public class Server
         }
     }
 
+    private class UploadTask extends AsyncTask<File, Integer, Void>
+    {
+        JSONObject information;
+        final String boundary = "--" + Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
+        String endpoint, filetype;
+
+        public UploadTask(@NonNull String endpoint, @NonNull JSONObject information, String filetype)
+        {
+            this.information = information;
+            this.endpoint = endpoint;
+            this.filetype = filetype;
+        }
+
+
+        @Override
+        protected Void doInBackground(File... files)
+        {
+            try {
+                //Creating Objects
+                url = new URL(ADDRESS+endpoint);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                //DEBUG: System.out.println("output is set");
+                connection.setRequestProperty("Content-Type","multipart/form-data; boundary="+boundary);
+                connection.setRequestProperty("Cookie", session_cookie.getString("session"));
+                connection.setRequestProperty("Connection", "keep-alive");
+
+                OutputStream output = connection.getOutputStream();
+                PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, "utf-8"), true);
+
+                writer.append("--" + boundary).append(CRLF);
+                writer.append("Content-Disposition: form-data; name=\"binaryFile\"; filename=\"" + files[0].getName() + "\"").append(CRLF);
+                writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(files[0].getName())).append(CRLF);
+                writer.append("Content-Transfer-Encoding: binary").append(CRLF);
+                writer.append(CRLF).flush();
+                Files.copy(files[0].toPath(), output);
+                output.flush(); // Important before continuing with writer!
+                writer.append(CRLF).flush();
+            }
+            catch(IOException | JSONException exc)
+            {
+                Utility.printError("Server.UploadTask.doInBackground", exc);
+            }
+
+            return null;
+        }
+    }
+
     /**
-     * Executes an asynchronous request to the server
+     * Executes an asynchronous request to the server retrieving new messages
      */
     private class MessageRetriever extends AsyncTask<String, Integer, List<JSONObject>>
     {
