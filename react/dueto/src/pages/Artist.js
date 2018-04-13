@@ -69,19 +69,29 @@ class Artist extends Component {
   }
 
   getBody = () => {
-    if(this.state.videoPage && this.state.videos !== null) {
-      const videoCards = []
-      for(let i = 0; i < this.state.videos.length; i++) {
-        const data = this.state.videos[i]
+    const videoCards = []
 
+    if(this.state.videoPage) {
+      if(this.state.videos !== null) {
+        for(let i = 0; i < this.state.videos.length; i++) {
+          const data = this.state.videos[i]
+  
+          videoCards.push(
+            <VideoCard
+              style={{margin: 40}}
+              id={data.Id}
+              artist={data.Artist.Id}
+              desc={data.Desc}
+              name={data.Title}
+            />
+          )
+        }
+      }
+      else {
         videoCards.push(
-          <VideoCard
-            style={{margin: 40}}
-            id={data.Id}
-            artist={data.Artist.Id}
-            desc={data.Desc}
-            name={data.Title}
-          />
+          <Paper style={{height: "fit-content", padding: 20, margin: 20}}>
+            <Typography style={{fontSize: "large"}}>This user has no videos</Typography>
+          </Paper>
         )
       }
       
@@ -101,8 +111,8 @@ class Artist extends Component {
         <div style={{backgroundColor: "#e8e8e8", display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
           <Paper style={{padding: 10, width: "-webkit-fill-available", display: "flex", flexDirection: "column", alignItems: "center"}}>
             <Avatar src={this.state.avatarUrl} style={{width: 100, height: 100, marginBotton: 10}}/>
-            <Typography>{this.state.name}</Typography> 
-            <Typography>{this.state.username}</Typography> 
+            <Typography style={{fontSize: "large"}}>{this.state.name}</Typography> 
+            <Typography style={{fontSize: "large"}}>{this.state.username}</Typography> 
           </Paper>
           <Paper style={{display: "grid", alignItems: "center"}}>
             <div style={{gridColumn: 2}}>

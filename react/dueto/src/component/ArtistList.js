@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Typography, Paper, Button, Avatar } from 'material-ui'
+import { Divider, Typography, Paper, Button, Avatar } from 'material-ui'
 import Card, { CardContent } from 'material-ui/Card'
 import Menu, {MenuItem} from 'material-ui/Menu'
 import {Link} from "react-router-dom"
@@ -11,8 +11,8 @@ class ArtistList extends Component {
   
     this.state = {
       open: false,
-      anchor: null,
-      buttonText: "by zip-code",
+      anchor: undefined,
+      buttonText: "By zip-code",
       artists: []
     }
   }
@@ -28,7 +28,7 @@ class ArtistList extends Component {
   }
 
   openMenu = event => {
-    this.setState({ open: true, anchorEl: event.target });
+    this.setState({ open: true, anchor: event.currentTarget});
   }
 
   closeMenu = event => {
@@ -38,7 +38,7 @@ class ArtistList extends Component {
   zipcodeArtists = () => {
     getArtistsByZip()
       .then(data => {
-        this.setState({artists: data, open: false})
+        this.setState({artists: data, open: false, buttonText: "By zip-code"})
       })
       .catch(error => {
         console.error(error)
@@ -48,7 +48,7 @@ class ArtistList extends Component {
   cityArtists = () => {
     getArtistsByCity()
       .then(data => {
-        this.setState({artists: data, open: false})
+        this.setState({artists: data, open: false, buttonText: "By city"})
       })
       .catch(error => {
         console.error(error)
@@ -81,7 +81,7 @@ class ArtistList extends Component {
     }
     else {
       artistCards.push(
-        <Card style={{width: 200, margin: 20, display: "flex", paddingLeft: 10, alignItems: "center"}}>
+        <Card style={{minWidth: 200, margin: 20, display: "flex", paddingLeft: 10, alignItems: "center"}}>
           <CardContent>
             <Typography>There are no artists in your area.</Typography>
           </CardContent>
@@ -95,8 +95,11 @@ class ArtistList extends Component {
   render() {
     return (
       <Paper style={{marginTop: 20}}>
-        <Typography style={{margin: 10, fontSize: 15}}>Artists near you</Typography>
-        <Button onClick={this.openMenu}>Open Menu</Button>
+        <div style={{margin: 10, minWidth: 250, display: "flex", flexDirection: "row"}}>
+          <Typography style={{minWidth: 130, margin: 10, fontSize: "large"}}>Artists near you</Typography>
+          <Button id="menu" style={{minWidth: 125}} onClick={this.openMenu}>{this.state.buttonText}</Button>
+        </div>
+        <Divider/>
         <Menu anchorEl={this.state.anchor} open={this.state.open} onClose={this.closeMenu}>
           <MenuItem onClick={this.zipcodeArtists}>By Zipcode</MenuItem>
           <MenuItem onClick={this.cityArtists}>By City</MenuItem>

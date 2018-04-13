@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Paper, Tab, Tabs, Button, TextField } from 'material-ui'
+import { Paper, Tab, Tabs, Button} from 'material-ui'
 import {Link} from 'react-router-dom'
-import {getSessionId, logoutUser, eraseCookie} from '../utils/fetchData.js'
+import {logoutUser} from '../utils/fetchData.js'
 
 class Header extends Component {
   constructor() {
@@ -35,7 +35,6 @@ class Header extends Component {
   logout = () => {
     logoutUser()
       .then(data => {
-        eraseCookie()
         window.location = "/logout"
       })
       .catch(error => {

@@ -70,7 +70,7 @@ class EditProfile extends Component {
        
     updateUser(userdata)
       .then(data => {
-        window.location = "/home"
+        window.location = "/profile"
       })
       .catch(error => { 
          console.error(error)
@@ -167,7 +167,7 @@ class EditProfile extends Component {
               onChange={this.avatarChange}
             />
             <div style={{marginTop: 10}}>
-              <Button onClick={this.create}>Update Account</Button>
+              <Button onClick={this.update}>Update Account</Button>
               <Button onClick={this.cancel}>Cancel</Button>
             </div>
           </Paper>
