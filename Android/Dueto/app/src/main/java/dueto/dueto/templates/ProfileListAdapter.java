@@ -2,27 +2,19 @@ package dueto.dueto.templates;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
-
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,16 +25,10 @@ import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import dueto.dueto.R;
-import dueto.dueto.model.Video;
-
-import static android.view.View.getDefaultSize;
-
 public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
 
-    private static final String TAG = "PersonListAdapter";
+    private static final String TAG = "ProfileListAdapter";
 
     private Context mContext;
     private int mResource;
@@ -57,6 +43,7 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
         TextView reposts;
         TextView timeStamp;
         ImageView image;
+        ImageView thumbnail;
         UniversalVideoView video;
     }
 
@@ -82,6 +69,7 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
         String reposts = getItem(position).getReposts();
         String timeStamp = getItem(position).getTimeStamp();
         String imgUrl = getItem(position).getImgURL();
+        String thumbURL = getItem(position).getThumbnail();
         String videoURL = getItem(position).getVideoURL();
 
         final View result;      //create the view result for showing the animation
@@ -104,7 +92,8 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
             holder.reposts = (TextView) convertView.findViewById(R.id.reposts);
             holder.timeStamp = (TextView) convertView.findViewById(R.id.timeStamp);
             holder.image = (ImageView) convertView.findViewById(R.id.image);
-            holder.video = (UniversalVideoView ) convertView.findViewById(R.id.video);
+            holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
+            holder.video = (UniversalVideoView) convertView.findViewById(R.id.video);
 
             //result = convertView;
 
@@ -121,6 +110,9 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
         holder.timeStamp.setText(timeStamp);
         holder.reposts.setText(reposts);
 
+        holder.thumbnail.bringToFront();
+        //holder.thumbnail.setAlpha(0.5f); //controls transparency of the image (0-1, float, where 1 is opaque)
+
         try {
             ProfileCell video = mVideos.get(position);
             holder.video.getHolder().setSizeFromLayout();
@@ -133,10 +125,8 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
                 @SuppressLint("ClickableViewAccessibility")
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mp.seekTo(100);
                     mp.setLooping(true);
                     holder.video.pause();
-
 
                     holder.video.setOnTouchListener(new View.OnTouchListener() {
                         private long startClickTime;
@@ -151,13 +141,15 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
                             if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
                                  if (!holder.video.isPlaying()) {
                                       v.performClick();
+                                      holder.thumbnail.setVisibility(View.INVISIBLE);
                                       holder.video.start();
 
                                       return true;
                                   }
                                   if (holder.video.isPlaying()) {
                                       v.performClick();
-                                      holder.video.resume();
+                                      //holder.thumbnail.setVisibility(View.VISIBLE);
+                                      holder.video.pause();
 
                                       return true;
                                  }
@@ -186,6 +178,7 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
 
         //download and display image from url
         imageLoader.displayImage(imgUrl, holder.image);
+        imageLoader.displayImage(thumbURL, holder.thumbnail);
 
         return convertView;
     }

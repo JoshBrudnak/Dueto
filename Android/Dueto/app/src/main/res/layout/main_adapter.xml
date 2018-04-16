@@ -11,13 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--<ImageView-->
-        <!--android:id="@+id/image"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="350dp"-->
-        <!--android:layout_weight="50" />-->
-
         <com.universalvideoview.UniversalVideoView
             android:id="@+id/video"
             android:layout_width="400dp"

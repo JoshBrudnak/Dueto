@@ -3,6 +3,7 @@ package dueto.dueto.templates;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -194,11 +195,6 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        //create the imageloader object
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        ;
 
         //download and display image from url
         imageLoader.displayImage(imgUrl, holder.image);

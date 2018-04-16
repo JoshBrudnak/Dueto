@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:focusableInTouchMode="false"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:scaleType="centerCrop"
+        android:layout_width="400dp"
+        android:layout_height="350dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <!--<ImageView-->
-        <!--android:id="@+id/image"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="350dp"-->
-        <!--android:layout_weight="50" />-->
 
         <com.universalvideoview.UniversalVideoView
             android:id="@+id/video"
@@ -162,4 +163,4 @@
         </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
-</LinearLayout>
+</FrameLayout>

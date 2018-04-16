@@ -63,7 +63,6 @@ public class UserProfileActivity extends AppCompatActivity{
         getSupportActionBar().hide();
         setContentView(R.layout.activity_user_profile);
 
-        //firstView = (ImageButton) findViewById(R.id.firstView);
         editProfile = (ImageButton) findViewById(R.id.editButton);
         editMusic = (ImageButton) findViewById(R.id.musicButton);
         scrollView = (ScrollView) findViewById(R.id.userScroll);

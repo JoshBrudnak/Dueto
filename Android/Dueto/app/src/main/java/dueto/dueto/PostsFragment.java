@@ -31,19 +31,19 @@ public class PostsFragment extends Fragment {
 
         ProfileCell john = new ProfileCell("User 1","John Dungeldo is a striving idiot",
                 "1.5m likes", "X comments", "Y reposts", "2d",
-                "drawable://" + R.drawable.icon,"https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
+                "drawable://" + R.drawable.icon, "drawable://" + R.drawable.cello, "https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
 
         ProfileCell steve = new ProfileCell("User 1","John Dungeldo John Dungeldo John Dungeldo",
                 "2.5k likes", "X comments", "Y reposts", "3d",
-                "drawable://" + R.drawable.icon,"https://s3.amazonaws.com/androidvideostutorial/862009639.mp4");
+                "drawable://" + R.drawable.icon, "drawable://" + R.drawable.guitars, "https://s3.amazonaws.com/androidvideostutorial/862009639.mp4");
 
         ProfileCell stacy = new ProfileCell("User 1","Leader",
                 "Z likes", "X comments", "Y reposts", "4w",
-                "drawable://" + R.drawable.icon, "https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
+                "drawable://" + R.drawable.icon, "drawable://" + R.drawable.cello,  "https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
 
         ProfileCell ashley = new ProfileCell("User 1","Web",
                 "Z likes", "X comments", "Y reposts", "1m",
-                "drawable://" + R.drawable.icon,"https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
+                "drawable://" + R.drawable.icon, "drawable://" + R.drawable.guitars, "https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
 
 
 
