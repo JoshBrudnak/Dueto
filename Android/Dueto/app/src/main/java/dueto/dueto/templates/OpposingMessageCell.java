@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.Display;
 import android.view.Gravity;
-
 import org.json.JSONObject;
 
 /**

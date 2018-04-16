@@ -12,16 +12,13 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
 import java.util.ArrayList;
@@ -61,7 +58,6 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        //get the persons information
         String name = getItem(position).getName();
         String description = getItem(position).getDescription();
         String likes = getItem(position).getLikes();
@@ -72,7 +68,7 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
         String thumbURL = getItem(position).getThumbnail();
         String videoURL = getItem(position).getVideoURL();
 
-        final View result;      //create the view result for showing the animation
+        final View result;
 
         final ViewHolder holder;
 
@@ -95,12 +91,12 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
             holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
             holder.video = (UniversalVideoView) convertView.findViewById(R.id.video);
 
-            //result = convertView;
-
             convertView.setTag(holder);
-        } else {
+
+        }
+        else {
+
             holder = (ViewHolder) convertView.getTag();
-            //result = convertView;
         }
 
         holder.name.setText(name);

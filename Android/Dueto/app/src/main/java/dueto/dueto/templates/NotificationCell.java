@@ -1,12 +1,6 @@
 package dueto.dueto.templates;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
-
-import dueto.dueto.R;
 
 public class NotificationCell {
     private String name;
@@ -14,8 +8,6 @@ public class NotificationCell {
     private String timeStamp;
     private String imgURL;
     private String otherIMG;
-
-
 
     public NotificationCell(String name, String description, String timeStamp, String imgURL, String otherIMG) {
         this.description = description;

@@ -1,11 +1,6 @@
 package dueto.dueto.templates;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import dueto.dueto.R;
 
 public class ProfileCell {
     private String name;
@@ -17,8 +12,6 @@ public class ProfileCell {
     private String imgURL;
     private String thumbnail;
     private String videoURL;
-
-
 
     public ProfileCell(String name, String description, String likes, String comments, String reposts, String timeStamp, String imgURL, String thumbnail, String videoURL) {
         this.description = description;

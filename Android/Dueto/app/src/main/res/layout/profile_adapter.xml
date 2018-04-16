@@ -36,8 +36,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-    <!--</LinearLayout>-->
-
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -162,5 +160,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
 </FrameLayout>

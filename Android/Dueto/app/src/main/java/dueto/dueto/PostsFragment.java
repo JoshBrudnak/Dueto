@@ -19,12 +19,6 @@ public class PostsFragment extends Fragment {
     Intent i;
     String[] listitems = {"Activity 1"};
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ListView mListView = (ListView) getView().findViewById(R.id.listView);
@@ -45,9 +39,6 @@ public class PostsFragment extends Fragment {
                 "Z likes", "X comments", "Y reposts", "1m",
                 "drawable://" + R.drawable.icon, "drawable://" + R.drawable.guitars, "https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
 
-
-
-        //Add the Person objects to an ArrayList
         ArrayList<ProfileCell> profileList = new ArrayList<>();
 
         profileList.add(john);

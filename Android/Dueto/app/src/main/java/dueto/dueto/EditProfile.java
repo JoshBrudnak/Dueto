@@ -7,33 +7,24 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.media.Image;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -237,9 +228,6 @@ public class EditProfile extends AppCompatActivity {
                 cursor.close();
 
                 Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-//                yourSelectedImage = Bitmap.createScaledBitmap(yourSelectedImage, 250, 250, false);
-//
-//                firstView.setImageBitmap(yourSelectedImage);
 
                 ExifInterface exif = null;
                 try {
@@ -277,8 +265,6 @@ public class EditProfile extends AppCompatActivity {
                     }
                 }
 
-                //firstView.setImageURI(selectedImageUri);
-
             }
 
         }
@@ -291,14 +277,12 @@ public class EditProfile extends AppCompatActivity {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
-    public static Bitmap decodeUri(Context c, Uri uri, final int requiredSize)
-            throws FileNotFoundException {
+    public static Bitmap decodeUri(Context c, Uri uri, final int requiredSize) throws FileNotFoundException {
         BitmapFactory.Options o = new BitmapFactory.Options();
         o.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
 
-        int width_tmp = o.outWidth
-                , height_tmp = o.outHeight;
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
 
         while(true) {
@@ -332,4 +316,5 @@ public class EditProfile extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -1,12 +1,6 @@
 package dueto.dueto.templates;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
-
-import dueto.dueto.R;
 
 public class MainCell {
     private String name;
@@ -17,8 +11,6 @@ public class MainCell {
     private String timeStamp;
     private String imgURL;
     private String videoURL;
-
-
 
     public MainCell(String name, String description, String likes, String comments, String reposts, String timeStamp, String imgURL, String videoURL) {
         this.description = description;

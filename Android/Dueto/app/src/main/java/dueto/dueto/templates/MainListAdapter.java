@@ -49,7 +49,7 @@ import static android.view.View.getDefaultSize;
 
 public class MainListAdapter extends ArrayAdapter<MainCell> {
 
-    private static final String TAG = "PersonListAdapter";
+    private static final String TAG = "MainListAdapter";
 
     private Context mContext;
     private int mResource;
@@ -81,7 +81,6 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        //get the persons information
         String name = getItem(position).getName();
         String description = getItem(position).getDescription();
         String likes = getItem(position).getLikes();
@@ -91,7 +90,7 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         String imgUrl = getItem(position).getImgURL();
         String videoURL = getItem(position).getVideoURL();
 
-        final View result;      //create the view result for showing the animation
+        final View result;
 
         final ViewHolder holder;
 
@@ -113,18 +112,12 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
             holder.image = (ImageView) convertView.findViewById(R.id.image);
             holder.video = (UniversalVideoView ) convertView.findViewById(R.id.video);
 
-            //result = convertView;
-
             convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-            //result = convertView;
         }
+        else {
 
-//        Animation animation = AnimationUtils.loadAnimation(mContext,
-//                (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-//        result.startAnimation(animation);
-//        lastPosition = position;
+            holder = (ViewHolder) convertView.getTag();
+        }
 
         holder.name.setText(name);
         holder.description.setText(description);

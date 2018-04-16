@@ -7,42 +7,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.VideoView;
 import java.util.ArrayList;
 import dueto.dueto.templates.MainCell;
 import dueto.dueto.templates.MainListAdapter;
 import dueto.dueto.util.Utility;
 public class MainActivity extends Activity {
 
-    private Button LogIn;
-    private Button SignIn;
-    private Button Notifications;
-    private VideoView mVideoView;
-    Integer SELECT_FILE = 0;
-    private int ACTIVITY_START_CAMERA_APP = 0;
-    private VideoView video;
-    private VideoView video2;
     private int bVisibility = View.INVISIBLE;
     private int menuButtonRotation = 0;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    ImageView pictureView;
-    private Display display;
     private boolean scrollable = true; //Scroll always
-
-    private VideoView realVideo;
-    private VideoView realVideo2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,17 +145,5 @@ public class MainActivity extends Activity {
         });
 
     }
-
-
-
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-//        if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
-//            Uri videoUri = data.getData();
-//            Uri videoUri2 = data.getData();
-//
-//            realVideo.setVideoURI(videoUri);
-//            realVideo2.setVideoURI(videoUri2);
-//        }
-//    }
 
 }
