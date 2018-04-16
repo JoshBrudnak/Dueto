@@ -43,6 +43,12 @@ public class PostsFragment extends Fragment {
 
         profileList.add(john);
         profileList.add(steve);
+        profileList.add(stacy);
+        profileList.add(ashley);
+        profileList.add(john);
+        profileList.add(steve);
+        profileList.add(stacy);
+        profileList.add(ashley);
 
         Context globalContext;
         globalContext = getActivity().getApplicationContext();

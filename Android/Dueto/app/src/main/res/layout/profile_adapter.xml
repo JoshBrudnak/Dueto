@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:cacheColorHint="#00000000"
     android:focusableInTouchMode="false"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -48,6 +49,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="50"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/userName"
                 app:layout_constraintHorizontal_bias="0.0"

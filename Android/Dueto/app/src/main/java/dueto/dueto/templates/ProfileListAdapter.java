@@ -2,6 +2,7 @@ package dueto.dueto.templates;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.Address;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -107,70 +108,74 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
         holder.reposts.setText(reposts);
 
         holder.thumbnail.bringToFront();
-        //holder.thumbnail.setAlpha(0.5f); //controls transparency of the image (0-1, float, where 1 is opaque)
 
-        try {
             ProfileCell video = mVideos.get(position);
             holder.video.getHolder().setSizeFromLayout();
             //play video using android api, when video view is clicked.
-            String url = video.getVideoURL(); // your URL here
-            Uri videoUri = Uri.parse(url);
-            holder.video.setVideoURI(videoUri);
 
-            holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @SuppressLint("ClickableViewAccessibility")
+            holder.thumbnail.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.setLooping(true);
-                    holder.video.pause();
+                public void onClick(View view) {
 
-                    holder.video.setOnTouchListener(new View.OnTouchListener() {
-                        private long startClickTime;
+                    String url = video.getVideoURL(); // your URL here
+                    Uri videoUri = Uri.parse(url);
+                    holder.video.setVideoURI(videoUri);
+                    holder.thumbnail.setVisibility(View.INVISIBLE);
 
+                    holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @SuppressLint("ClickableViewAccessibility")
                         @Override
-                        public boolean onTouch(View v, MotionEvent motionEvent) {
-                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                            startClickTime = System.currentTimeMillis();
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.setLooping(true);
+                            holder.video.requestFocus();
+                            holder.video.start();
+
+                            holder.video.setOnTouchListener(new View.OnTouchListener() {
+                                private long startClickTime;
+
+                                @Override
+                                public boolean onTouch(View v, MotionEvent motionEvent) {
+                                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                        startClickTime = System.currentTimeMillis();
+                                    }
+                                    else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+                                        if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
+                                            if (!holder.video.isPlaying()) {
+                                                v.performClick();
+                                                holder.thumbnail.setVisibility(View.INVISIBLE);
+                                                holder.video.start();
+
+                                                return true;
+                                            }
+                                            if (holder.video.isPlaying()) {
+                                                v.performClick();
+                                                //holder.thumbnail.setVisibility(View.VISIBLE);
+                                                holder.video.pause();
+
+                                                return true;
+                                            }
+
+                                        }
+                                        else {
+                                            return false;
+                                        }
+
+                                        return true;
+                                    }
+                                    else {
+                                        return true;
+                                    }
+
+                                    return true;
+                                }
+                            });
+
                         }
-                        else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
-                            if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
-                                 if (!holder.video.isPlaying()) {
-                                      v.performClick();
-                                      holder.thumbnail.setVisibility(View.INVISIBLE);
-                                      holder.video.start();
-
-                                      return true;
-                                  }
-                                  if (holder.video.isPlaying()) {
-                                      v.performClick();
-                                      //holder.thumbnail.setVisibility(View.VISIBLE);
-                                      holder.video.pause();
-
-                                      return true;
-                                 }
-
-                            }
-                            else {
-                                return false;
-                            }
-
-                        return true;
-                        }
-                        else {
-                            return true;
-                        }
-
-                        return true;
-                        }
                     });
-
                 }
-
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         //download and display image from url
         imageLoader.displayImage(imgUrl, holder.image);
