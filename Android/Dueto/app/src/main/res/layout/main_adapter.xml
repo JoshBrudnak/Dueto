@@ -49,6 +49,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="50"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/userName"
                 app:layout_constraintHorizontal_bias="0.0"

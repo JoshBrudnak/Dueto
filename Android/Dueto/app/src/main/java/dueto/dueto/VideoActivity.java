@@ -30,7 +30,6 @@ import java.io.IOException;
 public class VideoActivity extends Activity {
 
     Button mRecordView, mPlayView, mUploadView;
-    ImageView previewImage;
     private VideoView mVideoView;
     Integer SELECT_FILE = 0;
     private int ACTIVITY_START_CAMERA_APP = 0;
@@ -40,7 +39,6 @@ public class VideoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
-        previewImage = (ImageView) findViewById(R.id.imageView);
         mRecordView = (Button) findViewById(R.id.recordButton);
         mPlayView = (Button) findViewById(R.id.playButton);
         mUploadView = (Button) findViewById(R.id.uploadButton);
@@ -57,6 +55,7 @@ public class VideoActivity extends Activity {
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takeVideoIntent, ACTIVITY_START_CAMERA_APP);
+                    mVideoView.seekTo(100);
                 }
 
             }
@@ -65,7 +64,7 @@ public class VideoActivity extends Activity {
         mPlayView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                previewImage.setVisibility(View.INVISIBLE);
+                mVideoView.seekTo(100);
                 mVideoView.start();
 
             }
@@ -74,10 +73,10 @@ public class VideoActivity extends Activity {
         mUploadView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                previewImage.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI); //This code selects a video from the phone's gallery
                 intent.setType("video/*");
                 startActivityForResult(intent, SELECT_FILE);
+                mVideoView.seekTo(100);
                 mVideoView.start();
 
             }
@@ -95,6 +94,7 @@ public class VideoActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
+            mVideoView.seekTo(100);
             mVideoView.setVideoURI(videoUri);
         }
 

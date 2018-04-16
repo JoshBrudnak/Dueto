@@ -27,6 +27,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -36,10 +37,12 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -109,8 +112,6 @@ public class MainActivity extends Activity {
                 "Z likes", "X comments", "Y reposts", "1m",
                 "drawable://" + R.drawable.icon,"https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
 
-
-
         //Add the Person objects to an ArrayList
         ArrayList<MainCell> mainList = new ArrayList<>();
 
@@ -120,7 +121,31 @@ public class MainActivity extends Activity {
         MainListAdapter adapter = new MainListAdapter(this, R.layout.main_adapter, mainList);
         mListView.setAdapter(adapter);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id)
+            {
+                // In the following line "v" refers to the View returned by the `getView()` method; meaning the clicked View.
+                TextView txtName = (TextView) findViewById(R.id.userName);
+                String name = txtName.getText().toString();
+                switch(name)
+                {
+                    case "nameOne":
+                        Intent intent = new Intent(MainActivity.this, FirstActivity.class);
+                        startActivity(intent);
+                        break;
 
+                    case "nameTwo":
+                        Intent intent2 = new Intent(MainActivity.this, FirstActivity.class);
+                        startActivity(intent2);
+                        break;
+
+                    //And so on and so forth....
+                }
+
+            }
+        });
 
 
 //        realVideo = (VideoView) findViewById(R.id.realVideo);
@@ -328,6 +353,8 @@ public class MainActivity extends Activity {
         });
 
     }
+
+
 
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data){
 //        if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {

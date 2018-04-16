@@ -43,15 +43,18 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|adjustResize"
             android:noHistory="true"
             />
         <activity
             android:name=".messaging.MessageListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|adjustResize"
             />
         <activity
             android:name=".SigninActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize"
             android:noHistory="true"

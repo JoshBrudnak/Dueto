@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.mikepenz.fastadapter.items.AbstractItem;
-
 import dueto.dueto.R;
 
 public class ProfileCell {

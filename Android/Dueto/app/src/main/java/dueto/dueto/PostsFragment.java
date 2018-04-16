@@ -1,43 +1,17 @@
 package dueto.dueto;
 
-import android.app.Activity;
-import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.Toast;
-import android.widget.VideoView;
-
-import com.mikepenz.fastadapter.adapters.FastItemAdapter;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import dueto.dueto.servercom.Server;
 import dueto.dueto.templates.ProfileCell;
 import dueto.dueto.templates.ProfileListAdapter;
-import dueto.dueto.templates.TableCell;
-
-import static android.content.ContentValues.TAG;
 
 
 public class PostsFragment extends Fragment {

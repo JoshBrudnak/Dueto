@@ -23,6 +23,7 @@ public class EditMusic extends AppCompatActivity {
     private Button noMusic;
 
     private Button Save;
+    private Button SignOut;
     private TextView Cancel;
     private MediaPlayer player1;
 

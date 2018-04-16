@@ -59,6 +59,7 @@ public class EditProfile extends AppCompatActivity {
     private static final String TAG = "ProfilePicPreview";
 
     private Button Save;
+    private Button SignOut;
     private TextView Cancel;
 
     @Override
@@ -78,6 +79,7 @@ public class EditProfile extends AppCompatActivity {
 
         Cancel = (TextView) findViewById(R.id.cancelChangeView);
         Save = (Button) findViewById(R.id.saveProfileChange);
+        SignOut = (Button) findViewById(R.id.signOut);
 
         changePic.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
             @Override
@@ -86,6 +88,7 @@ public class EditProfile extends AppCompatActivity {
                 SelectImage();
             }
         });
+
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +110,14 @@ public class EditProfile extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        SignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(EditProfile.this, FirstActivity.class));
+            }
+        });
+
         Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

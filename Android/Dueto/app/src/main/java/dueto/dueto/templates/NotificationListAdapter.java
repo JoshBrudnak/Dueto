@@ -40,28 +40,24 @@ import dueto.dueto.model.Video;
 
 import static android.view.View.getDefaultSize;
 
-public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
+public class NotificationListAdapter extends ArrayAdapter<NotificationCell> {
 
     private static final String TAG = "PersonListAdapter";
 
     private Context mContext;
     private int mResource;
     private ImageLoader imageLoader = ImageLoader.getInstance();
-    private ArrayList<ProfileCell> mVideos;
+    private ArrayList<NotificationCell> mVideos;
 
     private static class ViewHolder {
         TextView name;
         TextView description;
-        TextView likes;
-        TextView comments;
-        TextView reposts;
         TextView timeStamp;
         ImageView image;
-        UniversalVideoView video;
+        ImageView otherIMG;
     }
 
-
-    public ProfileListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<ProfileCell> objects) {
+    public NotificationListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<NotificationCell> objects) {
         super(context, resource, objects);
 
         mContext = context;
@@ -77,12 +73,9 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
         //get the persons information
         String name = getItem(position).getName();
         String description = getItem(position).getDescription();
-        String likes = getItem(position).getLikes();
-        String comments = getItem(position).getComments();
-        String reposts = getItem(position).getReposts();
         String timeStamp = getItem(position).getTimeStamp();
         String imgUrl = getItem(position).getImgURL();
-        String videoURL = getItem(position).getVideoURL();
+        String otherIMG = getItem(position).getotherIMG();
 
         final View result;      //create the view result for showing the animation
 
@@ -93,18 +86,15 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
 
             //convertView = inflater.inflate(mResource, parent, false);
             //convertView = inflater.inflate(R.layout.profile_adapter, null);
-            convertView = inflater.inflate(R.layout.profile_adapter, parent, false);
+            convertView = inflater.inflate(R.layout.notification_adapter, parent, false);
 
             holder = new ViewHolder();
 
             holder.name = (TextView) convertView.findViewById(R.id.userName);
             holder.description = (TextView) convertView.findViewById(R.id.description);
-            holder.likes = (TextView) convertView.findViewById(R.id.likes);
-            holder.comments = (TextView) convertView.findViewById(R.id.comments);
-            holder.reposts = (TextView) convertView.findViewById(R.id.reposts);
             holder.timeStamp = (TextView) convertView.findViewById(R.id.timeStamp);
             holder.image = (ImageView) convertView.findViewById(R.id.image);
-            holder.video = (UniversalVideoView ) convertView.findViewById(R.id.video);
+            holder.otherIMG = (ImageView) convertView.findViewById(R.id.image2);
 
             //result = convertView;
 
@@ -114,78 +104,21 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
             //result = convertView;
         }
 
+
         holder.name.setText(name);
         holder.description.setText(description);
-        holder.likes.setText(likes);
-        holder.comments.setText(comments);
         holder.timeStamp.setText(timeStamp);
-        holder.reposts.setText(reposts);
 
-        try {
-            ProfileCell video = mVideos.get(position);
-            holder.video.getHolder().setSizeFromLayout();
-            //play video using android api, when video view is clicked.
-            String url = video.getVideoURL(); // your URL here
-            Uri videoUri = Uri.parse(url);
-            holder.video.setVideoURI(videoUri);
+        //create the imageloader object
 
-            holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @SuppressLint("ClickableViewAccessibility")
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.seekTo(100);
-                    mp.setLooping(true);
-                    holder.video.pause();
-
-
-                    holder.video.setOnTouchListener(new View.OnTouchListener() {
-                        private long startClickTime;
-
-                        @Override
-                        public boolean onTouch(View v, MotionEvent motionEvent) {
-                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                            startClickTime = System.currentTimeMillis();
-                        }
-                        else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-
-                            if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
-                                 if (!holder.video.isPlaying()) {
-                                      v.performClick();
-                                      holder.video.start();
-
-                                      return true;
-                                  }
-                                  if (holder.video.isPlaying()) {
-                                      v.performClick();
-                                      holder.video.resume();
-
-                                      return true;
-                                 }
-
-                            }
-                            else {
-                                return false;
-                            }
-
-                        return true;
-                        }
-                        else {
-                            return true;
-                        }
-
-                        return true;
-                        }
-                    });
-
-                }
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!imageLoader.isInited()) {
+            setupImageLoader();
         }
 
-        //download and display image from url
-        imageLoader.displayImage(imgUrl, holder.image);
+        if(imageLoader.isInited()) {
+            imageLoader.displayImage(imgUrl, holder.image);
+            imageLoader.displayImage(otherIMG, holder.otherIMG);
+        }
 
         return convertView;
     }

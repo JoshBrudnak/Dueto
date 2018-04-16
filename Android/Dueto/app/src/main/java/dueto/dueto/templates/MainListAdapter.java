@@ -16,6 +16,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,7 +36,12 @@ import com.universalvideoview.UniversalVideoView;
 import java.util.ArrayList;
 import java.util.List;
 
+import dueto.dueto.FirstActivity;
+import dueto.dueto.LoginActivity;
+import dueto.dueto.MainActivity;
 import dueto.dueto.R;
+import dueto.dueto.SigninActivity;
+import dueto.dueto.UserProfileActivity;
 import dueto.dueto.model.Video;
 
 import static android.view.View.getDefaultSize;
@@ -46,6 +52,7 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
 
     private Context mContext;
     private int mResource;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
     private ArrayList<MainCell> mVideos;
 
     private static class ViewHolder {
@@ -66,14 +73,12 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         mContext = context;
         mResource = resource;
         mVideos = objects;
+        setupImageLoader();
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        //sets up the image loader library
-        setupImageLoader();
 
         //get the persons information
         String name = getItem(position).getName();
@@ -194,23 +199,14 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         //create the imageloader object
         ImageLoader imageLoader = ImageLoader.getInstance();
         ;
-        int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed", null, mContext.getPackageName());
-
-        //create display options
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                .cacheOnDisc(true).resetViewBeforeLoading(true)
-                .showImageForEmptyUri(defaultImage)
-                .showImageOnFail(defaultImage)
-                .showImageOnLoading(defaultImage).build();
 
         //download and display image from url
-        imageLoader.displayImage(imgUrl, holder.image, options);
+        imageLoader.displayImage(imgUrl, holder.image);
 
         return convertView;
     }
 
     private void setupImageLoader() {
-        // UNIVERSAL IMAGE LOADER SETUP
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -223,9 +219,6 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
                 .discCacheSize(100 * 1024 * 1024).build();
 
         ImageLoader.getInstance().init(config);
-        // END - UNIVERSAL IMAGE LOADER SETUP
-//    }
-
 
     }
 }

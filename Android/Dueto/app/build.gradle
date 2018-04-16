@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "dueto.dueto"
-        minSdkVersion 26
+        minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
         versionName "0.0.1"
@@ -40,13 +40,13 @@ dependencies {
 
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile('com.mikepenz:fastadapter:1.5.2@aar') {
-        transitive = true
-    }
+
     compile 'com.mikepenz:fastadapter-extensions:1.5.1@aar'
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta6'
     compile 'com.linsea:universalvideoview:1.1.0@aar'
-//    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
+
+    compile 'com.github.danylovolokh:list-visibility-utils:0.2.0'
+    compile 'com.github.danylovolokh:video-player-manager:0.2.0'
 }
 
 configurations.all {
