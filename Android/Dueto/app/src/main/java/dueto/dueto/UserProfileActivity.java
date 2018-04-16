@@ -33,8 +33,6 @@ public class UserProfileActivity extends AppCompatActivity{
         editMusic = (ImageButton) findViewById(R.id.musicButton);
         scrollView = (ScrollView) findViewById(R.id.userScroll);
 
-        scrollView.scrollTo(0, 0);
-
         TextView newName = (TextView) findViewById(R.id.profileName);
         newName.setText(getIntent().getStringExtra("name"));
         newName.setGravity(Gravity.CENTER);

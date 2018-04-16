@@ -122,12 +122,15 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
                     holder.video.setVideoURI(videoUri);
                     holder.thumbnail.setVisibility(View.INVISIBLE);
 
+                    holder.video.requestFocus();
                     holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @SuppressLint("ClickableViewAccessibility")
                         @Override
                         public void onPrepared(MediaPlayer mp) {
                             mp.setLooping(true);
-                            holder.video.requestFocus();
+
+                            int yPos = holder.video.getBottom();
+                            holder.video.scrollTo(0, yPos);
                             holder.video.start();
 
                             holder.video.setOnTouchListener(new View.OnTouchListener() {
