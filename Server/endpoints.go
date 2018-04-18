@@ -25,7 +25,7 @@ const (
 	RemoveSession     = "delete from Session where sessionkey = $1;"
 	RemoveOldSessions = "delete from session where age(now(), time) > '1 hour';"
 
-
+	SelectNewVideoId      = "select id from video where artistId = $1 and title = $2 order by uploadtime desc limit 1;"
 	SelectSharedVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1 and shared = true;"
 	SelectBasicArtistData = "select id, username, name from artist where id = $1;"
 	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, email from Artist where id = $1;"
@@ -48,7 +48,7 @@ const (
 	UpdateSent        = "update Comment set sent = true where id = $1;"
 	UpdateArtist      = "update artist set username = $1, name = $2, description = $3, password = $4, email = $5 where id = $6;"
 	UpdateBasicArtist = "update artist set username = $1, name = $2, description = $3, email = $4 where id = $5;"
-	IncreaseViews     = "update video set views = (select views from video where artistId = $1 and title = $2) + 1 where artistId = $1 and title = $2;"
+	IncreaseViews     = "update video set views = (select views from video where id = $1) + 1 where id = $1;"
 )
 
 type Authentication struct {
@@ -170,7 +170,7 @@ func authenticate(cookie *http.Cookie) bool {
 		rows.Next()
 		err = rows.Scan(&sessionCount)
 		logIfErr(err)
-        rows.Close()
+		rows.Close()
 
 		if sessionCount > 0 {
 			return true
@@ -404,16 +404,17 @@ func video(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	videoId := r.URL.Query().Get("id")
 
-	artistId, videoName := fileLoc(w, videoId)
-	filePath := "./data/videos/" + artistId + "/" + videoName + ".mp4"
-	_, err := os.Stat(filePath)
+	artistId, _ := fileLoc(w, videoId)
+	filePath := "./data/videos/" + artistId + "/" + videoId + ".mp4"
 
+	_, err := os.Stat(filePath)
 	if os.IsNotExist(err) {
 		http.Error(w, "Video not found", http.StatusNotFound)
 		return
 	}
 
-	rows, err := db.Query(IncreaseViews, videoId, videoName)
+	rows, err := db.Query(IncreaseViews, videoId)
+	logIfErr(err)
 	rows.Close()
 
 	http.ServeFile(w, r, filePath)
@@ -437,8 +438,8 @@ func thumbnail(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	videoId := r.URL.Query().Get("id")
 
-	artistId, videoName := fileLoc(w, videoId)
-	filePath := "./data/thumbnails/" + artistId + "/" + videoName + ".jpeg"
+	artistId, _ := fileLoc(w, videoId)
+	filePath := "./data/thumbnails/" + artistId + "/" + videoId + ".jpeg"
 	_, err := os.Stat(filePath)
 
 	if os.IsNotExist(err) {
@@ -602,13 +603,13 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 }
 
-func getThumbnail(artist string, name string) {
+func getThumbnail(artist string, vidId string) {
 	var buffer bytes.Buffer
 
 	width := 640
 	height := 360
-	videoPath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
-	thumbnailPath := fmt.Sprintf("./data/thumbnails/%s/%s.jpeg", artist, name)
+	videoPath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, vidId)
+	thumbnailPath := fmt.Sprintf("./data/thumbnails/%s/%s.jpeg", artist, vidId)
 	f, err := os.Create(thumbnailPath)
 	logIfErr(err)
 	f.Close()
@@ -646,20 +647,34 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 	data, err := ioutil.ReadAll(file)
 	logServerErr(w, err)
 
-	filePath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
-
-	f, err := os.Create(filePath)
-	logServerErr(w, err)
-
-	_, err = f.Write(data)
-	logServerErr(w, err)
-	f.Close()
-
-	getThumbnail(artist, name)
-
 	rows, err := db.Query(AddVideo, artist, name, desc, genre)
 	logServerErr(w, err)
 	rows.Close()
+
+	if err == nil {
+		var videoId string
+
+		vidRows, err := db.Query(SelectNewVideoId, artist, name)
+		logServerErr(w, err)
+
+		vidRows.Next()
+		err = vidRows.Scan(&videoId)
+		logIfErr(err)
+		vidRows.Close()
+
+		filePath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, videoId)
+
+		f, err := os.Create(filePath)
+		logServerErr(w, err)
+
+		_, err = f.Write(data)
+		logServerErr(w, err)
+		f.Close()
+
+		getThumbnail(artist, videoId)
+	} else {
+		http.Error(w, "Server error", http.StatusInternalServerError)
+	}
 }
 
 func addAvatar(w http.ResponseWriter, r *http.Request) {
@@ -866,10 +881,9 @@ func getSharedVideos(w http.ResponseWriter, r *http.Request) {
 	logServerErr(w, err)
 }
 
-
 func shareVideo(w http.ResponseWriter, r *http.Request) {
-    var v Video
-    var artistId string
+	var v Video
+	var artistId string
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, _ := r.Cookie("SESSIONID")
@@ -883,25 +897,25 @@ func shareVideo(w http.ResponseWriter, r *http.Request) {
 	fileId := r.FormValue("video")
 
 	rows, err := db.Query(SelectVideoById, fileId)
-    rows.Next()
+	rows.Next()
 	err = rows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
-    rows.Close()
+	rows.Close()
 
 	rows, err = db.Query(ShareVideo, v.Id, v.Title, v.Desc, artist, v.Time, v.Views, v.Likes, v.Genre)
 	logIfErr(err)
 
-	oldFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artistId, v.Title)
-	newFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, v.Title)
+	oldFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artistId, v.Id)
+	newFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, v.Id)
 	logServerErr(w, err)
 
 	newF, err := os.Create(newFile)
 	oldF, err := os.Open(oldFile)
 	logServerErr(w, err)
 
-    _, err = io.Copy(oldF, newF)
+	_, err = io.Copy(oldF, newF)
 	logServerErr(w, err)
 	newF.Close()
 	oldF.Close()
 
-	getThumbnail(artist, v.Title)
+	getThumbnail(artist, v.Id)
 }
