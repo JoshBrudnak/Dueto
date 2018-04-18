@@ -28,7 +28,7 @@ const (
 	SelectNewVideoId      = "select id from video where artistId = $1 and title = $2 order by uploadtime desc limit 1;"
 	SelectSharedVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1 and shared = true;"
 	SelectBasicArtistData = "select id, username, name from artist where id = $1;"
-	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, email from Artist where id = $1;"
+	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, email, location::json->>'country', location::json->>'city', location::json->>'zip' from Artist where id = $1;"
 	SelectExtArtistData   = "select username, name, description, date, active, followerCount, likeCount from Artist where id = $1;"
 	SelectArtistVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1 and shared = false;"
 	SelectRecentVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video order by uploadtime desc limit 10;"
@@ -126,6 +126,9 @@ type ExtArtist struct {
 	Date          string
 	FollowerCount string
 	LikeCount     string
+	Country       string
+	City          string
+	Zipcode       string
 	VideoList     []Video
 }
 
@@ -139,6 +142,9 @@ type IntArtist struct {
 	LikeCount string
 	Email     string
 	Id        string
+	Country   string
+	City      string
+	Zipcode   string
 	VideoList []Video
 }
 
@@ -210,7 +216,7 @@ func artist(w http.ResponseWriter, r *http.Request) {
 	checkErr(err)
 
 	rows.Next()
-	err = rows.Scan(&a.Username, &a.Name, &a.Desc, &a.Date, &a.Active, &a.FollowerCount, &a.LikeCount)
+	err = rows.Scan(&a.Username, &a.Name, &a.Desc, &a.Date, &a.Active, &a.FollowerCount, &a.LikeCount, &a.Country, &a.City, &a.Zipcode)
 	logIfErr(err)
 	rows.Close()
 
@@ -248,7 +254,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	checkErr(err)
 
 	rows.Next()
-	err = rows.Scan(&a.Username, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount, &a.Email)
+	err = rows.Scan(&a.Username, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount, &a.Email, &a.Country, &a.City, &a.Zipcode)
 	logIfErr(err)
 	rows.Close()
 
