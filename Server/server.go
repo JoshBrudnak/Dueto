@@ -123,9 +123,9 @@ func main() {
 	http.HandleFunc("/api/city", searchByCity)
 	http.HandleFunc("/api/getmessages", getMessages)
 	http.HandleFunc("/api/postmessage", postMessages)
-	http.HandleFunc("/api/getnewmessages", getRecentMessages)
+	http.HandleFunc("/api/getsharedvideos", getSharedVideos)
+	http.HandleFunc("/api/sharevideo", shareVideo)
 	http.HandleFunc("/", home)
 
 	http.ListenAndServe(":8080", nil)
-
 }

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/badoux/checkmail"
 	"golang.org/x/crypto/bcrypt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -15,7 +16,8 @@ import (
 
 const (
 	AddArtist  = "insert into Artist(username, name, age, email, password, followers, description, likeCount, location, date, active) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9::json, now()::timestamp, true);"
-	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes, genre) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4);"
+	AddVideo   = "insert into Video(artistId, title, description, uploadTime, views, likes, genre, shared) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4, false);"
+	ShareVideo = "insert into Video(artistId, title, description, uploadTime, views, likes, genre, shared) VALUES($1, $2, $3, now()::timestamp, 0, 0, $4, true);"
 	AddGenre   = "insert into Genre(name, description) VALUES($1, $2);"
 	AddSession = "insert into Session(userId, sessionKey, time) VALUES($1, $2, now()::timestamp);"
 	AddMessage = "insert into Comment(sender, reciever, message, time, sent) VALUES($1, $2, $3, now()::timestamp, false);"
@@ -23,13 +25,16 @@ const (
 	RemoveSession     = "delete from Session where sessionkey = $1;"
 	RemoveOldSessions = "delete from session where age(now(), time) > '1 hour';"
 
+	SelectNewVideoId      = "select id from video where artistId = $1 and title = $2 order by uploadtime desc limit 1;"
+	SelectSharedVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1 and shared = true;"
 	SelectBasicArtistData = "select id, username, name from artist where id = $1;"
-	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, email from Artist where id = $1;"
+	SelectIntArtistData   = "select username, name, followers, description, date, active, likeCount, email, location::json->>'country', location::json->>'city', location::json->>'zip' from Artist where id = $1;"
 	SelectExtArtistData   = "select username, name, description, date, active, followerCount, likeCount from Artist where id = $1;"
-	SelectArtistVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1;"
+	SelectArtistVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1 and shared = false;"
 	SelectRecentVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video order by uploadtime desc limit 10;"
-	SelectVideosByArtist  = "select id, title, description, views, likes, uploadTime, genre from Video where artistId = $1;"
+	SelectVideosByArtist  = "select id, title, description, views, likes, uploadTime, genre from Video where artistId = $1 and shared = false;"
 	SelectVideosByGenre   = "select id, title, description, views, likes, uploadTime, artistId from Video where genre = $1;"
+	SelectVideoById       = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where id = $1"
 	SelectGenres          = "select name, description from Genre;"
 	SelectUserAuth        = "select id, password from artist where username = $1;"
 	SelectSession         = "select count(userId) from session where sessionkey = $1;"
@@ -43,7 +48,7 @@ const (
 	UpdateSent        = "update Comment set sent = true where id = $1;"
 	UpdateArtist      = "update artist set username = $1, name = $2, description = $3, password = $4, email = $5 where id = $6;"
 	UpdateBasicArtist = "update artist set username = $1, name = $2, description = $3, email = $4 where id = $5;"
-	IncreaseViews     = "update video set views = (select views from video where artistId = $1 and title = $2) + 1 where artistId = $1 and title = $2;"
+	IncreaseViews     = "update video set views = (select views from video where id = $1) + 1 where id = $1;"
 )
 
 type Authentication struct {
@@ -121,6 +126,9 @@ type ExtArtist struct {
 	Date          string
 	FollowerCount string
 	LikeCount     string
+	Country       string
+	City          string
+	Zipcode       string
 	VideoList     []Video
 }
 
@@ -134,6 +142,9 @@ type IntArtist struct {
 	LikeCount string
 	Email     string
 	Id        string
+	Country   string
+	City      string
+	Zipcode   string
 	VideoList []Video
 }
 
@@ -165,6 +176,7 @@ func authenticate(cookie *http.Cookie) bool {
 		rows.Next()
 		err = rows.Scan(&sessionCount)
 		logIfErr(err)
+		rows.Close()
 
 		if sessionCount > 0 {
 			return true
@@ -204,13 +216,12 @@ func artist(w http.ResponseWriter, r *http.Request) {
 	checkErr(err)
 
 	rows.Next()
-	err = rows.Scan(&a.Username, &a.Name, &a.Desc, &a.Date, &a.Active, &a.FollowerCount, &a.LikeCount)
+	err = rows.Scan(&a.Username, &a.Name, &a.Desc, &a.Date, &a.Active, &a.FollowerCount, &a.LikeCount, &a.Country, &a.City, &a.Zipcode)
 	logIfErr(err)
-	defer rows.Close()
+	rows.Close()
 
 	videoRows, viderr := db.Query(SelectArtistVideos, artistId)
 	logIfErr(viderr)
-	defer videoRows.Close()
 
 	for videoRows.Next() {
 		err = videoRows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
@@ -218,6 +229,7 @@ func artist(w http.ResponseWriter, r *http.Request) {
 
 		a.VideoList = append(a.VideoList, v)
 	}
+	videoRows.Close()
 
 	err = json.NewEncoder(w).Encode(a)
 	logIfErr(err)
@@ -242,7 +254,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	checkErr(err)
 
 	rows.Next()
-	err = rows.Scan(&a.Username, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount, &a.Email)
+	err = rows.Scan(&a.Username, &a.Name, &a.Followers, &a.Desc, &a.Date, &a.Active, &a.LikeCount, &a.Email, &a.Country, &a.City, &a.Zipcode)
 	logIfErr(err)
 	rows.Close()
 
@@ -318,7 +330,6 @@ func discover(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query(SelectGenres)
 	checkErr(err)
-	defer rows.Close()
 
 	for rows.Next() {
 		err := rows.Scan(&g.Name, &g.Description)
@@ -326,6 +337,7 @@ func discover(w http.ResponseWriter, r *http.Request) {
 
 		genres.GenreList = append(genres.GenreList, g)
 	}
+	rows.Close()
 
 	err = json.NewEncoder(w).Encode(genres)
 	logServerErr(w, err)
@@ -398,16 +410,17 @@ func video(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	videoId := r.URL.Query().Get("id")
 
-	artistId, videoName := fileLoc(w, videoId)
-	filePath := "./data/videos/" + artistId + "/" + videoName + ".mp4"
-	_, err := os.Stat(filePath)
+	artistId, _ := fileLoc(w, videoId)
+	filePath := "./data/videos/" + artistId + "/" + videoId + ".mp4"
 
+	_, err := os.Stat(filePath)
 	if os.IsNotExist(err) {
 		http.Error(w, "Video not found", http.StatusNotFound)
 		return
 	}
 
-	rows, err := db.Query(IncreaseViews, videoId, videoName)
+	rows, err := db.Query(IncreaseViews, videoId)
+	logIfErr(err)
 	rows.Close()
 
 	http.ServeFile(w, r, filePath)
@@ -431,8 +444,8 @@ func thumbnail(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	videoId := r.URL.Query().Get("id")
 
-	artistId, videoName := fileLoc(w, videoId)
-	filePath := "./data/thumbnails/" + artistId + "/" + videoName + ".jpeg"
+	artistId, _ := fileLoc(w, videoId)
+	filePath := "./data/thumbnails/" + artistId + "/" + videoId + ".jpeg"
 	_, err := os.Stat(filePath)
 
 	if os.IsNotExist(err) {
@@ -596,13 +609,13 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 }
 
-func getThumbnail(artist string, name string) {
+func getThumbnail(artist string, vidId string) {
 	var buffer bytes.Buffer
 
 	width := 640
 	height := 360
-	videoPath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
-	thumbnailPath := fmt.Sprintf("./data/thumbnails/%s/%s.jpeg", artist, name)
+	videoPath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, vidId)
+	thumbnailPath := fmt.Sprintf("./data/thumbnails/%s/%s.jpeg", artist, vidId)
 	f, err := os.Create(thumbnailPath)
 	logIfErr(err)
 	f.Close()
@@ -640,20 +653,34 @@ func addVideo(w http.ResponseWriter, r *http.Request) {
 	data, err := ioutil.ReadAll(file)
 	logServerErr(w, err)
 
-	filePath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, name)
-
-	f, err := os.Create(filePath)
-	logServerErr(w, err)
-
-	_, err = f.Write(data)
-	logServerErr(w, err)
-	f.Close()
-
-	getThumbnail(artist, name)
-
 	rows, err := db.Query(AddVideo, artist, name, desc, genre)
 	logServerErr(w, err)
 	rows.Close()
+
+	if err == nil {
+		var videoId string
+
+		vidRows, err := db.Query(SelectNewVideoId, artist, name)
+		logServerErr(w, err)
+
+		vidRows.Next()
+		err = vidRows.Scan(&videoId)
+		logIfErr(err)
+		vidRows.Close()
+
+		filePath := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, videoId)
+
+		f, err := os.Create(filePath)
+		logServerErr(w, err)
+
+		_, err = f.Write(data)
+		logServerErr(w, err)
+		f.Close()
+
+		getThumbnail(artist, videoId)
+	} else {
+		http.Error(w, "Server error", http.StatusInternalServerError)
+	}
 }
 
 func addAvatar(w http.ResponseWriter, r *http.Request) {
@@ -698,7 +725,6 @@ func searchByZipCode(w http.ResponseWriter, r *http.Request) {
 	artistId := getUserId(cookie.Value)
 	rows, err := db.Query(SelectArtistByZip, artistId)
 	checkErr(err)
-	defer rows.Close()
 
 	for rows.Next() {
 		err = rows.Scan(&a.Id, &a.Name, &a.Username)
@@ -706,6 +732,7 @@ func searchByZipCode(w http.ResponseWriter, r *http.Request) {
 
 		artistList = append(artistList, a)
 	}
+	rows.Close()
 
 	err = json.NewEncoder(w).Encode(artistList)
 	logServerErr(w, err)
@@ -818,4 +845,83 @@ func postMessages(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query(AddMessage, artistId, message.Artist, message.Message)
 	logIfErr(err)
 	rows.Close()
+}
+
+func getSharedVideos(w http.ResponseWriter, r *http.Request) {
+	var videos VideoList
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, err := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	rows, err := db.Query(SelectSharedVideos)
+	logIfErr(err)
+
+	for rows.Next() {
+		var v Video
+		var artistId string
+
+		err = rows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
+		logIfErr(err)
+
+		var a BasicArtist
+		artistRow, aErr := db.Query(SelectBasicArtistData, artistId)
+		logIfErr(aErr)
+
+		artistRow.Next()
+		err = artistRow.Scan(&a.Id, &a.Username, &a.Name)
+		logIfErr(err)
+		artistRow.Close()
+
+		v.Artist = a
+
+		videos.VideoCards = append(videos.VideoCards, v)
+	}
+	rows.Close()
+
+	err = json.NewEncoder(w).Encode(videos)
+	logServerErr(w, err)
+}
+
+func shareVideo(w http.ResponseWriter, r *http.Request) {
+	var v Video
+	var artistId string
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	cookie, _ := r.Cookie("SESSIONID")
+
+	if !authenticate(cookie) {
+		http.Error(w, "Authentication failed", http.StatusForbidden)
+		return
+	}
+
+	artist := getUserId(cookie.Value)
+	fileId := r.FormValue("video")
+
+	rows, err := db.Query(SelectVideoById, fileId)
+	rows.Next()
+	err = rows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
+	rows.Close()
+
+	rows, err = db.Query(ShareVideo, v.Id, v.Title, v.Desc, artist, v.Time, v.Views, v.Likes, v.Genre)
+	logIfErr(err)
+
+	oldFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artistId, v.Id)
+	newFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, v.Id)
+	logServerErr(w, err)
+
+	newF, err := os.Create(newFile)
+	oldF, err := os.Open(oldFile)
+	logServerErr(w, err)
+
+	_, err = io.Copy(oldF, newF)
+	logServerErr(w, err)
+	newF.Close()
+	oldF.Close()
+
+	getThumbnail(artist, v.Id)
 }
