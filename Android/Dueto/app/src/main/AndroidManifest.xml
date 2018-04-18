@@ -43,28 +43,25 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|adjustResize"
             android:noHistory="true"
-            />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".messaging.MessageListActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            />
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".SigninActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustPan|adjustResize"
             android:noHistory="true"
-            />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".TimelineActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -84,14 +81,14 @@
             android:name=".VideoActivity"
             android:label="@string/title_activity_video"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".DiscoverActivity" />
         <activity
             android:name=".EditProfile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditMusic"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".OtherProfileActivity"></activity>
     </application>
 
 </manifest>

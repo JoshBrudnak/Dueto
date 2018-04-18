@@ -92,6 +92,8 @@ public class SigninActivity extends AppCompatActivity {
 
         public static boolean isValid(String email)
         {
+
+            //String emailRegex = "^[0-9]+(-?[0-9]+)+$";
             String emailRegex = "^[a-zA-Z0-9_+&*-]+" +
                                 "(?:\\." +
                                 "[a-zA-Z0-9_+&*-]+)*@" +

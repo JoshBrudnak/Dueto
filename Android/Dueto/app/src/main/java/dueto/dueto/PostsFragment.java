@@ -2,6 +2,8 @@ package dueto.dueto;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,11 +11,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import dueto.dueto.templates.ProfileCell;
 import dueto.dueto.templates.ProfileListAdapter;
@@ -22,7 +31,6 @@ import dueto.dueto.templates.ProfileListAdapter;
 public class PostsFragment extends Fragment {
 
     Intent i;
-    String[] listitems = {"Activity 1"};
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

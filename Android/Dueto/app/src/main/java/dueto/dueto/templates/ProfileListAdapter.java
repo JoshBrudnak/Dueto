@@ -76,9 +76,10 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileCell> {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
 
+            //LayoutInflater inflater2 = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //convertView = inflater.inflate(mResource, parent, false);
-            //convertView = inflater.inflate(R.layout.profile_adapter, null);
-            convertView = inflater.inflate(R.layout.profile_adapter, parent, false);
+            convertView = inflater.inflate(R.layout.profile_adapter, null);
+            //convertView = inflater.inflate(R.layout.profile_adapter, parent, false);
 
             holder = new ViewHolder();
 

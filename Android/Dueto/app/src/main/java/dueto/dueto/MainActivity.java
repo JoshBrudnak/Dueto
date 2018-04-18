@@ -34,19 +34,19 @@ public class MainActivity extends Activity {
 
         MainCell arnold = new MainCell("Arnold Schwarze","John Dungeldo is a striving idiot",
                 "1.5m likes", "X comments", "Y reposts", "2d",
-                "drawable://" + R.drawable.profile,"https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
+                "drawable://" + R.drawable.profile, "drawable://" + R.drawable.cello,"https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
 
         MainCell john = new MainCell("John Dungeldo","John Dungeldo John Dungeldo John",
                 "2.5k likes", "X comments", "Y reposts", "3d",
-                "drawable://" + R.drawable.coop,"https://s3.amazonaws.com/androidvideostutorial/862014834.mp4");
+                "drawable://" + R.drawable.coop, "drawable://" + R.drawable.guitars,"https://s3.amazonaws.com/androidvideostutorial/862014834.mp4");
 
         MainCell stacy = new MainCell("User 1","Leader",
                 "Z likes", "X comments", "Y reposts", "4w",
-                "drawable://" + R.drawable.icon, "https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
+                "drawable://" + R.drawable.icon, "drawable://" + R.drawable.cello, "https://s3.amazonaws.com/androidvideostutorial/862017385.mp4");
 
         MainCell ashley = new MainCell("User 1","Web",
                 "Z likes", "X comments", "Y reposts", "1m",
-                "drawable://" + R.drawable.icon,"https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
+                "drawable://" + R.drawable.icon, "drawable://" + R.drawable.guitars, "https://s3.amazonaws.com/androidvideostutorial/862014159.mp4");
 
         //Add the Person objects to an ArrayList
         ArrayList<MainCell> mainList = new ArrayList<>();
@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
         coopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SigninActivity.class));
+                startActivity(new Intent(MainActivity.this, OtherProfileActivity.class));
             }
         });
 

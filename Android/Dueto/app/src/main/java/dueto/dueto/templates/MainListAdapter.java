@@ -64,6 +64,7 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         TextView reposts;
         TextView timeStamp;
         ImageView image;
+        ImageView thumbnail;
         UniversalVideoView video;
     }
 
@@ -86,6 +87,7 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         String likes = getItem(position).getLikes();
         String comments = getItem(position).getComments();
         String reposts = getItem(position).getReposts();
+        String thumbURL = getItem(position).getThumbnail();
         String timeStamp = getItem(position).getTimeStamp();
         String imgUrl = getItem(position).getImgURL();
         String videoURL = getItem(position).getVideoURL();
@@ -110,6 +112,7 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
             holder.reposts = (TextView) convertView.findViewById(R.id.reposts);
             holder.timeStamp = (TextView) convertView.findViewById(R.id.timeStamp);
             holder.image = (ImageView) convertView.findViewById(R.id.image);
+            holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
             holder.video = (UniversalVideoView ) convertView.findViewById(R.id.video);
 
             convertView.setTag(holder);
@@ -126,71 +129,82 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         holder.timeStamp.setText(timeStamp);
         holder.reposts.setText(reposts);
 
-        try {
-            MainCell video = mVideos.get(position);
-            holder.video.getHolder().setSizeFromLayout();
-            //play video using android api, when video view is clicked.
-            String url = video.getVideoURL(); // your URL here
-            Uri videoUri = Uri.parse(url);
-            holder.video.setVideoURI(videoUri);
+        holder.thumbnail.bringToFront();
 
-            holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @SuppressLint("ClickableViewAccessibility")
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.seekTo(100);
-                    mp.setLooping(true);
-                    holder.video.pause();
+        MainCell video = mVideos.get(position);
+        holder.video.getHolder().setSizeFromLayout();
+        //play video using android api, when video view is clicked.
 
+        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                    holder.video.setOnTouchListener(new View.OnTouchListener() {
-                        private long startClickTime;
+                String url = video.getVideoURL(); // your URL here
+                Uri videoUri = Uri.parse(url);
+                holder.video.setVideoURI(videoUri);
+                holder.thumbnail.setVisibility(View.INVISIBLE);
 
-                        @Override
-                        public boolean onTouch(View v, MotionEvent motionEvent) {
-                            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                                startClickTime = System.currentTimeMillis();
-                            }
-                            else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                holder.video.requestFocus();
+                holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @SuppressLint("ClickableViewAccessibility")
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setLooping(true);
 
-                                if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
-                                    if (!holder.video.isPlaying()) {
-                                        v.performClick();
-                                        holder.video.start();
+                        int yPos = holder.video.getBottom();
+                        holder.video.scrollTo(0, yPos);
+                        holder.video.start();
 
-                                        return true;
+                        holder.video.setOnTouchListener(new View.OnTouchListener() {
+                            private long startClickTime;
+
+                            @Override
+                            public boolean onTouch(View v, MotionEvent motionEvent) {
+                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                    startClickTime = System.currentTimeMillis();
+                                }
+                                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+                                    if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
+                                        if (!holder.video.isPlaying()) {
+                                            v.performClick();
+                                            holder.thumbnail.setVisibility(View.INVISIBLE);
+                                            holder.video.start();
+
+                                            return true;
+                                        }
+                                        if (holder.video.isPlaying()) {
+                                            v.performClick();
+                                            //holder.thumbnail.setVisibility(View.VISIBLE);
+                                            holder.video.pause();
+
+                                            return true;
+                                        }
+
                                     }
-                                    if (holder.video.isPlaying()) {
-                                        v.performClick();
-                                        holder.video.pause();
-
-                                        return true;
+                                    else {
+                                        return false;
                                     }
 
+                                    return true;
                                 }
                                 else {
-                                    return false;
+                                    return true;
                                 }
 
                                 return true;
                             }
-                            else {
-                                return true;
-                            }
+                        });
 
-                            return true;
-                        }
-                    });
+                    }
 
-                }
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                });
+            }
+        });
 
         //download and display image from url
         imageLoader.displayImage(imgUrl, holder.image);
+        imageLoader.displayImage(thumbURL, holder.thumbnail);
 
         return convertView;
     }
