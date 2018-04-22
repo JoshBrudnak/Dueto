@@ -88,7 +88,10 @@
         <activity
             android:name=".EditMusic"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".OtherProfileActivity"></activity>
+        <activity android:name=".OtherProfileActivity" />
+        <activity android:name=".TestingFolder.Main2Activity" />
+        <activity android:name=".TestingFolder.MobileActivity" />
+        <activity android:name=".TestingFolder.CustomAdapter"></activity>
     </application>
 
 </manifest>

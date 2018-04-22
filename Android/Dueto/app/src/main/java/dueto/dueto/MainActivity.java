@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
         mainList.add(arnold);
         mainList.add(john);
 
+
         MainListAdapter adapter = new MainListAdapter(this, R.layout.main_adapter, mainList);
         mListView.setAdapter(adapter);
 

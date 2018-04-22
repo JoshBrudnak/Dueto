@@ -3,6 +3,8 @@ package dueto.dueto.templates;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.location.Address;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -23,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -34,12 +37,14 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import dueto.dueto.FirstActivity;
 import dueto.dueto.LoginActivity;
 import dueto.dueto.MainActivity;
+import dueto.dueto.OtherProfileActivity;
 import dueto.dueto.R;
 import dueto.dueto.SigninActivity;
 import dueto.dueto.UserProfileActivity;
@@ -128,6 +133,38 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         holder.comments.setText(comments);
         holder.timeStamp.setText(timeStamp);
         holder.reposts.setText(reposts);
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(mContext, OtherProfileActivity.class);
+
+                String nameText = (holder.name).getText().toString();
+
+                Intent myIntent = new Intent(view.getContext(), OtherProfileActivity.class);
+                myIntent.putExtra("otherName", nameText);
+
+                (holder.image).buildDrawingCache();
+                Bitmap bitmap = (holder.image).getDrawingCache();
+                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, _bs);
+                myIntent.putExtra("otherByteArray", _bs.toByteArray());
+
+                mContext.startActivity(myIntent);
+            }
+        });
+
+
+        holder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, OtherProfileActivity.class);
+
+                mContext.startActivity(intent);
+            }
+        });
+
+
 
         holder.thumbnail.bringToFront();
 

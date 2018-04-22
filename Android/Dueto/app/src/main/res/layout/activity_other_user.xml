@@ -30,7 +30,7 @@
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/firstView"
+                    android:id="@+id/otherIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -62,7 +62,7 @@
                     android:src="@drawable/note" />
 
                 <TextView
-                    android:id="@+id/profileName"
+                    android:id="@+id/otherName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -103,7 +103,7 @@
                     android:textColor="@color/White" />
 
                 <TextView
-                    android:id="@+id/profileLoc"
+                    android:id="@+id/otherLoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -114,7 +114,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/profileDesc"
+                    android:id="@+id/otherDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

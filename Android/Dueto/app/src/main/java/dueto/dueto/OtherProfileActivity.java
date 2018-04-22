@@ -30,6 +30,16 @@ public class OtherProfileActivity extends AppCompatActivity{
         getSupportActionBar().hide();
         setContentView(R.layout.activity_other_user);
 
+        TextView newName = (TextView) findViewById(R.id.otherName);
+        newName.setText(getIntent().getStringExtra("otherName"));
+        newName.setGravity(Gravity.CENTER);
+
+        if(getIntent().hasExtra("otherByteArray")) {
+            ImageView _imv = (ImageView) findViewById(R.id.otherIcon);
+            Bitmap _bitmap = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("otherByteArray"),0,getIntent().getByteArrayExtra("otherByteArray").length);
+            _imv.setImageBitmap(_bitmap);
+        }
+
     }
 
     public void ChangeFragment(View view) {
