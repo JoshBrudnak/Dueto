@@ -117,6 +117,13 @@ export const getMessages = async (artistId) => {
   return newData
 }
 
+export const getSharedVideos = async () => {
+  const response = await fetch("/api/getsharedvideos", { credentials: "include" })
+  const newData = await response.json()
+ 
+  return newData
+}
+
 export const sendMessage = async (message, artist) => {
   const data = {
      Message: message,
@@ -224,6 +231,24 @@ export const addUser = async (body) => {
   let formBody = JSON.stringify(body)
 
   const response = await fetch("/api/createuser", {
+	body: formBody,
+	credentials: 'include',
+	method: 'POST',
+  })
+
+  const newData = await response
+
+  return newData
+}
+
+export const shareVideo = async (id) => {
+  const data = {
+     video: id,
+  }
+
+  const formBody = JSON.stringify(data)
+
+  const response = await fetch("/api/sharevideo", {
 	body: formBody,
 	credentials: 'include',
 	method: 'POST',

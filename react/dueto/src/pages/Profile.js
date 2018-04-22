@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import {Avatar, Typography, Paper, IconButton} from 'material-ui'
+import {Avatar, Typography, Paper, IconButton, Tabs, Tab} from 'material-ui'
 import Header from '../component/Header.js'
 import {AddCircle, Settings} from 'material-ui-icons'
 import {Link} from 'react-router-dom'
 import VideoCard from '../component/VideoCard.js'
-import {getProfileData} from '../utils/fetchData.js'
+import {getProfileData, getSharedVideos} from '../utils/fetchData.js'
 
 class Profile extends Component {
   constructor() {
@@ -18,8 +18,10 @@ class Profile extends Component {
       likes: undefined,
       followers: undefined,
       videos: [],
+      reshares: [],
       videoPage: true,
       chatPage: false, 
+      resharePage: false,
       avatarUrl: "" 
     }
   }
@@ -42,18 +44,29 @@ class Profile extends Component {
       .catch(error => {
         window.location = "/login"
       })
+
+    getSharedVideos()
+      .then(data => {
+          console.log(data)
+        this.setState({
+          reshares: data.VideoCards,
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   tabChange = (event, value) => {
     switch(value) {
       case 0:
-        this.setState({videoPage: true, chatPage: false})
+        this.setState({videoPage: true, resharePage: false})
         break
       case 1:
-        this.setState({videoPage: false, chatPage: true})
+        this.setState({videoPage: false, resharePage: true})
         break
       default:
-        this.setState({videoPage: true, chatPage: false})
+        this.setState({videoPage: true, resharePage: false})
         break
     }
   }
@@ -68,19 +81,38 @@ class Profile extends Component {
 
   getBody = () => {
     const videoCards = []
-    if(this.state.videos !== null) {
-      for(let i = 0; i < this.state.videos.length; i++) {
-        const data = this.state.videos[i]
-  
-        videoCards.push(
-          <VideoCard
-            style={{margin: 40}}
-            id={data.Id}
-            artist={data.Artist.Id}
-            desc={data.Desc}
-            name={data.Title}
-          />
-        )
+    if(this.state.videoPage) {
+      if(this.state.videos !== null) {
+        for(let i = 0; i < this.state.videos.length; i++) {
+          const data = this.state.videos[i]
+    
+          videoCards.push(
+            <VideoCard
+              style={{margin: 40}}
+              id={data.Id}
+              artist={data.Artist.Id}
+              desc={data.Desc}
+              name={data.Title}
+            />
+          )
+        }
+      }
+    }
+    else if(this.state.resharePage) {
+      if(this.state.reshares !== undefined) {
+        for(let i = 0; i < this.state.reshares.length; i++) {
+          const data = this.state.reshares[i]
+    
+          videoCards.push(
+            <VideoCard
+              style={{margin: 40}}
+              id={data.Id}
+              artist={data.Artist.Id}
+              desc={data.Desc}
+              name={data.Title}
+            />
+          )
+        }
       }
     }
     else {
@@ -117,7 +149,15 @@ class Profile extends Component {
               </IconButton>
             </div> 
             <Typography style={{fontSize: "large"}}>{this.state.name}</Typography> 
-            <Typography style={{fontSize: "large"}}>{this.state.username}</Typography> 
+            <Typography style={{fontSize: "large"}}>{this.state.username}</Typography>
+          </Paper>
+          <Paper style={{display: "grid", alignItems: "center"}}>
+          <div style={{gridColumn: 2}}>
+            <Tabs onChange={this.tabChange}>
+                <Tab style={{width: 100}} label="Video" />
+                <Tab style={{width: 100}} label="Reshared" />
+            </Tabs>
+          </div>
           </Paper>
         </div>
         <div style={{height: "-webkit-fill-available", backgroundColor: "#e8e8e8", display: "flex", flexWrap: "wrap", justifyContent: "center"}}>

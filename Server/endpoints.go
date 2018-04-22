@@ -23,7 +23,7 @@ const (
 	AddMessage = "insert into Comment(sender, reciever, message, time, sent) VALUES($1, $2, $3, now()::timestamp, false);"
 
 	RemoveSession     = "delete from Session where sessionkey = $1;"
-	RemoveOldSessions = "delete from session where age(now(), time) > '1 hour';"
+	RemoveOldSessions = "delete from session where age(now(), time) > '5 hour';"
 
 	SelectNewVideoId      = "select id from video where artistId = $1 and title = $2 order by uploadtime desc limit 1;"
 	SelectSharedVideos    = "select id, title, description, artistId, uploadTime, views, likes, genre from Video where artistId = $1 and shared = true;"
@@ -90,8 +90,12 @@ type Genre struct {
 	Description string
 }
 
+type SharedVideo struct {
+	Video string
+}
+
 type Genres struct {
-	GenreList []Genre
+    GenreList []Genre
 }
 
 type BasicArtist struct {
@@ -480,6 +484,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	err := checkmail.ValidateFormat(data.Email)
 	if err != nil {
 		http.Error(w, "Enter a valid email", http.StatusNotAcceptable)
+        return
 	}
 
 	bHash, err := bcrypt.GenerateFromPassword([]byte(data.Password), 1)
@@ -591,7 +596,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		logIfErr(err)
 		rows.Close()
 
-		exp := time.Now().Add(time.Hour)
+		exp := time.Now().Add(5 * time.Hour)
 		cookie := http.Cookie{Name: "SESSIONID", Value: sessionId, Path: "/", Expires: exp, HttpOnly: true}
 		http.SetCookie(w, &cookie)
 	} else {
@@ -857,8 +862,9 @@ func getSharedVideos(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Authentication failed", http.StatusForbidden)
 		return
 	}
+	artist := getUserId(cookie.Value)
 
-	rows, err := db.Query(SelectSharedVideos)
+	rows, err := db.Query(SelectSharedVideos, artist)
 	logIfErr(err)
 
 	for rows.Next() {
@@ -890,6 +896,8 @@ func getSharedVideos(w http.ResponseWriter, r *http.Request) {
 func shareVideo(w http.ResponseWriter, r *http.Request) {
 	var v Video
 	var artistId string
+	var newId string
+    var fileId SharedVideo
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, _ := r.Cookie("SESSIONID")
@@ -900,28 +908,38 @@ func shareVideo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	artist := getUserId(cookie.Value)
-	fileId := r.FormValue("video")
+    decoder := json.NewDecoder(r.Body)
+    decoder.Decode(&fileId)
 
-	rows, err := db.Query(SelectVideoById, fileId)
+	rows, err := db.Query(SelectVideoById, fileId.Video)
 	rows.Next()
 	err = rows.Scan(&v.Id, &v.Title, &v.Desc, &artistId, &v.Time, &v.Views, &v.Likes, &v.Genre)
+    logIfErr(err)
 	rows.Close()
 
-	rows, err = db.Query(ShareVideo, v.Id, v.Title, v.Desc, artist, v.Time, v.Views, v.Likes, v.Genre)
+	rows, err = db.Query(ShareVideo, artist, v.Title, v.Desc, v.Genre)
+    rows.Close()
 	logIfErr(err)
 
-	oldFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artistId, v.Id)
-	newFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, v.Id)
-	logServerErr(w, err)
+	rows, err = db.Query(SelectNewVideoId, artist, v.Title)
+	rows.Next()
+	err = rows.Scan(&newId)
+    logIfErr(err)
+	rows.Close()
 
-	newF, err := os.Create(newFile)
+	oldFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artistId, v.Id)
+	newFile := fmt.Sprintf("./data/videos/%s/%s.mp4", artist, newId)
+
+    newF, err := os.Create(newFile)
 	oldF, err := os.Open(oldFile)
 	logServerErr(w, err)
 
 	_, err = io.Copy(oldF, newF)
 	logServerErr(w, err)
+
+    newF.Sync()
 	newF.Close()
 	oldF.Close()
 
-	getThumbnail(artist, v.Id)
+	getThumbnail(artist, newId)
 }
