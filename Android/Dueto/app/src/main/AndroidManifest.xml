@@ -91,7 +91,8 @@
         <activity android:name=".OtherProfileActivity" />
         <activity android:name=".TestingFolder.Main2Activity" />
         <activity android:name=".TestingFolder.MobileActivity" />
-        <activity android:name=".TestingFolder.CustomAdapter"></activity>
+        <activity android:name=".TestingFolder.CustomAdapter" />
+        <activity android:name=".util.Publish"></activity>
     </application>
 
 </manifest>

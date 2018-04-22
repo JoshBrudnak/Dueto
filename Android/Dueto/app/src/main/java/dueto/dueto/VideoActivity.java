@@ -70,6 +70,7 @@ public class VideoActivity extends Activity {
         if (requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
             mVideoView.setVideoURI(videoUri);
+
         }
     }
 

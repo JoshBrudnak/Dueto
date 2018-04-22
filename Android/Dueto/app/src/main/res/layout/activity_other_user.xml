@@ -68,7 +68,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:hint="User Profile"
-                    android:maxLength="10"
+                    android:maxLength="15"
                     android:textColor="@color/White"
                     android:textSize="18sp"
                     android:textStyle="bold" />
