@@ -7,9 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.regex.Pattern;
 
 public class SigninActivity extends AppCompatActivity {
@@ -95,6 +92,8 @@ public class SigninActivity extends AppCompatActivity {
 
         public static boolean isValid(String email)
         {
+
+            //String emailRegex = "^[0-9]+(-?[0-9]+)+$";
             String emailRegex = "^[a-zA-Z0-9_+&*-]+" +
                                 "(?:\\." +
                                 "[a-zA-Z0-9_+&*-]+)*@" +

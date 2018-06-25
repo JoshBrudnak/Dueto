@@ -1,13 +1,6 @@
 package dueto.dueto.templates;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import com.mikepenz.fastadapter.items.AbstractItem;
-
-import dueto.dueto.R;
 
 public class MainCell {
     private String name;
@@ -17,11 +10,10 @@ public class MainCell {
     private String reposts;
     private String timeStamp;
     private String imgURL;
+    private String thumbnail;
     private String videoURL;
 
-
-
-    public MainCell(String name, String description, String likes, String comments, String reposts, String timeStamp, String imgURL, String videoURL) {
+    public MainCell(String name, String description, String likes, String comments, String reposts, String timeStamp, String imgURL, String thumbnail, String videoURL) {
         this.description = description;
         this.name = name;
         this.likes = likes;
@@ -29,6 +21,7 @@ public class MainCell {
         this.reposts = reposts;
         this.timeStamp = timeStamp;
         this.imgURL = imgURL;
+        this.thumbnail = thumbnail;
         this.videoURL = videoURL;
     }
 
@@ -38,6 +31,14 @@ public class MainCell {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getVideoURL() {

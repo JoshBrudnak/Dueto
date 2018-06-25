@@ -57,7 +57,8 @@
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="29dp"
+        android:background="@drawable/button_submit"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -72,7 +73,8 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="29dp"
+        android:background="@drawable/button_submit"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -87,7 +89,8 @@
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="29dp"
+        android:background="@drawable/button_submit"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -102,11 +105,13 @@
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="29dp"
+        android:background="@drawable/button_submit"
         android:layout_marginBottom="116dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+
         android:text="Button 4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +122,8 @@
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="29dp"
+        android:background="@drawable/red_button"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

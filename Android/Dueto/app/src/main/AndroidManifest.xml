@@ -43,25 +43,25 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"
             android:noHistory="true"
-            />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".messaging.MessageListActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".SigninActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustPan|adjustResize"
             android:noHistory="true"
-            />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".TimelineActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -81,14 +81,18 @@
             android:name=".VideoActivity"
             android:label="@string/title_activity_video"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".DiscoverActivity" />
         <activity
             android:name=".EditProfile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditMusic"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".OtherProfileActivity" />
+        <activity android:name=".TestingFolder.Main2Activity" />
+        <activity android:name=".TestingFolder.MobileActivity" />
+        <activity android:name=".TestingFolder.CustomAdapter" />
+        <activity android:name=".util.Publish"></activity>
     </application>
 
 </manifest>

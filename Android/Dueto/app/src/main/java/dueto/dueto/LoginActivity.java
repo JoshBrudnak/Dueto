@@ -8,9 +8,6 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
-
-import org.w3c.dom.Text;
-
 import dueto.dueto.servercom.Server;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,8 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         Info = (TextView)findViewById(R.id.logInfo);
         Login = (Button)findViewById(R.id.logButt);
         Create = (TextView) findViewById(R.id.createView);
-
-        //Info.setText("Attempts Remaining: 3");
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override

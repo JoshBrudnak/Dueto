@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:cacheColorHint="#00000000"
     android:focusableInTouchMode="false"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:scaleType="centerCrop"
+        android:layout_width="400dp"
+        android:layout_height="350dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <!--<ImageView-->
-        <!--android:id="@+id/image"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="350dp"-->
-        <!--android:layout_weight="50" />-->
 
         <com.universalvideoview.UniversalVideoView
             android:id="@+id/video"
@@ -27,15 +29,12 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:clickable="true"
-            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
-
-    <!--</LinearLayout>-->
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -49,6 +48,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="50"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/userName"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -161,5 +161,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

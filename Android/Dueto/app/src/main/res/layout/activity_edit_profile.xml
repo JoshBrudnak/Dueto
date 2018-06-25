@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    android:background="@color/newBlue"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">>
 
-    tools:context=".EditProfile">
-
-        <android.support.constraint.ConstraintLayout
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:background="@color/newBlue"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            tools:context=".EditProfile">
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -56,25 +57,25 @@
 
             <TextView
                 android:id="@+id/userChangeView"
-                android:layout_width="106dp"
+                android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="Username"
                 android:textColor="@color/White"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/userChangeText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.091"
+                app:layout_constraintHorizontal_bias="0.09"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameChangeText"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/nameChangeView"
-                android:layout_width="64dp"
+                android:layout_width="wrap_content"
                 android:layout_height="27dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -85,14 +86,14 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/nameChangeText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.078"
+                app:layout_constraintHorizontal_bias="0.08"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editPicButton"
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/webChangeView"
-                android:layout_width="121dp"
+                android:layout_width="wrap_content"
                 android:layout_height="27dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -103,14 +104,14 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/webChangeText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.097"
+                app:layout_constraintHorizontal_bias="0.085"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userChangeText"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/locChangeView"
-                android:layout_width="169dp"
+                android:layout_width="wrap_content"
                 android:layout_height="27dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -121,10 +122,10 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/locChangeText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.125"
+                app:layout_constraintHorizontal_bias="0.087"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/webChangeText"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <EditText
                 android:id="@+id/locChangeText"
@@ -145,7 +146,7 @@
                 app:layout_constraintHorizontal_bias="0.393"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/webChangeText"
-                app:layout_constraintVertical_bias="0.106" />
+                app:layout_constraintVertical_bias="0.031" />
 
             <EditText
                 android:id="@+id/nameChangeText"
@@ -166,7 +167,7 @@
                 app:layout_constraintHorizontal_bias="0.393"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editPicButton"
-                app:layout_constraintVertical_bias="0.129" />
+                app:layout_constraintVertical_bias="0.050000012" />
 
             <EditText
                 android:id="@+id/userChangeText"
@@ -180,14 +181,14 @@
                 android:ems="10"
                 android:hint="Username"
                 android:imeOptions="flagNoExtractUi"
-                android:inputType="textPassword"
+                android:inputType="textPersonName"
                 android:paddingLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.393"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameChangeText"
-                app:layout_constraintVertical_bias="0.07" />
+                app:layout_constraintVertical_bias="0.027" />
 
             <EditText
                 android:id="@+id/webChangeText"
@@ -201,14 +202,14 @@
                 android:ems="10"
                 android:hint="Website"
                 android:imeOptions="flagNoExtractUi"
-                android:inputType="textPassword"
+                android:inputType="textPersonName"
                 android:paddingLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.393"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userChangeText"
-                app:layout_constraintVertical_bias="0.088" />
+                app:layout_constraintVertical_bias="0.028" />
 
             <EditText
                 android:id="@+id/descChangeText"
@@ -229,7 +230,7 @@
                 app:layout_constraintHorizontal_bias="0.393"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/locChangeText"
-                app:layout_constraintVertical_bias="0.149" />
+                app:layout_constraintVertical_bias="0.029" />
 
             <TextView
                 android:id="@+id/descChangeView"
@@ -239,15 +240,15 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Description"
+                android:text="Bio"
                 android:textColor="@color/White"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/descChangeText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.097"
+                app:layout_constraintHorizontal_bias="0.105"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/locChangeText"
-                app:layout_constraintVertical_bias="0.375" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/saveProfileChange"
@@ -263,17 +264,19 @@
                 android:textColor="@color/White"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.157"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descChangeText"
-                app:layout_constraintVertical_bias="0.117" />
+                app:layout_constraintTop_toBottomOf="@+id/phoneChangeText"
+                app:layout_constraintVertical_bias="0.021" />
 
             <TextView
                 android:id="@+id/cancelChangeView"
-                android:layout_width="69dp"
+                android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:text="Cancel"
                 android:textColor="@color/White"
@@ -282,8 +285,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/saveProfileChange"
-                app:layout_constraintVertical_bias="0.153" />
+                app:layout_constraintTop_toBottomOf="@+id/phoneChangeText"
+                app:layout_constraintVertical_bias="0.077" />
 
             <ImageView
                 android:id="@+id/titleBarView"
@@ -331,6 +334,63 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
+            <TextView
+                android:id="@+id/phoneChangeView"
+                android:layout_width="169dp"
+                android:layout_height="27dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Phone Number"
+                android:textColor="@color/White"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/phoneChangeText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descChangeText"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/phoneChangeText"
+                android:layout_width="307dp"
+                android:layout_height="34dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_edittext"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.393"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descChangeText"
+                app:layout_constraintVertical_bias="0.041" />
+
+            <Button
+                android:id="@+id/signOut"
+                android:layout_width="102dp"
+                android:layout_height="29dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_submit"
+                android:gravity="center"
+                android:text="Sign Out"
+                android:textColor="@color/White"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toEndOf="@+id/saveProfileChange"
+                app:layout_constraintTop_toBottomOf="@+id/phoneChangeText"
+                app:layout_constraintVertical_bias="0.02" />
         </android.support.constraint.ConstraintLayout>
 
-</ScrollView>
+    </ScrollView>

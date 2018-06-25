@@ -5,24 +5,8 @@
     android:id="@+id/constrLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
     tools:context="dueto.dueto.MainActivity">
-
-    <!--<ScrollView-->
-        <!--android:id="@+id/sView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:fillViewport="true"-->
-        <!--android:visibility="visible">-->
-
-        <!--<TableLayout-->
-            <!--android:id="@+id/homeTable"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@color/menuBG"-->
-            <!--android:stretchColumns="1">-->
-        <!--</TableLayout>-->
-
-    <!--</ScrollView>-->
 
     <ScrollView
         android:id="@+id/sView"
@@ -40,13 +24,6 @@
             android:id="@+id/listView"/>
 
     </ScrollView>
-
-    <!--<VideoView-->
-        <!--android:id="@+id/realVideo"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="350dp"-->
-        <!--android:layout_gravity="center" />-->
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/menuButton"

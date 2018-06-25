@@ -1,5 +1,6 @@
 package dueto.dueto;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -7,33 +8,30 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.media.Image;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,11 +53,13 @@ public class EditProfile extends AppCompatActivity {
     private TextView defaultWebsite;
     private TextView defaultLocation;
 
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+    Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
     private static final String TAG = "ProfilePicPreview";
 
     private Button Save;
+    private Button SignOut;
     private TextView Cancel;
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,13 @@ public class EditProfile extends AppCompatActivity {
 
         Cancel = (TextView) findViewById(R.id.cancelChangeView);
         Save = (Button) findViewById(R.id.saveProfileChange);
+        SignOut = (Button) findViewById(R.id.signOut);
+
+        if (checkSelfPermission(Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    MY_CAMERA_REQUEST_CODE);
+        }
 
         changePic.setOnClickListener(new View.OnClickListener() { //calls onClick(default name) through ClickListener which takes you to LoginActivity
             @Override
@@ -86,6 +93,7 @@ public class EditProfile extends AppCompatActivity {
                 SelectImage();
             }
         });
+
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +115,14 @@ public class EditProfile extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        SignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(EditProfile.this, FirstActivity.class));
+            }
+        });
+
         Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,21 +157,19 @@ public class EditProfile extends AppCompatActivity {
     public void ChangeFragment(View view) {
         Fragment fragment;
 
-        if(view == findViewById(R.id.button1)) {
+        if (view == findViewById(R.id.button1)) {
             fragment = new PostsFragment();
             FragmentManager fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.fragment_place, fragment);
             ft.commit();
-        }
-        else if (view == findViewById(R.id.button2)) {
+        } else if (view == findViewById(R.id.button2)) {
             fragment = new RepostsFragment();
             FragmentManager fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.fragment_place, fragment);
             ft.commit();
-        }
-        else {
+        } else {
             fragment = new PostsFragment();
             FragmentManager fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
@@ -165,9 +179,9 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
-    private void SelectImage(){
+    private void SelectImage() {
 
-        final CharSequence[] items={"Camera","Gallery", "Cancel"};
+        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfile.this);
         builder.setTitle("Add Image");
@@ -199,19 +213,19 @@ public class EditProfile extends AppCompatActivity {
     }
 
     @Override
-    public  void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode,data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode== Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
 
-            if(requestCode==REQUEST_CAMERA){
+            if (requestCode == REQUEST_CAMERA) {
 
                 Bundle bundle = data.getExtras();
                 Bitmap bmp = (Bitmap) bundle.get("data");
                 bmp = Bitmap.createScaledBitmap(bmp, 200, 200, false);
                 profilePic.setImageBitmap(bmp);
 
-            }else if(requestCode==SELECT_FILE){
+            } else if (requestCode == SELECT_FILE) {
 
                 //Uri selectedImageUri = data.getData();
 
@@ -240,7 +254,7 @@ public class EditProfile extends AppCompatActivity {
 
                 int orientation = ExifInterface.ORIENTATION_NORMAL;
 
-                if (exif != null){
+                if (exif != null) {
                     orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
                     switch (orientation) {
@@ -286,12 +300,11 @@ public class EditProfile extends AppCompatActivity {
         o.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
 
-        int width_tmp = o.outWidth
-                , height_tmp = o.outHeight;
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
 
-        while(true) {
-            if(width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
+        while (true) {
+            if (width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
                 break;
             width_tmp /= 2;
             height_tmp /= 2;
@@ -320,5 +333,25 @@ public class EditProfile extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == MY_CAMERA_REQUEST_CODE) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+
+            } else {
+
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+
+            }
+
+        }
     }
 }

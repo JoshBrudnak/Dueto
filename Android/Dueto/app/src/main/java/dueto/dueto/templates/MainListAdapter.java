@@ -3,6 +3,9 @@ package dueto.dueto.templates;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.location.Address;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -16,11 +19,13 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -32,20 +37,28 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import dueto.dueto.FirstActivity;
+import dueto.dueto.LoginActivity;
+import dueto.dueto.MainActivity;
+import dueto.dueto.OtherProfileActivity;
 import dueto.dueto.R;
+import dueto.dueto.SigninActivity;
+import dueto.dueto.UserProfileActivity;
 import dueto.dueto.model.Video;
 
 import static android.view.View.getDefaultSize;
 
 public class MainListAdapter extends ArrayAdapter<MainCell> {
 
-    private static final String TAG = "PersonListAdapter";
+    private static final String TAG = "MainListAdapter";
 
     private Context mContext;
     private int mResource;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
     private ArrayList<MainCell> mVideos;
 
     private static class ViewHolder {
@@ -56,6 +69,7 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         TextView reposts;
         TextView timeStamp;
         ImageView image;
+        ImageView thumbnail;
         UniversalVideoView video;
     }
 
@@ -66,26 +80,24 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         mContext = context;
         mResource = resource;
         mVideos = objects;
+        setupImageLoader();
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        //sets up the image loader library
-        setupImageLoader();
-
-        //get the persons information
         String name = getItem(position).getName();
         String description = getItem(position).getDescription();
         String likes = getItem(position).getLikes();
         String comments = getItem(position).getComments();
         String reposts = getItem(position).getReposts();
+        String thumbURL = getItem(position).getThumbnail();
         String timeStamp = getItem(position).getTimeStamp();
         String imgUrl = getItem(position).getImgURL();
         String videoURL = getItem(position).getVideoURL();
 
-        final View result;      //create the view result for showing the animation
+        final View result;
 
         final ViewHolder holder;
 
@@ -105,20 +117,15 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
             holder.reposts = (TextView) convertView.findViewById(R.id.reposts);
             holder.timeStamp = (TextView) convertView.findViewById(R.id.timeStamp);
             holder.image = (ImageView) convertView.findViewById(R.id.image);
+            holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
             holder.video = (UniversalVideoView ) convertView.findViewById(R.id.video);
 
-            //result = convertView;
-
             convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-            //result = convertView;
         }
+        else {
 
-//        Animation animation = AnimationUtils.loadAnimation(mContext,
-//                (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-//        result.startAnimation(animation);
-//        lastPosition = position;
+            holder = (ViewHolder) convertView.getTag();
+        }
 
         holder.name.setText(name);
         holder.description.setText(description);
@@ -127,90 +134,119 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
         holder.timeStamp.setText(timeStamp);
         holder.reposts.setText(reposts);
 
-        try {
-            MainCell video = mVideos.get(position);
-            holder.video.getHolder().setSizeFromLayout();
-            //play video using android api, when video view is clicked.
-            String url = video.getVideoURL(); // your URL here
-            Uri videoUri = Uri.parse(url);
-            holder.video.setVideoURI(videoUri);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(mContext, OtherProfileActivity.class);
 
-            holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @SuppressLint("ClickableViewAccessibility")
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.seekTo(100);
-                    mp.setLooping(true);
-                    holder.video.pause();
+                String nameText = (holder.name).getText().toString();
+
+                Intent myIntent = new Intent(view.getContext(), OtherProfileActivity.class);
+                myIntent.putExtra("otherName", nameText);
+
+                (holder.image).buildDrawingCache();
+                Bitmap bitmap = (holder.image).getDrawingCache();
+                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, _bs);
+                myIntent.putExtra("otherByteArray", _bs.toByteArray());
+
+                mContext.startActivity(myIntent);
+            }
+        });
 
 
-                    holder.video.setOnTouchListener(new View.OnTouchListener() {
-                        private long startClickTime;
+        holder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, OtherProfileActivity.class);
 
-                        @Override
-                        public boolean onTouch(View v, MotionEvent motionEvent) {
-                            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                                startClickTime = System.currentTimeMillis();
-                            }
-                            else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                mContext.startActivity(intent);
+            }
+        });
 
-                                if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
-                                    if (!holder.video.isPlaying()) {
-                                        v.performClick();
-                                        holder.video.start();
 
-                                        return true;
+
+        holder.thumbnail.bringToFront();
+
+        MainCell video = mVideos.get(position);
+        holder.video.getHolder().setSizeFromLayout();
+        //play video using android api, when video view is clicked.
+
+        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String url = video.getVideoURL(); // your URL here
+                Uri videoUri = Uri.parse(url);
+                holder.video.setVideoURI(videoUri);
+                holder.thumbnail.setVisibility(View.INVISIBLE);
+
+                holder.video.requestFocus();
+                holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @SuppressLint("ClickableViewAccessibility")
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setLooping(true);
+
+                        int yPos = holder.video.getBottom();
+                        holder.video.scrollTo(0, yPos);
+                        holder.video.start();
+
+                        holder.video.setOnTouchListener(new View.OnTouchListener() {
+                            private long startClickTime;
+
+                            @Override
+                            public boolean onTouch(View v, MotionEvent motionEvent) {
+                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                    startClickTime = System.currentTimeMillis();
+                                }
+                                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+                                    if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
+                                        if (!holder.video.isPlaying()) {
+                                            v.performClick();
+                                            holder.thumbnail.setVisibility(View.INVISIBLE);
+                                            holder.video.start();
+
+                                            return true;
+                                        }
+                                        if (holder.video.isPlaying()) {
+                                            v.performClick();
+                                            //holder.thumbnail.setVisibility(View.VISIBLE);
+                                            holder.video.pause();
+
+                                            return true;
+                                        }
+
                                     }
-                                    if (holder.video.isPlaying()) {
-                                        v.performClick();
-                                        holder.video.pause();
-
-                                        return true;
+                                    else {
+                                        return false;
                                     }
 
+                                    return true;
                                 }
                                 else {
-                                    return false;
+                                    return true;
                                 }
 
                                 return true;
                             }
-                            else {
-                                return true;
-                            }
+                        });
 
-                            return true;
-                        }
-                    });
+                    }
 
-                }
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        //create the imageloader object
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        ;
-        int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed", null, mContext.getPackageName());
-
-        //create display options
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                .cacheOnDisc(true).resetViewBeforeLoading(true)
-                .showImageForEmptyUri(defaultImage)
-                .showImageOnFail(defaultImage)
-                .showImageOnLoading(defaultImage).build();
+                });
+            }
+        });
 
         //download and display image from url
-        imageLoader.displayImage(imgUrl, holder.image, options);
+        imageLoader.displayImage(imgUrl, holder.image);
+        imageLoader.displayImage(thumbURL, holder.thumbnail);
 
         return convertView;
     }
 
     private void setupImageLoader() {
-        // UNIVERSAL IMAGE LOADER SETUP
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -223,9 +259,6 @@ public class MainListAdapter extends ArrayAdapter<MainCell> {
                 .discCacheSize(100 * 1024 * 1024).build();
 
         ImageLoader.getInstance().init(config);
-        // END - UNIVERSAL IMAGE LOADER SETUP
-//    }
-
 
     }
 }

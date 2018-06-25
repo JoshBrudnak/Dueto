@@ -16,7 +16,7 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="dueto.dueto.UserProfileActivity">
+        tools:context=".OtherProfileActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/firstView"
+                    android:id="@+id/otherIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -40,7 +40,7 @@
                     app:civ_border_width="1dp" />
 
                 <ImageButton
-                    android:id="@+id/editButton"
+                    android:id="@+id/messageUser"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="left"
@@ -48,7 +48,7 @@
                     android:layout_marginTop="-40dp"
                     android:background="@null"
                     android:scaleType="fitStart"
-                    android:src="@drawable/settings" />
+                    android:src="@drawable/camera" />
 
                 <ImageButton
                     android:id="@+id/musicButton"
@@ -62,7 +62,7 @@
                     android:src="@drawable/note" />
 
                 <TextView
-                    android:id="@+id/profileName"
+                    android:id="@+id/otherName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -103,24 +103,24 @@
                     android:textColor="@color/White" />
 
                 <TextView
-                    android:id="@+id/profileLoc"
+                    android:id="@+id/otherLoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="-95dp"
                     android:hint="Location"
-                    android:maxLength="20"
+                    android:maxLength="15"
                     android:textColor="@color/White"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/profileDesc"
+                    android:id="@+id/otherDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="-2dp"
                     android:hint="Description"
-                    android:maxLength="50"
+                    android:maxLength="30"
                     android:textColor="@color/White"
                     android:textSize="15sp" />
 

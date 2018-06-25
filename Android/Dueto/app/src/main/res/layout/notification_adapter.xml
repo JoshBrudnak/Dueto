@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:focusableInTouchMode="false"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="33.3"
+            android:weightSum="100"
+            app:layout_constraintDimensionRatio="H,1:1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="50"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/userName"
+                app:layout_constraintHorizontal_bias="0.34"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.48" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="296dp"
+                android:layout_weight="50"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.733"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.48" />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="50"
+                android:gravity="left"
+                android:maxLength="15"
+                android:text="TextView1"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.293"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.34" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="left"
+                android:maxLength="150"
+                android:text="TextView2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/userName"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.34" />
+
+            <TextView
+                android:id="@+id/timeStamp"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.275"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userName"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
