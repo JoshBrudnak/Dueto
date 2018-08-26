@@ -15,7 +15,7 @@ For user experience and project documentation go to the project's [wiki](https:/
   - Website
   - Database
 
-- Samentha Tahiri [[profile]](https://github.com/tahiris719)
+- Sam Tahiri [[profile]](https://github.com/tahiris719)
   - Android design
   - Android UI
 
