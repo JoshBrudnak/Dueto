@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Typography, Button } from 'material-ui'
-import Dialog, {DialogContent} from 'material-ui/Dialog'
+import { Typography, Button } from '@material-ui/core'
+import Dialog, {DialogContent} from '@material-ui/core/Dialog'
 import {getVideoUrl} from "../utils/fetchData.js"
 
 class VideoDialog extends Component {

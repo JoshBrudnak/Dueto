@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Input, TextField, Button, Typography, Paper} from 'material-ui'
+import {Input, TextField, Button, Typography, Paper} from '@material-ui/core'
 import {loginUser, addUser, addAvatar, getLocation} from '../utils/fetchData.js'
 import {Link} from "react-router-dom"
 

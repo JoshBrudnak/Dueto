@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {Button, Radio, FormControl, FormControlLabel, RadioGroup} from 'material-ui'
-import Dialog, {DialogTitle, DialogContent} from 'material-ui/Dialog'
+import {Button, Radio, FormControl, FormControlLabel, RadioGroup} from '@material-ui/core'
+import Dialog, {DialogTitle, DialogContent} from '@material-ui/core/Dialog'
 import {getGenres} from "../utils/fetchData.js"
 
 class GenreDialog extends Component {

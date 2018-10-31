@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Input, Button, TextField, Paper, Typography} from 'material-ui'
+import {Input, Button, TextField, Paper, Typography} from '@material-ui/core'
 import Header from '../component/Header.js'
 import GenreDialog from '../component/GenreDialog.js'
 import {Link} from "react-router-dom"

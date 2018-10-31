@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextField, Button, Paper, Typography } from 'material-ui'
+import { TextField, Button, Paper, Typography } from '@material-ui/core'
 import {Link} from 'react-router-dom'
 import {loginUser} from '../utils/fetchData.js'
 

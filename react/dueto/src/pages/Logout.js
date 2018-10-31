@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import {Typography, Paper} from "material-ui"
+import {Typography, Paper} from "@material-ui/core"
 import {Link} from "react-router-dom"
 
 class Logout extends Component {

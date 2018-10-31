@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Avatar, Typography, Paper, Tabs, Tab} from 'material-ui'
+import {Avatar, Typography, Paper, Tabs, Tab} from '@material-ui/core'
 import Header from '../component/Header.js'
 import VideoCard from '../component/VideoCard.js'
 import MessageView from '../component/MessageView.js'
