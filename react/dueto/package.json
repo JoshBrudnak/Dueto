@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.3.2",
+    "@material-ui/icons": "^3.0.1",
     "@types/googlemaps": "^3.30.16",
     "@types/markerclustererplus": "^2.1.33",
     "@types/react": "^16.4.18",
@@ -31,8 +33,6 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
-    "material-ui": "next",
-    "material-ui-icons": "next",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
