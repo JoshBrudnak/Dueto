@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {Button, TextField, Paper} from 'material-ui'
-import Card, { CardContent } from "material-ui/Card"
+import {Button, TextField, Paper} from '@material-ui/core'
+import Card, { CardContent } from "@material-ui/core/Card"
 import {getMessages, sendMessage} from "../utils/fetchData.js"
 
 class MessageView extends Component {

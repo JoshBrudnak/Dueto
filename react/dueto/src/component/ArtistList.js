@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Divider, Typography, Paper, Button, Avatar } from 'material-ui'
-import Card, { CardContent } from 'material-ui/Card'
-import Menu, {MenuItem} from 'material-ui/Menu'
+import { Divider, Typography, Paper, Button, Avatar } from '@material-ui/core'
+import Card, { CardContent } from '@material-ui/core/Card'
+import Menu, {MenuItem} from '@material-ui/core/Menu'
 import {Link} from "react-router-dom"
 import { getAvatarUrl, getArtistsByZip, getArtistsByCity } from '../utils/fetchData.js'
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Card, {CardMedia} from 'material-ui/Card'
+import Card, {CardMedia} from '@material-ui/core/Card'
 import {Link} from 'react-router-dom'
 
 class GenreCard extends Component {
